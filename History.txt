@@ -1,0 +1,15 @@
+== 0.3.0 / 2007-12-11
+  * color highlighting now works (need facets-2.0 library)
+
+== 0.2.0 / 2006-11-26
+  * add the "turn" executable
+  * fixed warnings
+
+== 0.1.2 / 2006-11-13
+  * added some instructions for using the package
+
+== 0.1.1 / 2006-11-10
+  * removed explicit dependency on the 'hoe' gem
+
+== 0.1.0 / 2006-11-10
+  * initial release
