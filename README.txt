@@ -75,7 +75,7 @@ scipt. Now your Rails tests will use TURN formatting.
 
 == INSTALL:
 
-  sudo gem install turn
+* sudo gem install turn
 
 == LICENSE:
 
