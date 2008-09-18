@@ -4,6 +4,11 @@ README.txt
 Rakefile
 bin/turn
 lib/turn.rb
+lib/turn/colorize.rb
+lib/turn/command.rb
+lib/turn/crossrunner.rb
+lib/turn/isorunner.rb
+lib/turn/solorunner.rb
 tasks/annotations.rake
 tasks/doc.rake
 tasks/gem.rake

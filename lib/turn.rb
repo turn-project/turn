@@ -1,21 +1,11 @@
-# $Id$
-
 require 'test/unit/ui/console/testrunner'
-begin
-  require 'facets/ansicode'
-rescue LoadError
-  begin
-    require 'rubygems'
-    require 'facets/ansicode'
-  rescue LoadError
-  end
-end
-
+require 'turn/colorize'
 
 module ::Test::Unit
 module UI
 module Console
   class TestRunner
+    include Turn::Colorize
 
     alias :t_attach_to_mediator :attach_to_mediator
     def attach_to_mediator
@@ -40,8 +30,8 @@ module Console
 
       bar = '=' * 78
       if COLORIZE
-        bar = if pass == total then ::Console::ANSICode.green bar
-              else ::Console::ANSICode.red bar end
+        bar = if pass == total then ::ANSICode.green bar
+              else ::ANSICode.red bar end
       end
 
       @io.puts bar
@@ -60,7 +50,7 @@ module Console
     end
 
     def t_test_finished( name )
-      @io.puts PASS unless @t_fault
+      @io.puts " #{PASS}" unless @t_fault
       @t_fault = false
     end
 
@@ -73,26 +63,15 @@ module Console
         @io.puts ERROR
         msg << fault.to_s.split("\n")[2..-1].join("\n\t")
       when ::Test::Unit::Failure
-        @io.puts FAIL
+        @io.puts " #{FAIL}"
         msg << fault.location[0] << "\n\t"
         msg << fault.message.gsub("\n","\n\t")
       end
 
-      msg = ::Console::ANSICode.magenta msg if COLORIZE
+      msg = ::ANSICode.magenta msg if COLORIZE
       @io.puts msg
     end
 
-    COLORIZE = defined?(::Console::ANSICode) && ENV.has_key?('TERM')
-    if COLORIZE
-      PASS = ::Console::ANSICode.green ' PASS'
-      FAIL = ::Console::ANSICode.red ' FAIL'
-      ERROR = ::Console::ANSICode.white(
-              ::Console::ANSICode.on_red('ERROR'))
-    else
-      PASS = " PASS"
-      FAIL = " FAIL"
-      ERROR = "ERROR"
-    end
   end
 end
 end

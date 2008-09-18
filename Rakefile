@@ -10,7 +10,7 @@ PROJ.url = 'http://codeforpeople.rubyforge.org/turn'
 PROJ.description = paragraphs_of('README.txt', 1).join("\n\n")
 PROJ.changes = paragraphs_of('History.txt', 0..1).join("\n\n")
 PROJ.rubyforge_name = 'codeforpeople'
-PROJ.version = '0.3.0'
+PROJ.version = '0.4.0'
 
 PROJ.rdoc_exclude << '^lib/'
 PROJ.rdoc_remote_dir = PROJ.name

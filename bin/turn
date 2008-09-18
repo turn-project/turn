@@ -1,14 +1,4 @@
 #!/usr/bin/ruby
 
-RUBY = File.join(Config::CONFIG['bindir'], Config::CONFIG['ruby_install_name'])
+load 'turn/command.rb'
 
-begin
-  require 'turn'
-  Kernel.exec(RUBY, '-r', 'turn', *ARGV)
-rescue LoadError
-  require 'rubygems'
-  require 'turn'
-  Kernel.exec(RUBY, '-rubygems', '-r', 'turn', *ARGV)
-end
-
-# EOF
