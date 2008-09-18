@@ -15,8 +15,8 @@ wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
 
 == FEATURES:
-  
-Sample output:
+
+General usage provides better test output. Here is some sample output:
 
   TestMyClass
       test_alt                                                            PASS
@@ -35,12 +35,14 @@ Sample output:
     total: 15 tests with 42 assertions in 0.018 seconds
   ============================================================================
 
+Turn also provides solo and cross test modes when run from the *turn* commandline
+application.
+
 == SYNOPSIS:
 
 If you have the 'facets' gem installed, then TURN output will be displayed in
 wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
-
 
 === Command Line
 
@@ -51,6 +53,17 @@ You can use the *turn* executable in place of the *ruby* interpreter.
 This will invoke the ruby interpreter and automatically require the turn
 formatting library. All command line arguments are passed "as is" to the
 ruby interpreter.
+
+To use the solo runner.
+
+  turn --solo -Ilib test/
+
+This will run all tests in the test/ directory in a separate process.
+Likewise for the cross runner.
+
+  turn --cross -Ilib test/
+
+This will run every pairing of tests in a separate process.
 
 === Require
 
