@@ -6,9 +6,9 @@ module Turn
   # in isolated processes. It can do this either by running
   # each test in isolation (solo testing) or in pairs (cross testing).
   #
-  # The IsoRunner proives some variery in ouput formats and can also
+  # The IsoRunner proiveds some variery in ouput formats and can also
   # log results to a file.
-  #
+
   class CrossRunner < IsoRunner
 
     #include Turn::Colorize
@@ -88,7 +88,7 @@ module Turn
     # Run cross comparison testing.
     #
     # This tool runs unit tests in pairs to make sure there is cross
-    # library compatibility. Each pari is run in a separate interpretor
+    # library compatibility. Each pair is run in a separate interpretor
     # to prevent script clash. This makes for a more robust test
     # facility and prevents potential conflicts between test scripts.
     #
