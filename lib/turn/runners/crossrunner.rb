@@ -1,6 +1,5 @@
-require 'turn/isorunner'
-
 module Turn
+  require 'turn/runners/isorunner'
 
   # Iso Runner provides means from running unit test
   # in isolated processes. It can do this either by running
@@ -11,31 +10,35 @@ module Turn
 
   class CrossRunner < IsoRunner
 
-    #include Turn::Colorize
-
-    # File glob pattern of tests to run.
-    attr_accessor :tests
-
-    # File glob pattern of tests to cross run.
-    attr_accessor :versus
-
-    # Tests to specially exclude.
-    attr_accessor :exclude
-
-    # Add these folders to the $LOAD_PATH.
-    attr_accessor :loadpath
-
-    # Libs to require when running tests.
-    attr_accessor :requires
-
-    # Test against live install (i.e. Don't use loadpath option)
-    attr_accessor :live
-
-    # Log results?
-    attr_accessor :log
-
     #
-    attr_accessor :trace
+    def start
+      suite = TestSuite.new
+
+      files = @controller.files
+      viles = @controller.files # TODO: viles this selectable
+
+      #files = files.select{ |f| File.extname(f) == '.rb' and File.file?(f) }
+      #viles = viles.select{ |f| File.extname(f) == '.rb' and File.file?(f) }
+
+      width = (files+viles).collect{ |f| f.size }.max
+
+      pairs = files.inject([]){ |m, f| viles.collect{ |g| m << [f,g] }; m }
+      #pairs = pairs.reject{ |f,v| f == v }
+
+      testruns = pairs.collect do |file, versus|
+        name = "%#{max}s %#{max}s" % [file, versus]
+        suite.new_case(name, file, versus)
+      end
+
+      test_loop_runner(suite)
+    end
+
+  end
+
+end
+
+=begin
+    #include Turn::Colorize
 
     private
 
@@ -126,11 +129,15 @@ module Turn
       cmd   = %[ruby -I#{loadpath.join(':')} -e"load('./%s'); load('%s')"]
       dis   = "%-#{width}s %-#{width}s"
 
+      #testruns = pairs.collect do |pair|
+      #  { 'file'    => pair,
+      #    'command' => cmd % pair,
+      #    'display' => dis % pair
+      #  }
+      #end
+
       testruns = pairs.collect do |pair|
-        { 'file'    => pair,
-          'command' => cmd % pair,
-          'display' => dis % pair
-        }
+        TestRun.new(dis % pair, cmd % pair)
       end
 
       report = test_loop_runner(testruns)
@@ -150,6 +157,4 @@ module Turn
     end
 
   end
-
-end
-
+=end

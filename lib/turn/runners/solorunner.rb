@@ -1,4 +1,4 @@
-require 'turn/isorunner'
+require 'turn/runners/isorunner'
 
 module Turn
 
@@ -39,11 +39,7 @@ module Turn
 
       #
       def initialize_defaults
-        @loadpath ||= ['lib']
-        @tests    ||= "test/**/test_*"
-        @exclude  ||= []
-        @reqiures ||= []
-        @live     ||= false
+        super
         @log      ||= false
       end
 
@@ -99,27 +95,25 @@ module Turn
       cmd   = %[ruby -I#{loadpath.join(':')} %s]
       dis   = "%-#{width}s"
 
+      #testruns = files.collect do |file|
+      #  { 'files'   => file,
+      #    'command' => cmd % file,
+      #    'display' => dis % file
+      #  }
+      #end
+
+      suite = TestSuite.new
+
       testruns = files.collect do |file|
-        { 'files'   => file,
-          'command' => cmd % file,
-          'display' => dis % file
-        }
+        suite.new_case(file, cmd % file)
       end
 
-      report = test_loop_runner(testruns)
+      report = test_loop_runner(suite)
 
-      puts report
+      #puts report
 
-      if log #&& !dryrun?
-        #logfile = File.join('log', apply_naming_policy('testlog', 'txt'))
-        FileUtils.mkdir_p('log')
-        logfile = File.join('log', 'testlog.txt')
-        File.open(logfile, 'a') do |f|
-          f << "= Solo Test @ #{Time.now}\n"
-          f << report
-          f << "\n"
-        end
-      end
+      #log = false # TODO!!!!!!!!!!!!
+      #log_report(report) if log
     end
 
   end

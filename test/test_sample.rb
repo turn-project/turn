@@ -1,5 +1,5 @@
 require 'test/unit'
-#require 'turn'
+require 'turn'
 
 class TC_Sample < Test::Unit::TestCase
 

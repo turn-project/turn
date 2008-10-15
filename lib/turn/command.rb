@@ -1,5 +1,7 @@
 require 'getoptlong'
 
+require 'turn/controller'
+
 RUBY = File.join(Config::CONFIG['bindir'], Config::CONFIG['ruby_install_name'])
 
 original_argv = ARGV.dup
@@ -11,25 +13,31 @@ opts = GetoptLong.new(
   [ '--loadpath', '-I', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--requires', '-r', GetoptLong::REQUIRED_ARGUMENT ],
 
+  # RUN MODES
   [ '--solo',           GetoptLong::NO_ARGUMENT ],
   [ '--cross',          GetoptLong::NO_ARGUMENT ],
-  [ '--load',           GetoptLong::NO_ARGUMENT ]
+  [ '--load',           GetoptLong::NO_ARGUMENT ],
+
+  # OUTPUT MODES
+  [ '--marshal',        GetoptLong::NO_ARGUMENT ],
+  [ '--outline',        GetoptLong::NO_ARGUMENT ],
+  [ '--progress',       GetoptLong::NO_ARGUMENT ]
 )
 
-    # Tests to specially exclude.
-    #attr_accessor :exclude
-
-mode     = nil
 live     = nil
 log      = nil
 loadpath = ['lib']
 requires = []
+
+runmode = nil
+outmode = nil
 
 opts.each do |opt, arg|
   case opt
   when '--help'
     RDoc::usage
     exit 0
+
   when '--live'
     live = true
   when '--log'
@@ -38,51 +46,71 @@ opts.each do |opt, arg|
     loadpath = arg
   when '--requires'
     requires = arg
+
   when '--solo'
-    mode = :solo
+    runmode = :solo
   when '--cross'
-    mode = :cross
+    runmode = :cross
+  when '--marshal'
+    runmode = :marshal
+    outmode = :marshal
+  when '--progress'
+    outmode = :progress
+  when '--outline'
+    outmode = :outline
   end
 end
 
 tests = ARGV
 
-if mode
+case outmode
+when :marshal
+  reporter = Turn::MarshalReporter.new($stdout)
+when :progress
+  reporter = Turn::ProgressReporter.new($stdout)
+else
+  reporter = Turn::OutlineReporter.new($stdout)
+end
 
-  case mode
-  when :cross
-    require 'turn/crossrunner'
-    klass = Turn::CrossRunner
-  when :solo
-    require 'turn/solorunner'
-    klass = Turn::SoloRunner
-  else
-    require 'turn/solorunner'
-    klass = Turn::SoloRunner
-  end
+case runmode
+when :marshal
+  require 'turn/runners/testrunner'
+  runner   = Turn::TestRunner
+when :solo
+  require 'turn/runners/solorunner'
+  runner = Turn::SoloRunner
+when :cross
+  require 'turn/runners/crossrunner'
+  runner = Turn::CrossRunner
+else
+  require 'turn/runners/testrunner'
+  runner = Turn::TestRunner
+end
 
-  testrunner = klass.new do |runner|
-    runner.live     = live
-    runner.log      = log
-    runner.loadpath = loadpath
-    runner.requires = requires
-    runner.tests    = tests.dup
-  end
+controller = Turn::Controller.new do |c|
+  c.live     = live
+  c.log      = log
+  c.loadpath = loadpath
+  c.requires = requires
+  c.tests    = tests.dup
+  c.runner   = runner
+  c.reporter = reporter
+end
 
-  testrunner.run_tests
+controller.start
 
+=begin
 else
 
   begin
-    require 'turn'
-    require *ARGV
-    #Kernel.exec(RUBY, '-r', 'turn', *ARGV)
+    require 'turn/adapters/testunit' # 'turn'
   rescue LoadError
     require 'rubygems'
-    require 'turn'
-    require *ARGV
-    #Kernel.exec(RUBY, '-rubygems', '-r', 'turn', *ARGV)
+    require 'turn/adapters/testunit' # 'turn'
   end
+
+  ARGV.each{ |a| Dir[a].each{ |f| require f }}
+  Turn::TestRunner.run(TS_MyTests)
 
   #RUBY = File.join(Config::CONFIG['bindir'], Config::CONFIG['ruby_install_name'])
   #
@@ -96,6 +124,5 @@ else
   #end
 
 end
-
-# EOF
+=end
 
