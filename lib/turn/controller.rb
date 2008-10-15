@@ -34,18 +34,20 @@ module Turn
     # Log results?
     attr_accessor :log
 
-    #
-    attr_accessor :trace
-
     # Instance of Reporter.
     attr_accessor :reporter
 
     # Insatance of Runner.
     attr_accessor :runner
 
-    def trace?   ; @trace   ; end
+    # Verbose output?
+    attr_accessor :verbose
+
+    #
+    #attr_accessor :trace or :debug?
+
     def verbose? ; @verbose ; end
-    #def dryrun?  ; @dryrun  ; end
+    def live?    ; @live    ; end
 
   private
 
@@ -67,20 +69,20 @@ module Turn
     end
 
     # Collect test configuation.
-    def test_configuration(options={})
-      #options = configure_options(options, 'test')
-      #options['loadpath'] ||= metadata.loadpath
-      options['tests']    ||= self.tests
-      options['loadpath'] ||= self.loadpath
-      options['requires'] ||= self.requires
-      options['live']     ||= self.live
-      options['exclude']  ||= self.exclude
-      #options['tests']    = list_option(options['tests'])
-      options['loadpath'] = list_option(options['loadpath'])
-      options['exclude']  = list_option(options['exclude'])
-      options['require']  = list_option(options['require'])
-      return options
-    end
+    #def test_configuration(options={})
+    #  #options = configure_options(options, 'test')
+    #  #options['loadpath'] ||= metadata.loadpath
+    #  options['tests']    ||= self.tests
+    #  options['loadpath'] ||= self.loadpath
+    #  options['requires'] ||= self.requires
+    #  options['live']     ||= self.live
+    #  options['exclude']  ||= self.exclude
+    #  #options['tests']    = list_option(options['tests'])
+    #  options['loadpath'] = list_option(options['loadpath'])
+    #  options['exclude']  = list_option(options['exclude'])
+    #  options['require']  = list_option(options['require'])
+    #  return options
+    #end
 
     #
     def list_option(list)
@@ -112,6 +114,8 @@ module Turn
       @files ||= (
         fs = tests.map{ |t| Dir[t] }.flatten #TODO: make descending glob
         fs.select{ |f| !File.directory?(f) }
+        ex = exclude.map{ |x| Dir[x] }.flatten #TODO: make descending glob
+        fs - ex
       )
     end
 

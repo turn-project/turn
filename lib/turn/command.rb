@@ -2,7 +2,7 @@ require 'getoptlong'
 
 require 'turn/controller'
 
-RUBY = File.join(Config::CONFIG['bindir'], Config::CONFIG['ruby_install_name'])
+#RUBY = File.join(Config::CONFIG['bindir'], Config::CONFIG['ruby_install_name'])
 
 original_argv = ARGV.dup
 

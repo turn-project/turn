@@ -1,13 +1,10 @@
 module Turn
   require 'turn/runners/isorunner'
 
-  # Iso Runner provides means from running unit test
-  # in isolated processes. It can do this either by running
-  # each test in isolation (solo testing) or in pairs (cross testing).
+  # = Cross Runner
   #
-  # The IsoRunner proiveds some variery in ouput formats and can also
-  # log results to a file.
-
+  # Cross Runner runs test in pairs.
+  #
   class CrossRunner < IsoRunner
 
     #
@@ -20,7 +17,7 @@ module Turn
       #files = files.select{ |f| File.extname(f) == '.rb' and File.file?(f) }
       #viles = viles.select{ |f| File.extname(f) == '.rb' and File.file?(f) }
 
-      width = (files+viles).collect{ |f| f.size }.max
+      max = (files+viles).collect{ |f| f.size }.max
 
       pairs = files.inject([]){ |m, f| viles.collect{ |g| m << [f,g] }; m }
       #pairs = pairs.reject{ |f,v| f == v }

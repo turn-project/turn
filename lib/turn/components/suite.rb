@@ -27,8 +27,8 @@ module Turn
     end
 
     #
-    def new_case(name) #, command=nil)
-      c = TestCase.new(name) #, command)
+    def new_case(name, *files)
+      c = TestCase.new(name, *files)
       @cases << c
       c
     end

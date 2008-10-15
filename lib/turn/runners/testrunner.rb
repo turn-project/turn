@@ -1,18 +1,12 @@
-require 'test/unit'
-Test::Unit.run = false
-
+#require 'test/unit'; Test::Unit.run = false
 require 'test/unit/ui/console/testrunner'
-require 'turn/colorize'
 
-require 'turn/components/suite.rb'
-require 'turn/components/case.rb'
-require 'turn/components/method.rb'
-
-require 'turn/reporters/outline_reporter.rb'
-require 'turn/reporters/progress_reporter.rb'
-
-#$turn_reporter = Turn::ProgressReporter.new(@io)
-#$turn_reporter = Turn::OutlineReporter.new(@io)
+#require 'turn/colorize'
+#require 'turn/components/suite.rb'
+#require 'turn/components/case.rb'
+#require 'turn/components/method.rb'
+#require 'turn/reporters/outline_reporter.rb'
+#require 'turn/reporters/progress_reporter.rb'
 
 module Turn
 
@@ -20,9 +14,13 @@ module Turn
   class TestRunner < ::Test::Unit::UI::Console::TestRunner
 
     def initialize(controller)
-      output_level = 2
+      output_level = 2 # 2-NORMAL 3-VERBOSE
 
-      [controller.files].flatten.each{ |f| require(f) }
+      controller.loadpath.each{ |path| $: << path } unless controller.live?
+      controller.requires.each{ |path| require(path) }
+
+      [controller.files].flatten.each{ |path| require(path) }
+
       sub_suites = []
       ObjectSpace.each_object(Class) do |klass|
         if(Test::Unit::TestCase > klass)
