@@ -1,8 +1,3 @@
-#require 'facets' #/hash/reke, string/tabs
-#require 'facets/progressbar'
-#require 'facets/dir/multiglob'
-#require 'fileutils'
-
 module Turn
   require 'turn/colorize'
 
