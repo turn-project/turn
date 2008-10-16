@@ -1,5 +1,25 @@
-require 'getoptlong'
+# Turn - Pretty Unit Test Runner for Ruby
+#
+# SYNOPSIS
+#   turn [OPTIONS] [RUN MODE] [OUTPUT MODE] [test globs...]
+#
+# OPTIONS
+#   -h --help
+#      --live
+#      --log
+#   -I --loadpath=PATHS
+#   -r --requires=PATHS
+#
+# RUN MODES
+#      --solo
+#      --cross
+#
+# OUTPUT MODES
+#   -O --outline
+#   -P --progress
+#   -M --marshal
 
+require 'getoptlong'
 require 'turn/controller'
 
 #RUBY = File.join(Config::CONFIG['bindir'], Config::CONFIG['ruby_install_name'])
@@ -19,9 +39,9 @@ opts = GetoptLong.new(
   #[ '--load',           GetoptLong::NO_ARGUMENT ],
 
   # OUTPUT MODES
-  [ '--outline',        GetoptLong::NO_ARGUMENT ],
+  [ '--outline',  '-O', GetoptLong::NO_ARGUMENT ],
   [ '--progress', '-P', GetoptLong::NO_ARGUMENT ],
-  [ '--marshal',  '-m', GetoptLong::NO_ARGUMENT ]
+  [ '--marshal',  '-M', GetoptLong::NO_ARGUMENT ]
 )
 
 live     = nil
@@ -35,8 +55,9 @@ outmode = nil
 opts.each do |opt, arg|
   case opt
   when '--help'
-    RDoc::usage
-    exit 0
+    help, rest = File.read(__FILE__).split(/^\s*$/)
+    puts help.gsub(/^\#[ ]{0,1}/,'')
+    exit
 
   when '--live'
     live = true
