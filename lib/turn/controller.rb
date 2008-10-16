@@ -13,6 +13,11 @@ module Turn
   require 'turn/runners/solorunner'
   require 'turn/runners/crossrunner'
 
+  # = Controller
+  #
+  #--
+  # TODO: Add support to test run loggging.
+  #++
   class Controller
 
     # File glob pattern of tests to run.
@@ -28,23 +33,20 @@ module Turn
     # Libs to require when running tests.
     attr_accessor :requires
 
-    # Test against live install (i.e. Don't use loadpath option)
-    attr_accessor :live
-
-    # Log results?
-    attr_accessor :log
-
     # Instance of Reporter.
     attr_accessor :reporter
 
     # Insatance of Runner.
     attr_accessor :runner
 
+    # Test against live install (i.e. Don't use loadpath option)
+    attr_accessor :live
+
+    # Log results? May be true/false or log file name. (TODO)
+    attr_accessor :log
+
     # Verbose output?
     attr_accessor :verbose
-
-    #
-    #attr_accessor :trace or :debug?
 
     def verbose? ; @verbose ; end
     def live?    ; @live    ; end
@@ -59,7 +61,7 @@ module Turn
     #
     def initialize_defaults
       @loadpath ||= ['lib']
-      @tests    ||= "test/**/test_*"
+      @tests    ||= "test/**/{test,}*{,test}"
       @exclude  ||= []
       @reqiures ||= []
       @live     ||= false
@@ -135,64 +137,4 @@ module Turn
   end
 
 end
-
-
-=begin
-    # Run unit tests. Unlike test-solo and test-cross this loads
-    # all tests and runs them together in a single process.
-    #
-    # Note that this shells out to the testrb program.
-    #
-    # TODO: Generate a test log entry?
-    def test_run(options={})
-      #options = test_configuration(options)
-
-      #tests    = options['tests']
-      #loadpath = options['loadpath']
-      #requires = options['requires']
-      #live     = options['live']
-      #exclude  = options['exclude']
-
-      #log      = options['log'] != false
-      #logfile  = File.join('log', apply_naming_policy('test', 'log'))
-
-      # what about arguments for selecting specific tests?
-      #tests = options['arguments'] if options['arguments']
-
-      #unless live
-      #  loadpath.each do |lp|
-      #    $LOAD_PATH.unshift(File.expand_path(lp))
-      #  end
-      #end
-
-      #if File.exist?('test/suite.rb')
-      #  files = 'test/suite.rb'
-      #else
-        files = tests.map{ |t| Dir[t] }.flatten #TODO make descending
-      #end
-
-      #if files.empty?
-      #  $stderr.puts "No tests."
-      #  return
-      #end
-
-      filelist = files.select{|file| !File.directory?(file) }.join(' ')
-
-      runner.new()
-
-      if live
-        command = %[testrb #{filelist} 2>&1]
-      else
-        command = %[testrb -I#{loadpath.join(':')} #{filelist} 2>&1]
-      end
-
-      system command
-
-      #if log && !dryrun?
-      #  command = %[testrb -I#{loadpath} #{filelist} > #{logfile} 2>&1]  # /dev/null 2>&1
-      #  system command
-      #  puts "Updated #{logfile}"
-      #end
-    end
-=end
 

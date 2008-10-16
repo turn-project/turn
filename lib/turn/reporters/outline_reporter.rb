@@ -4,6 +4,10 @@ module Turn
 
   # = Outline Reporter (Turn's Original)
   #
+  #--
+  # TODO: Should we fit reporter output to width of console?
+  # TODO: Running percentages?
+  #++
   class OutlineReporter < Reporter
 
     def start_suite(suite)
@@ -11,7 +15,7 @@ module Turn
       @time  = Time.now
       #files = suite.collect{ |s| s.file }.join(' ')
       io.puts "Loaded suite #{suite.name}"
-      io.puts "Started"
+      #io.puts "Started"
     end
 
     def start_case(kase)

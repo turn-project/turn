@@ -10,7 +10,11 @@ require 'test/unit/ui/console/testrunner'
 
 module Turn
 
-  # 
+  # = TestUnit TestRunner
+  #
+  #--
+  # TODO: Add minitest runner.
+  #++
   class TestRunner < ::Test::Unit::UI::Console::TestRunner
 
     def initialize(controller)
@@ -130,6 +134,18 @@ module Turn
       @t_suite.count_assertions = @t_result.assertion_count
 
       @t_reporter.finish_suite(@t_suite)
+    end
+
+    # This is copied verbatim from test/unit/ui/console/testrunner.rb.
+    # It is here for one simple reason: to supress testunits output of
+    # "Loaded Suite".
+    def setup_mediator
+      @mediator = create_mediator(@suite)
+      suite_name = @suite.to_s
+      if ( @suite.kind_of?(Module) )
+        suite_name = @suite.name
+      end
+      #output("Loaded suite #{suite_name}")
     end
 
   end#class TestRunner

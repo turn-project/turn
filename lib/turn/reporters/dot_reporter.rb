@@ -6,41 +6,72 @@ module Turn
   #
   class DotReporter < Reporter
 
-    def start_testsuite(suite, size=suite.size)
+    def start_suite(suite)
       @time = Time.now
-      files = suite.collect{ |s| s.file }.join(' ')
-      io.puts "Loaded suite #{files}"
+      io.puts "Loaded suite #{suite.name}"
       io.puts "Started"
     end
 
-    def start_testcase
+    def start_case(kase)
     end
 
-    def start_test
+    def start_test(test)
     end
 
-    def pass
+    def pass(message=nil)
       io.print '.'; io.flush
     end
 
-    def fail
+    def fail(message=nil)
       io.print 'F'; io.flush
     end
 
-    def error
+    def error(message=nil)
       io.print 'E'; io.flush
     end
 
-    def finish_test
+    def finish_test(test)
     end
 
-    def finish_testcase
+    def finish_case(kase)
     end
 
-    def finish_testsuite
+    def finish_suite(suite)
       io.puts("Finished in %.5d seconds." % [Time.now - @time])
+      io.puts
+      io.puts "%-#{width}s  %10s %10s %10s %10s" % ["TOTAL", *test_tally(suite)]
+
+      report = ''
+
+      fails = suite.select do |testrun|
+        testrun.fail? || testrun.error?
+      end
+
+      unless fails.empty? # or verbose?
+        report << "\n\n-- Failures and Errors --\n\n"
+        fails.uniq.each do |testrun|
+          message = testrun.message.tabto(0)
+          message = ::ANSICode.magenta(message) if COLORIZE
+          report << message << "\n"
+        end
+        report << "\n"
+      end
+
+      io.puts report
+    end
+
+  private
+
+    def test_tally(suite)
+      counts = suite.collect{ |tr| tr.counts }
+      tally  = [0,0,0,0]
+      counts.each do |count|
+        4.times{ |i| tally[i] += count[i] }
+      end
+      return tally
     end
 
   end
 
 end
+

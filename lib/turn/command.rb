@@ -9,19 +9,19 @@ original_argv = ARGV.dup
 opts = GetoptLong.new(
   [ '--help', '-h',     GetoptLong::NO_ARGUMENT ],
   [ '--live',           GetoptLong::NO_ARGUMENT ],
-  [ '--log',            GetoptLong::NO_ARGUMENT ],
+  [ '--log',            GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--loadpath', '-I', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--requires', '-r', GetoptLong::REQUIRED_ARGUMENT ],
 
   # RUN MODES
   [ '--solo',           GetoptLong::NO_ARGUMENT ],
   [ '--cross',          GetoptLong::NO_ARGUMENT ],
-  [ '--load',           GetoptLong::NO_ARGUMENT ],
+  #[ '--load',           GetoptLong::NO_ARGUMENT ],
 
   # OUTPUT MODES
-  [ '--marshal',        GetoptLong::NO_ARGUMENT ],
   [ '--outline',        GetoptLong::NO_ARGUMENT ],
-  [ '--progress',       GetoptLong::NO_ARGUMENT ]
+  [ '--progress', '-P', GetoptLong::NO_ARGUMENT ],
+  [ '--marshal',  '-m', GetoptLong::NO_ARGUMENT ]
 )
 
 live     = nil
@@ -61,7 +61,7 @@ opts.each do |opt, arg|
   end
 end
 
-tests = ARGV
+tests = ARGV.empty? ? nil : ARGV.dup
 
 case outmode
 when :marshal
@@ -92,7 +92,7 @@ controller = Turn::Controller.new do |c|
   c.log      = log
   c.loadpath = loadpath
   c.requires = requires
-  c.tests    = tests.dup
+  c.tests    = tests
   c.runner   = runner
   c.reporter = reporter
 end

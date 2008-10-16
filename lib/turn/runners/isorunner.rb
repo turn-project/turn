@@ -28,6 +28,7 @@ module Turn
       #yield(self) if block_given?
       @loadpath = controller.loadpath
       @requires = controller.requires
+      @live     = controller.live?
     end
 
   public
@@ -45,7 +46,9 @@ module Turn
 
   private
 
-    #
+    # The IsoRunner actually shells out to turn in 
+    # manifest mode, to gather results from isolated
+    # runs.
     def test_loop_runner(suite)
       reporter.start_suite(suite)
       suite.each_with_index do |kase, index|
@@ -57,6 +60,7 @@ module Turn
         cmd << %[--marshal]
         cmd << %[--loadpath="#{@loadpath.join(';')}"] unless @loadpath.empty?
         cmd << %[--requires="#{@requires.join(';')}"] unless @requires.empty?
+        cmd << %[--live] if @live
         cmd << %[#{kase.files.join(' ')}]
         cmd = cmd.join(' ')
         result = `#{cmd}`
