@@ -67,8 +67,11 @@ module Turn
 
         head, yaml = *result.split('---')
         sub_suite = YAML.load(yaml)
+
         # TODO: handle multiple subcases
+        name = kase.name
         kase = sub_suite.cases[0]
+        kase.name = name
         suite.cases[index] = kase
 
         kase.tests.each do |test|

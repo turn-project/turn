@@ -23,7 +23,7 @@ module Turn
       #pairs = pairs.reject{ |f,v| f == v }
 
       testruns = pairs.collect do |file, versus|
-        name = "%#{max}s %#{max}s" % [file, versus]
+        name = "%-#{max}s %-#{max}s" % [file, versus]
         suite.new_case(name, file, versus)
       end
 

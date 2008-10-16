@@ -117,7 +117,7 @@ module Turn
         fs = tests.map{ |t| Dir[t] }.flatten #TODO: make descending glob
         fs.select{ |f| !File.directory?(f) }
         ex = exclude.map{ |x| Dir[x] }.flatten #TODO: make descending glob
-        fs - ex
+        (fs - ex).uniq
       )
     end
 
