@@ -54,12 +54,12 @@ module Turn
 
     # Were there any errors?
     def error?
-      @count_errors != 0
+      count_errors != 0
     end
 
     # Were there any failures?
     def fail?
-      @count_failures != 0
+      count_failures != 0
     end
 
     # Did all tests/assertion pass?
