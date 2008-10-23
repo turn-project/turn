@@ -5,6 +5,8 @@ module Turn
   #
   # Cross Runner runs test in pairs.
   #
+  # TODO: This needs work in the test_loop_runner.
+  #       It needs to show the files being cross tested.
   class CrossRunner < IsoRunner
 
     #

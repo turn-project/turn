@@ -46,6 +46,9 @@ module Turn
     # runs.
     def test_loop_runner(suite)
       reporter.start_suite(suite)
+
+      recase = []
+
       suite.each_with_index do |kase, index|
         reporter.start_case(kase)
 
@@ -65,24 +68,26 @@ module Turn
 
         # TODO: handle multiple subcases
         name = kase.name
-        kase = sub_suite.cases[0]
-        kase.name = name
-        suite.cases[index] = kase
+        kases = sub_suite.cases
+        #kase.name = name
+        suite.cases[index] = kases
 
-        kase.tests.each do |test|
-          reporter.start_test(test)
-          if test.error?
-            reporter.error(test.message)
-          elsif test.fail?
-            reporter.fail(test.message)
-          else
-            reporter.pass
+        kases.each do |kase|
+          kase.tests.each do |test|
+            reporter.start_test(test)
+            if test.error?
+              reporter.error(test.message)
+            elsif test.fail?
+              reporter.fail(test.message)
+            else
+              reporter.pass
+            end
+            reporter.finish_test(test)
           end
-          reporter.finish_test(test)
+          reporter.finish_case(kase)
         end
-
-        reporter.finish_case(kase)
       end
+      suite.cases.flatten!
       reporter.finish_suite(suite)
 
       # shutdown test/unit auto runner if test/unit is loaded.
@@ -90,14 +95,14 @@ module Turn
     end
 
     #
-    def test_parse_result(result)
-      if md = /(\d+) tests, (\d+) assertions, (\d+) failures, (\d+) errors/.match(result)
-        count = md[1..4].collect{|q| q.to_i}
-      else       
-        count = [1, 0, 0, 1]  # SHOULD NEVER HAPPEN
-      end
-      return count
-    end
+    #def test_parse_result(result)
+    #  if md = /(\d+) tests, (\d+) assertions, (\d+) failures, (\d+) errors/.match(result)
+    #    count = md[1..4].collect{|q| q.to_i}
+    #  else       
+    #    count = [1, 0, 0, 1]  # SHOULD NEVER HAPPEN
+    #  end
+    #  return count
+    #end
 
     # NOT USED YET.
     def log_report(report)
