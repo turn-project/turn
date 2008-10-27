@@ -3,7 +3,6 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
-TODO
 VERSION
 bin/turn
 lib/turn.rb
@@ -25,4 +24,5 @@ lib/turn/runners/solorunner.rb
 lib/turn/runners/testrunner.rb
 test/test_example.rb
 test/test_sample.rb
+work/quicktest.rb
 work/turn.rb

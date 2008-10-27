@@ -7,6 +7,8 @@ module Turn
   #
   # TODO: This needs work in the test_loop_runner.
   #       It needs to show the files being cross tested.
+  #
+  # TODO: Cross runner output needs to be fixed
   class CrossRunner < IsoRunner
 
     #
