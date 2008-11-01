@@ -18,20 +18,21 @@ module Turn
     #def start_test(test)
     #end
 
-    def pass(message=nil)
-      @pbar.inc
-    end
-
-    def fail(message=nil)
-      @pbar.inc
-    end
-
-    def error(message=nil)
-      @pbar.inc
-    end
-
-    #def finish_case(kase)
+    #def pass(message=nil)
+    #  #@pbar.inc
     #end
+
+    #def fail(message=nil)
+    #  #@pbar.inc
+    #end
+
+    #def error(message=nil)
+    #  #@pbar.inc
+    #end
+
+    def finish_case(kase)
+      @pbar.inc
+    end
 
     def finish_suite(suite)
       @pbar.finish
@@ -40,24 +41,23 @@ module Turn
 
     #
     def post_report(suite)
-      report = ''
-
       tally = test_tally(suite)
 
       width = suite.collect{ |tr| tr.name.size }.max
 
       headers = [ 'TESTCASE  ', '  TESTS   ', 'ASSERTIONS', ' FAILURES ', '  ERRORS   ' ]
-      report << "\n%-#{width}s       %10s %10s %10s %10s\n" % headers
+      io.puts "\n%-#{width}s       %10s %10s %10s %10s\n" % headers
 
       files = nil
 
       suite.each do |testrun|
         if testrun.files != [testrun.name] && testrun.files != files
-          report << testrun.files.join(' ') + "\n"
+          label = testrun.files.join(' ')
+          label = ::ANSICode.magenta(label) if COLORIZE
+          io.puts(label + "\n")
           files = testrun.files
         end
-        report << paint_line(testrun, width)
-        report << "\n"
+        io.puts paint_line(testrun, width)
       end
 
       #puts("\n%i tests, %i assertions, %i failures, %i errors\n\n" % tally)
@@ -66,8 +66,7 @@ module Turn
       tally_line << "%-#{width}s  " % "TOTAL"
       tally_line << "%10s %10s %10s %10s" % tally
 
-      report << tally_line
-      report << "\n\n"
+      io.puts(tally_line + "\n")
 
       fails = suite.select do |testrun|
         testrun.fail? || testrun.error?
@@ -75,17 +74,15 @@ module Turn
 
       #if tally[2] != 0 or tally[3] != 0
         unless fails.empty? # or verbose?
-          report << "-- Failures and Errors --\n\n"
+          io.puts "\n\n-- Failures and Errors --\n\n"
           fails.uniq.each do |testrun|
-            message = testrun.message.tabto(0)
-            message = ::ANSICode.magenta(message) if COLORIZE
-            report << message << "\n"
+            message = testrun.message.tabto(0).strip
+            message = ::ANSICode.red(message) if COLORIZE
+            io.puts(message+"\n\n")
           end
-          report << "\n"
+          io.puts
         end
       #end
-
-      io.puts report
     end
 
   private
