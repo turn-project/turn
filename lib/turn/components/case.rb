@@ -30,8 +30,8 @@ module Turn
     #
     def initialize(name, *files)
       @name  = name
-      @tests = []
       @files = (files.empty? ? [name] : files)
+      @tests = []
 
       @message = nil
       @count_assertions = 0

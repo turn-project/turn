@@ -21,8 +21,8 @@ module Turn
 
       max = (files+viles).collect{ |f| f.size }.max
 
-      pairs = files.inject([]){ |m, f| viles.collect{ |g| m << [f,g] }; m }
-      #pairs = pairs.reject{ |f,v| f == v }
+      pairs = files.inject([]){ |m, f| viles.collect{ |v| m << [f,v] }; m }
+      pairs = pairs.reject{ |f,v| f == v }
 
       testruns = pairs.collect do |file, versus|
         name = "%-#{max}s %-#{max}s" % [file, versus]

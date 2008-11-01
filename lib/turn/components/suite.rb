@@ -35,31 +35,31 @@ module Turn
 
     def count_failures
       #@count_failures ||= (
-        sum = 0; cases.each{ |c| sum += c.count_failures }; sum
+        sum = 0; each{ |c| sum += c.count_failures }; sum
       #)
     end
 
     def count_errors
       #@count_errors ||= (
-        sum = 0; cases.each{ |c| sum += c.count_errors }; sum
+        sum = 0; each{ |c| sum += c.count_errors }; sum
       #)
     end
 
     def count_passes
       #@count_passes ||= (
-        sum = 0; cases.each{ |c| sum += c.count_passes }; sum
+        sum = 0; each{ |c| sum += c.count_passes }; sum
       #)
     end
 
     def count_tests
       #@count_tests ||= (
-        sum = 0; cases.each{ |c| sum += c.count_tests }; sum
+        sum = 0; each{ |c| sum += c.count_tests }; sum
       #)
     end
 
     def count_assertions
       #@count_assertions ||= (
-        sum = 0; cases.each{ |c| sum += c.count_assertions }; sum
+        sum = 0; each{ |c| sum += c.count_assertions }; sum
       #)
     end
 

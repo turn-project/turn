@@ -49,25 +49,20 @@ module Turn
       headers = [ 'TESTCASE  ', '  TESTS   ', 'ASSERTIONS', ' FAILURES ', '  ERRORS   ' ]
       report << "\n%-#{width}s       %10s %10s %10s %10s\n" % headers
 
+      files = nil
+
       suite.each do |testrun|
-        line = ''
-        line << "%-#{width}s  " % [testrun.name]
-        line << "%10s %10s %10s %10s" % testrun.counts
-        line << " " * 8
-        if testrun.fail?
-          line << "[#{FAIL}]"
-        elsif testrun.error?
-          line << "[#{FAIL}]"
-        else
-          line << "[#{PASS}]"
+        if testrun.files != [testrun.name] && testrun.files != files
+          report << testrun.files.join(' ') + "\n"
+          files = testrun.files
         end
-        report << line
+        report << paint_line(testrun, width)
         report << "\n"
       end
 
       #puts("\n%i tests, %i assertions, %i failures, %i errors\n\n" % tally)
 
-      tally_line = ''
+      tally_line = "-----\n"
       tally_line << "%-#{width}s  " % "TOTAL"
       tally_line << "%10s %10s %10s %10s" % tally
 
@@ -94,6 +89,21 @@ module Turn
     end
 
   private
+
+    def paint_line(testrun, width)
+      line = ''
+      line << "%-#{width}s  " % [testrun.name]
+      line << "%10s %10s %10s %10s" % testrun.counts
+      line << " " * 8
+      if testrun.fail?
+        line << "[#{FAIL}]"
+      elsif testrun.error?
+        line << "[#{FAIL}]"
+      else
+        line << "[#{PASS}]"
+      end
+      line
+    end
 
     def test_tally(suite)
       counts = suite.collect{ |tr| tr.counts }

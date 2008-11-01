@@ -31,7 +31,7 @@ module Turn
           sub_suites << klass.suite
         end
       end
-      suite = Test::Unit::TestSuite.new('')  # FIXME
+      suite = Test::Unit::TestSuite.new('')  # FIXME: Name?
       sub_suites.sort_by{|s|s.name}.each{|s| suite << s}
 
       @t_reporter = controller.reporter

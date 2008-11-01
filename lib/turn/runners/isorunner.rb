@@ -41,7 +41,7 @@ module Turn
 
   private
 
-    # The IsoRunner actually shells out to turn in 
+    # The IsoRunner actually shells out to turn in
     # manifest mode, to gather results from isolated
     # runs.
     def test_loop_runner(suite)
@@ -63,16 +63,19 @@ module Turn
         cmd = cmd.join(' ')
         result = `#{cmd}`
 
+        files = kase.files
+
         head, yaml = *result.split('---')
         sub_suite = YAML.load(yaml)
 
-        # TODO: handle multiple subcases
-        name = kase.name
+        # TODO: How to handle pairs?
+        #name  = kase.name
         kases = sub_suite.cases
-        #kase.name = name
         suite.cases[index] = kases
 
         kases.each do |kase|
+          kase.files = files
+          #reporter.start_case(kase)
           kase.tests.each do |test|
             reporter.start_test(test)
             if test.error?
@@ -87,7 +90,9 @@ module Turn
           reporter.finish_case(kase)
         end
       end
+
       suite.cases.flatten!
+
       reporter.finish_suite(suite)
 
       # shutdown test/unit auto runner if test/unit is loaded.
@@ -98,7 +103,7 @@ module Turn
     #def test_parse_result(result)
     #  if md = /(\d+) tests, (\d+) assertions, (\d+) failures, (\d+) errors/.match(result)
     #    count = md[1..4].collect{|q| q.to_i}
-    #  else       
+    #  else
     #    count = [1, 0, 0, 1]  # SHOULD NEVER HAPPEN
     #  end
     #  return count

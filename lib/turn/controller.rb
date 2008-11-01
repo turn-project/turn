@@ -114,9 +114,14 @@ module Turn
 
     def files
       @files ||= (
-        fs = tests.map{ |t| Dir[t] }.flatten #TODO: make descending glob
-        fs.select{ |f| !File.directory?(f) }
-        ex = exclude.map{ |x| Dir[x] }.flatten #TODO: make descending glob
+        fs = tests.map do |t|
+          File.directory?(t) ? Dir[File.join(t, '**', '*')] : Dir[t]
+        end
+        fs = fs.flatten.reject{ |f| File.directory?(f) }
+        ex = exclude.map do |x|
+          File.directory?(x) ? Dir[File.join(x, '**', '*')] : Dir[x]
+        end
+        ex = ex.flatten.reject{ |f| File.directory?(f) }
         (fs - ex).uniq
       )
     end
