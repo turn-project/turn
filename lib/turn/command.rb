@@ -46,7 +46,7 @@ opts = GetoptLong.new(
 
 live     = nil
 log      = nil
-loadpath = ['lib']
+loadpath = []
 requires = []
 
 runmode = nil
@@ -64,9 +64,9 @@ opts.each do |opt, arg|
   when '--log'
     log = true
   when '--loadpath'
-    loadpath = arg
+    loadpath << arg
   when '--requires'
-    requires = arg
+    requires << arg
 
   when '--solo'
     runmode = :solo
@@ -81,6 +81,8 @@ opts.each do |opt, arg|
     outmode = :outline
   end
 end
+
+loadpath = ['lib'] if loadpath.empty?
 
 tests = ARGV.empty? ? nil : ARGV.dup
 
