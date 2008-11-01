@@ -37,9 +37,8 @@ module Turn
     end
 
     def finish_suite(suite)
-      io.puts("Finished in %.5d seconds." % [Time.now - @time])
+      io.puts("\nFinished in %.5f seconds." % [Time.now - @time])
       io.puts
-      io.puts "%-#{width}s  %10s %10s %10s %10s" % ["TOTAL", *test_tally(suite)]
 
       report = ''
 
@@ -48,7 +47,7 @@ module Turn
       end
 
       unless fails.empty? # or verbose?
-        report << "\n\n-- Failures and Errors --\n\n"
+        #report << "\n\n-- Failures and Errors --\n\n"
         fails.uniq.each do |testrun|
           message = testrun.message.tabto(0)
           message = ::ANSICode.magenta(message) if COLORIZE
@@ -58,6 +57,8 @@ module Turn
       end
 
       io.puts report
+
+      io.puts "%s tests, %s assetions, %s failures, %s errors" % test_tally(suite)
     end
 
   private

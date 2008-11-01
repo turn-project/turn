@@ -41,6 +41,7 @@ opts = GetoptLong.new(
   # OUTPUT MODES
   [ '--outline',  '-O', GetoptLong::NO_ARGUMENT ],
   [ '--progress', '-P', GetoptLong::NO_ARGUMENT ],
+  [ '--nominal',  '-N', GetoptLong::NO_ARGUMENT ],
   [ '--marshal',  '-M', GetoptLong::NO_ARGUMENT ]
 )
 
@@ -79,6 +80,8 @@ opts.each do |opt, arg|
     outmode = :progress
   when '--outline'
     outmode = :outline
+  when '--nominal'
+    outmode = :nominal
   end
 end
 
@@ -91,6 +94,8 @@ when :marshal
   reporter = Turn::MarshalReporter.new($stdout)
 when :progress
   reporter = Turn::ProgressReporter.new($stdout)
+when :nominal
+  reporter = Turn::DotReporter.new($stdout)
 else
   reporter = Turn::OutlineReporter.new($stdout)
 end
