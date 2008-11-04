@@ -1,0 +1,29 @@
+= Turn 0.5
+
+Turn has turned 0.5 with some signifficant new features.
+
+While Turn still provides the exact same functionality for running
+tests via ruby or testrb as previous versions. The turn commandline 
+utility has been completely rewritten with expanded capabilites. 
+
+The turn command now features three run modes:
+
+* Solo runner for running each test file in a separate process.
+* Cross runner for running test file pairs in separate processes.
+* Normal runner, which of course runs all test in a single process.
+
+It also support three report modes:
+
+* Progress reporter which uses a progress bar.
+* Minimal reporter which provides traditional "dot" progress.
+* Outline reporter populaized by turn.
+
+The is also a special Marshal Mode which dumps test results as YAML.
+And the underlying API makes it easy create new reporters.
+
+To get a quick rundown on how to use the new commandline:
+
+  $ turn --help
+
+Enjoy!
+
