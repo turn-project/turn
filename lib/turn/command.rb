@@ -4,20 +4,21 @@
 #   turn [OPTIONS] [RUN MODE] [OUTPUT MODE] [test globs...]
 #
 # OPTIONS
-#   -h --help
-#      --live
-#      --log
-#   -I --loadpath=PATHS
-#   -r --requires=PATHS
+#   -h --help             display this help information
+#      --live             don't use loadpath
+#      --log              log results to a file
+#   -I --loadpath=PATHS   add given paths to the $LOAD_PATH
+#   -r --requires=PATHS   require given paths before running tests
 #
 # RUN MODES
-#      --solo
-#      --cross
+#      --solo        run each test in a separate process
+#      --cross       run each pair of test files in a separate process
 #
 # OUTPUT MODES
-#   -O --outline
-#   -P --progress
-#   -M --marshal
+#   -O --outline     turn's original case/test outline mode [default]
+#   -P --progress    indicates progress with progress bar
+#   -D --dotted      test/unit's traditonal dot-progress mode
+#   -M --marshal     dump output as YAML (normal run mode only)
 
 require 'getoptlong'
 require 'turn/controller'
@@ -41,7 +42,7 @@ opts = GetoptLong.new(
   # OUTPUT MODES
   [ '--outline',  '-O', GetoptLong::NO_ARGUMENT ],
   [ '--progress', '-P', GetoptLong::NO_ARGUMENT ],
-  [ '--nominal',  '-N', GetoptLong::NO_ARGUMENT ],
+  [ '--dotted',   '-D', GetoptLong::NO_ARGUMENT ],
   [ '--marshal',  '-M', GetoptLong::NO_ARGUMENT ]
 )
 
@@ -80,8 +81,8 @@ opts.each do |opt, arg|
     outmode = :progress
   when '--outline'
     outmode = :outline
-  when '--nominal'
-    outmode = :nominal
+  when '--dotted'
+    outmode = :dotted
   end
 end
 
@@ -94,7 +95,7 @@ when :marshal
   reporter = Turn::MarshalReporter.new($stdout)
 when :progress
   reporter = Turn::ProgressReporter.new($stdout)
-when :nominal
+when :dotted
   reporter = Turn::DotReporter.new($stdout)
 else
   reporter = Turn::OutlineReporter.new($stdout)
