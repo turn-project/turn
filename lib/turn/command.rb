@@ -11,6 +11,7 @@
 #   -r --requires=PATHS   require given paths before running tests
 #
 # RUN MODES
+#      --normal      run all tests in a single process [default]
 #      --solo        run each test in a separate process
 #      --cross       run each pair of test files in a separate process
 #
@@ -35,6 +36,7 @@ opts = GetoptLong.new(
   [ '--requires', '-r', GetoptLong::REQUIRED_ARGUMENT ],
 
   # RUN MODES
+  [ '--normal',         GetoptLong::NO_ARGUMENT ],
   [ '--solo',           GetoptLong::NO_ARGUMENT ],
   [ '--cross',          GetoptLong::NO_ARGUMENT ],
   #[ '--load',           GetoptLong::NO_ARGUMENT ],
