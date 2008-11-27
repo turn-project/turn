@@ -1,4 +1,4 @@
-#require 'test/unit'
+require 'test/unit'
 #require 'turn'
 
 class TC_Example < Test::Unit::TestCase
