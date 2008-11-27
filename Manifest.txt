@@ -3,6 +3,7 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
+Release.txt
 VERSION
 bin/turn
 lib/turn.rb
