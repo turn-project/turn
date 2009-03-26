@@ -64,7 +64,7 @@ module Console
         msg << fault.to_s.split("\n")[2..-1].join("\n\t")
       when ::Test::Unit::Failure
         @io.puts " #{FAIL}"
-        msg << fault.location[0] << "\n\t"
+        msg << fault.location[0].to_s << "\n\t"
         msg << fault.message.gsub("\n","\n\t")
       end
 

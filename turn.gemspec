@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{turn}
-  s.version = "0.5.0"
+  s.version = "0.5.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Pease"]
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email = %q{tim.pease@gmail.com}
   s.executables = ["turn"]
   s.extra_rdoc_files = ["History.txt", "README.txt", "Release.txt", "bin/turn"]
-  s.files = [".gitignore", "History.txt", "README.txt", "Rakefile", "Release.txt", "VERSION", "bin/turn", "lib/turn.rb", "lib/turn/colorize.rb", "lib/turn/command.rb", "lib/turn/components/case.rb", "lib/turn/components/method.rb", "lib/turn/components/suite.rb", "lib/turn/controller.rb", "lib/turn/reporter.rb", "lib/turn/reporters/dot_reporter.rb", "lib/turn/reporters/marshal_reporter.rb", "lib/turn/reporters/outline_reporter.rb", "lib/turn/reporters/progress_reporter.rb", "lib/turn/runners/crossrunner.rb", "lib/turn/runners/isorunner.rb", "lib/turn/runners/loadrunner.rb", "lib/turn/runners/solorunner.rb", "lib/turn/runners/testrunner.rb", "test/test_example.rb", "test/test_sample.rb", "work/quicktest.rb", "work/turn.rb"]
+  s.files = [".gitignore", "History.txt", "README.txt", "Rakefile", "Release.txt", "VERSION", "bin/turn", "lib/turn.rb", "lib/turn/colorize.rb", "lib/turn/command.rb", "lib/turn/components/case.rb", "lib/turn/components/method.rb", "lib/turn/components/suite.rb", "lib/turn/controller.rb", "lib/turn/reporter.rb", "lib/turn/reporters/dot_reporter.rb", "lib/turn/reporters/marshal_reporter.rb", "lib/turn/reporters/outline_reporter.rb", "lib/turn/reporters/progress_reporter.rb", "lib/turn/runners/crossrunner.rb", "lib/turn/runners/isorunner.rb", "lib/turn/runners/loadrunner.rb", "lib/turn/runners/solorunner.rb", "lib/turn/runners/testrunner.rb", "test/test_example.rb", "test/test_sample.rb", "turn.gemspec", "work/quicktest.rb", "work/turn.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://codeforpeople.rubyforge.org/turn}
   s.rdoc_options = ["--main", "README.txt"]
