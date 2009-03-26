@@ -3,7 +3,11 @@ begin
   require 'bones'
   Bones.setup
 rescue LoadError
-  load 'tasks/setup.rb'
+  begin
+    load 'tasks/setup.rb'
+  rescue LoadError
+    raise RuntimeError, '### please install the "bones" gem ###'
+  end
 end
 
 task :default => 'test'
@@ -13,7 +17,7 @@ PROJ.summary = 'Test::Unit Reporter (New) -- new output format for Test::Unit'
 PROJ.authors = 'Tim Pease'
 PROJ.email = 'tim.pease@gmail.com'
 PROJ.url = 'http://codeforpeople.rubyforge.org/turn'
-PROJ.version = '0.4.0'
+PROJ.version = '0.5.0'
 
 PROJ.rubyforge.name = 'codeforpeople'
 
