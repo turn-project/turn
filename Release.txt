@@ -1,6 +1,14 @@
-= Turn 0.5
+= Turn 0.6
 
-Turn has turned 0.5 with some signifficant new features.
+Turn 0.6 is now compatible with Test/Unit 2.0. 
+
+A instance variable name change made between 1.x and 2.0 series
+of test/unit prevent the Turn modified Testrunner from working
+correctly.
+
+Other than that this release is the same as the 0.5.1 release.
+
+As of 0.5, Turn has some signifficant new features:
 
 While Turn still provides the exact same functionality for running
 tests via ruby or testrb as previous versions. The turn commandline 

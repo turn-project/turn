@@ -44,6 +44,9 @@ If you have the 'facets' gem installed, then TURN output will be displayed in
 wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
 
+Note that the 'facets' gem is also required if you wish to use the
+progressbar output mode.
+
 === Command Line
 
 You can use the *turn* executable in place of the *ruby* interpreter.
@@ -84,7 +87,7 @@ scipt. Now your Rails tests will use TURN formatting.
 
 == REQUIREMENTS:
 
-* facets 2.0+
+* facets 2.0+ (for colorized output and progressbar output mode)
 
 == INSTALL:
 
