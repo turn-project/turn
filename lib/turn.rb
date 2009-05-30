@@ -7,6 +7,11 @@ module Console
   class TestRunner
     include Turn::Colorize
 
+    # 1.x of test/unut used @io, where as 2.x uses @output.
+    def turn_out
+      @turn_out ||= (@io || @output)
+    end
+
     alias :t_attach_to_mediator :attach_to_mediator
     def attach_to_mediator
       @mediator.add_listener(TestRunnerMediator::STARTED, &method(:t_started))
@@ -14,7 +19,7 @@ module Console
       @mediator.add_listener(TestCase::STARTED, &method(:t_test_started))
       @mediator.add_listener(TestCase::FINISHED, &method(:t_test_finished))
       @mediator.add_listener(TestResult::FAULT, &method(:t_fault))
-      @io.sync = true
+      turn_out.sync = true
       @t_cur_file, @t_fault = nil
     end
 
@@ -34,23 +39,23 @@ module Console
               else ::ANSICode.red bar end
       end
 
-      @io.puts bar
-      @io.puts "  pass: %d,  fail: %d,  error: %d" % [pass, failure, error]
-      @io.puts "  total: %d tests with %d assertions in #{elapsed_time} seconds" % [total, @t_result.assertion_count]
-      @io.puts bar
+      turn_out.puts bar
+      turn_out.puts "  pass: %d,  fail: %d,  error: %d" % [pass, failure, error]
+      turn_out.puts "  total: %d tests with %d assertions in #{elapsed_time} seconds" % [total, @t_result.assertion_count]
+      turn_out.puts bar
     end
 
     def t_test_started( name )
       method, file = name.scan(%r/^([^\(]+)\(([^\)]+)\)/o).flatten!
       if @t_cur_file != file
         @t_cur_file = file
-        @io.puts file
+        turn_out.puts file
       end
-      @io.print "    %-69s" % method
+      turn_out.print "    %-69s" % method
     end
 
     def t_test_finished( name )
-      @io.puts " #{PASS}" unless @t_fault
+      turn_out.puts " #{PASS}" unless @t_fault
       @t_fault = false
     end
 
@@ -60,16 +65,16 @@ module Console
 
       case fault
       when ::Test::Unit::Error
-        @io.puts ERROR
+        turn_out.puts ERROR
         msg << fault.to_s.split("\n")[2..-1].join("\n\t")
       when ::Test::Unit::Failure
-        @io.puts " #{FAIL}"
+        turn_out.puts " #{FAIL}"
         msg << fault.location[0].to_s << "\n\t"
         msg << fault.message.gsub("\n","\n\t")
       end
 
       msg = ::ANSICode.magenta msg if COLORIZE
-      @io.puts msg
+      turn_out.puts msg
     end
 
   end
