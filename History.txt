@@ -1,3 +1,6 @@
+== 0.6.1 / 2009-08-26
+  * Switched ANSI color support to ANSI project.
+
 == 0.6.0 / 2009-05-30
   * Testrunner @io renamed to @output for test/unit 2.
 

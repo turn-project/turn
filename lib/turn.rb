@@ -35,8 +35,8 @@ module Console
 
       bar = '=' * 78
       if COLORIZE
-        bar = if pass == total then ::ANSICode.green bar
-              else ::ANSICode.red bar end
+        bar = if pass == total then ::ANSI::Code.green bar
+              else ::ANSI::Code.red bar end
       end
 
       turn_out.puts bar
@@ -73,7 +73,7 @@ module Console
         msg << fault.message.gsub("\n","\n\t")
       end
 
-      msg = ::ANSICode.magenta msg if COLORIZE
+      msg = ::ANSI::Code.magenta msg if COLORIZE
       turn_out.puts msg
     end
 

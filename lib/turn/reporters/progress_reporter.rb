@@ -53,7 +53,7 @@ module Turn
       suite.each do |testrun|
         if testrun.files != [testrun.name] && testrun.files != files
           label = testrun.files.join(' ')
-          label = ::ANSICode.magenta(label) if COLORIZE
+          label = ::ANSI::Code.magenta(label) if COLORIZE
           io.puts(label + "\n")
           files = testrun.files
         end
@@ -77,7 +77,7 @@ module Turn
           io.puts "\n\n-- Failures and Errors --\n\n"
           fails.uniq.each do |testrun|
             message = testrun.message.tabto(0).strip
-            message = ::ANSICode.red(message) if COLORIZE
+            message = ::ANSI::Code.red(message) if COLORIZE
             io.puts(message+"\n\n")
           end
           io.puts
