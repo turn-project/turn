@@ -1,4 +1,15 @@
-= Turn 0.6
+= Turn 0.6.1
+
+The facets/ansicode.rb library has been spun off as a separate
+project called 'ansi'. So this version swaps out its optional
+color support for the new project as well. You can install it via:
+
+  gem install ansi
+
+You might want to take at the library, it has a few other
+interesting ANSI-related classes as well.
+
+== As of 0.6.0
 
 Turn 0.6 is now compatible with Test/Unit 2.0. 
 
@@ -8,7 +19,9 @@ correctly.
 
 Other than that this release is the same as the 0.5.1 release.
 
-As of 0.5, Turn has some signifficant new features:
+== As of 0.5.0
+
+As of 0.5.0, Turn has some signifficant new features:
 
 While Turn still provides the exact same functionality for running
 tests via ruby or testrb as previous versions. The turn commandline 
