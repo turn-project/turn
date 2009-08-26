@@ -17,7 +17,7 @@ PROJ.summary = 'Test::Unit Reporter (New) -- new output format for Test::Unit'
 PROJ.authors = 'Tim Pease'
 PROJ.email = 'tim.pease@gmail.com'
 PROJ.url = 'http://codeforpeople.rubyforge.org/turn'
-PROJ.version = '0.5.1'
+PROJ.version = '0.6.0'
 PROJ.ignore_file = '.gitignore'
 
 PROJ.rubyforge.name = 'codeforpeople'
