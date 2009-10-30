@@ -78,6 +78,22 @@ module Console
       turn_out.puts msg
     end
 
+    private
+    def setup_mediator
+       @mediator = create_mediator(@suite)
+       suite_name = @suite.to_s
+       if ( @suite.kind_of?(Module) )
+         suite_name = @suite.name
+       end
+       msg = rails? ? "\n" : "Loaded suite #{suite_name}" #always same in rails so scrap it
+       output(msg) 
+    end
+
+    def rails?
+      $:.to_s.include? "rails"
+    end
+
+
   end
 end
 end
