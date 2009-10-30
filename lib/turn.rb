@@ -49,7 +49,8 @@ module Console
       method, file = name.scan(%r/^([^\(]+)\(([^\)]+)\)/o).flatten!
       if @t_cur_file != file
         @t_cur_file = file
-        turn_out.puts file
+        file = COLORIZE ? ::ANSICode.yellow(file) : file	
+	turn_out.puts file
       end
       turn_out.print "    %-69s" % method
     end
