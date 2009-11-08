@@ -49,8 +49,8 @@ module Console
       method, file = name.scan(%r/^([^\(]+)\(([^\)]+)\)/o).flatten!
       if @t_cur_file != file
         @t_cur_file = file
-        file = COLORIZE ? ::ANSICode.yellow(file) : file	
-	turn_out.puts file
+        file = COLORIZE ? ::ANSICode.yellow(file) : file
+        turn_out.puts file
       end
       turn_out.print "    %-69s" % method
     end
@@ -86,7 +86,7 @@ module Console
          suite_name = @suite.name
        end
        msg = rails? ? "\n" : "Loaded suite #{suite_name}" #always same in rails so scrap it
-       output(msg) 
+       output(msg)
     end
 
     def rails?
