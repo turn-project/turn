@@ -15,7 +15,9 @@ Bones {
   url          'http://gemcutter.org/gems/turn'
   version      File.read('.meta/version').strip
   ignore_file  '.gitignore'
-  rdoc.exclude << '^lib/'
+
+  exclude      << '^work'
+  rdoc.exclude << '^lib'
 
   use_gmail
   enable_sudo
