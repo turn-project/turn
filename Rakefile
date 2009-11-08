@@ -13,7 +13,7 @@ Bones {
   authors      'Tim Pease'
   email        'tim.pease@gmail.com'
   url          'http://gemcutter.org/gems/turn'
-  version      '0.6.0'
+  version      File.read('.meta/version')
   ignore_file  '.gitignore'
   rdoc.exclude << '^lib/'
 
