@@ -1,3 +1,7 @@
+== 0.6.2 / 2009-10-07
+  * Detecting rails environment and adjusting output accordingly
+  * Colorizing the filename
+
 == 0.6.1 / 2009-08-26
   * Switched ANSI color support to ANSI project.
 
