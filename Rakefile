@@ -1,32 +1,26 @@
 
 begin
   require 'bones'
-  Bones.setup
 rescue LoadError
-  begin
-    load 'tasks/setup.rb'
-  rescue LoadError
-    raise RuntimeError, '### please install the "bones" gem ###'
-  end
+  abort '### please install the "bones" gem ###'
 end
 
 task :default => 'test'
 
-PROJ.name = 'turn'
-PROJ.summary = 'Test::Unit Reporter (New) -- new output format for Test::Unit'
-PROJ.authors = 'Tim Pease'
-PROJ.email = 'tim.pease@gmail.com'
-PROJ.url = 'http://codeforpeople.rubyforge.org/turn'
-PROJ.version = '0.6.0'
-PROJ.ignore_file = '.gitignore'
+Bones {
+  name         'turn'
+  summary      'Test::Unit Reporter (New) -- new output format for Test::Unit'
+  authors      'Tim Pease'
+  email        'tim.pease@gmail.com'
+  url          'http://gemcutter.org/gems/turn'
+  version      '0.6.0'
+  ignore_file  '.gitignore'
+  rdoc.exclude << '^lib/'
 
-PROJ.rubyforge.name = 'codeforpeople'
+  use_gmail
+  enable_sudo
 
-PROJ.rdoc.exclude << '^lib/'
-PROJ.rdoc.remote_dir = PROJ.name
-
-PROJ.ann.email[:server] = 'smtp.gmail.com'
-PROJ.ann.email[:port] = 587
-PROJ.ann.email[:from] = 'Tim Pease'
+  depend_on 'bones-git', :development => true
+}
 
 # EOF
