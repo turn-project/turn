@@ -33,7 +33,7 @@ module Turn
     def pass(message=nil)
       io.puts " #{PASS}"
       if message
-        message = ::ANSICode.magenta(message) if COLORIZE
+        message = ::ANSI::Code.magenta(message) if COLORIZE
         message = message.to_s.tabto(8)
         io.puts(message)
       end
@@ -42,7 +42,7 @@ module Turn
     def fail(message=nil)
       io.puts(" #{FAIL}")
       if message
-        message = ::ANSICode.magenta(message) if COLORIZE
+        message = ::ANSI::Code.magenta(message) if COLORIZE
         message = message.to_s.tabto(8)
         io.puts(message)
       end
@@ -67,8 +67,8 @@ module Turn
 
       bar = '=' * 78
       if COLORIZE
-        bar = if pass == total then ::ANSICode.green bar
-              else ::ANSICode.red bar end
+        bar = if pass == total then ::ANSI::Code.green bar
+              else ::ANSI::Code.red bar end
       end
 
       tally = [total, suite.count_assertions]

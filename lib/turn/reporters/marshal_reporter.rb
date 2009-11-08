@@ -30,7 +30,7 @@ module Turn
     #def pass(message=nil)
     #  io.puts " #{PASS}"
     #  if message
-    #    message = ::ANSICode.magenta(message) if COLORIZE
+    #    message = ::ANSI::Code.magenta(message) if COLORIZE
     #    io.puts(message.to_s)
     #  end
     #end
@@ -38,7 +38,7 @@ module Turn
     #def fail(message=nil)
     #  io.puts(" #{FAIL}")
     #  if message
-    #    message = ::ANSICode.magenta(message) if COLORIZE
+    #    message = ::ANSI::Code.magenta(message) if COLORIZE
     #    io.puts(message.to_s)
     #  end
     #end

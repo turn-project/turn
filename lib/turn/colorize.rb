@@ -1,23 +1,23 @@
 begin
-  require 'facets/ansicode'
+  require 'ansi/code'
 rescue LoadError
   begin
     require 'rubygems'
-    require 'facets/ansicode'
+    require 'ansi/code'
   rescue LoadError
   end
 end
 
 module Turn
-  
+
   module Colorize
 
-    COLORIZE = defined?(::ANSICode) && ENV.has_key?('TERM')
+    COLORIZE = defined?(::ANSI::Code) && ENV.has_key?('TERM')
 
     if COLORIZE
-      PASS  = ::ANSICode.green('PASS')
-      FAIL  = ::ANSICode.red('FAIL')
-      ERROR = ::ANSICode.white(::ANSICode.on_red('ERROR'))
+      PASS  = ::ANSI::Code.green('PASS')
+      FAIL  = ::ANSI::Code.red('FAIL')
+      ERROR = ::ANSI::Code.white(::ANSI::Code.on_red('ERROR'))
     else
       PASS  = "PASS"
       FAIL  = "FAIL"
