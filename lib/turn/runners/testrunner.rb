@@ -34,6 +34,11 @@ module Turn
       suite = Test::Unit::TestSuite.new('')  # FIXME: Name?
       sub_suites.sort_by{|s|s.name}.each{|s| suite << s}
 
+      suite.tests.each do |c|
+        pattern = controller.pattern
+        c.tests.reject! { |t| pattern !~ t.method_name }
+      end
+
       @t_reporter = controller.reporter
 
       super(suite, output_level, $stdout)

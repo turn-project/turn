@@ -7,6 +7,7 @@
 #   -h --help             display this help information
 #      --live             don't use loadpath
 #      --log              log results to a file
+#   -n --name=PATTERN     only run tests that match regexp PATTERN
 #   -I --loadpath=PATHS   add given paths to the $LOAD_PATH
 #   -r --requires=PATHS   require given paths before running tests
 #
@@ -32,6 +33,7 @@ opts = GetoptLong.new(
   [ '--help', '-h',     GetoptLong::NO_ARGUMENT ],
   [ '--live',           GetoptLong::NO_ARGUMENT ],
   [ '--log',            GetoptLong::OPTIONAL_ARGUMENT ],
+  [ '--name',     '-n', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--loadpath', '-I', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--requires', '-r', GetoptLong::REQUIRED_ARGUMENT ],
 
@@ -50,6 +52,7 @@ opts = GetoptLong.new(
 
 live     = nil
 log      = nil
+pattern  = nil
 loadpath = []
 requires = []
 
@@ -67,6 +70,8 @@ opts.each do |opt, arg|
     live = true
   when '--log'
     log = true
+  when '--name'
+    pattern = Regexp.new(arg, Regexp::IGNORECASE)
   when '--loadpath'
     loadpath << arg
   when '--requires'
@@ -126,6 +131,7 @@ controller = Turn::Controller.new do |c|
   c.tests    = tests
   c.runner   = runner
   c.reporter = reporter
+  c.pattern  = pattern
 end
 
 controller.start

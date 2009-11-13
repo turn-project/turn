@@ -28,6 +28,10 @@ module Turn
     # Files globs to specially exclude.
     attr_accessor :exclude
 
+    # Regexp pattern that all test name's must
+    # match to be eligible to run.
+    attr_accessor :pattern
+
     # Add these folders to the $LOAD_PATH.
     attr_accessor :loadpath
 
@@ -69,6 +73,7 @@ module Turn
       @log      ||= true
       @reporter ||= OutlineReporter.new($stdout)
       @runner   ||= TestRunner.new
+      @pattern  ||= /.*/
     end
 
     # Collect test configuation.
