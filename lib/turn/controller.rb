@@ -68,7 +68,7 @@ module Turn
       @loadpath ||= ['lib']
       @tests    ||= "test/**/{test,}*{,test}"
       @exclude  ||= []
-      @reqiures ||= []
+      @requires ||= []
       @live     ||= false
       @log      ||= true
       @reporter ||= OutlineReporter.new($stdout)
@@ -114,8 +114,8 @@ module Turn
       @exclude = list_option(paths)
     end
 
-    def requries=(paths)
-      @requries = list_option(paths)
+    def requires=(paths)
+      @requires = list_option(paths)
     end
 
     def files
