@@ -1,3 +1,9 @@
+== 0.7.0 / 2009-10-13
+  * Fix typo and potential bug.
+  * Running ruby with /usr/bin/env for portability
+  * Adding --name=PATTERN for test name filtering
+  * ANSI class is all caps
+
 == 0.6.3 / 2009-10-12
   * Fixing require statements
 
