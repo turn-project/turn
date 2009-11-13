@@ -8,7 +8,7 @@ module Turn
   class ProgressReporter < Reporter
 
     def start_suite(suite)
-      @pbar = ::Ansi::Progressbar.new('Testing', suite.size)
+      @pbar = ::ANSI::Progressbar.new('Testing', suite.size)
       @pbar.inc
     end
 
