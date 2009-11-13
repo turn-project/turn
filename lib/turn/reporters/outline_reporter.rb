@@ -13,6 +13,8 @@ module Turn
     def start_suite(suite)
       @suite = suite
       @time  = Time.now
+      @stdout = StringIO.new
+      @stderr = StringIO.new
       #files = suite.collect{ |s| s.file }.join(' ')
       io.puts "Loaded suite #{suite.name}"
       #io.puts "Started"
@@ -28,6 +30,10 @@ module Turn
       #  io.puts(test.file)
       #end
       io.print "    %-69s" % test.name
+      $stdout = @stdout
+      $stderr = @stderr
+      $stdout.rewind
+      $stderr.rewind
     end
 
     def pass(message=nil)
@@ -46,6 +52,7 @@ module Turn
         message = message.to_s.tabto(8)
         io.puts(message)
       end
+      show_captured_output
     end
 
     def error(message=nil)
@@ -54,6 +61,31 @@ module Turn
     end
 
     def finish_test(test)
+      $stdout = STDOUT
+      $stderr = STDERR
+    end
+
+    def show_captured_output
+      show_captured_stdout
+      show_captured_stderr
+    end
+
+    def show_captured_stdout
+      @stdout.rewind
+      return if @stdout.eof?
+      STDOUT.puts(<<-output.tabto(8))
+\nSTDOUT:
+#{@stdout.read}
+      output
+    end
+
+    def show_captured_stderr
+      @stderr.rewind
+      return if @stderr.eof?
+      STDOUT.puts(<<-output.tabto(8))
+\nSTDERR:
+#{@stderr.read}
+      output
     end
 
     #def finish_case(kase)
