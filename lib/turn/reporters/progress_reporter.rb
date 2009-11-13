@@ -1,5 +1,5 @@
 require 'turn/reporter'
-require 'facets/progressbar'
+require 'ansi/progressbar'
 require 'facets/string/tab'
 
 module Turn
@@ -8,7 +8,7 @@ module Turn
   class ProgressReporter < Reporter
 
     def start_suite(suite)
-      @pbar = ::ProgressBar.new('Testing', suite.size)
+      @pbar = ::Ansi::Progressbar.new('Testing', suite.size)
       @pbar.inc
     end
 

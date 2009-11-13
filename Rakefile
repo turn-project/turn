@@ -23,6 +23,8 @@ Bones {
   use_gmail
   enable_sudo
 
+  depend_on 'ansi'
+  depend_on 'facets'
   depend_on 'bones-git', :development => true
 }
 
