@@ -1,6 +1,13 @@
 require 'turn/reporter'
 require 'ansi/progressbar'
-require 'facets/string/tab'
+
+class String
+  # Used to indent strings.
+  # (method borrowed from Ruby Facets).
+  def tab(n)
+    gsub(/^ */, ' ' * n)
+  end
+end
 
 module Turn
 
