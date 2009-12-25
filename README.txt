@@ -10,7 +10,7 @@ all the tests finish before you can see what the exact failure was. TURN
 displays each test on a separate line with failures being displayed
 immediately instead of at the end of the tests.
   
-If you have the 'facets' gem installed, then TURN output will be displayed in
+If you have the 'ansi' gem installed, then TURN output will be displayed in
 wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
 
@@ -40,12 +40,8 @@ application.
 
 == SYNOPSIS:
 
-If you have the 'facets' gem installed, then TURN output will be displayed in
-wonderful technicolor (but only if your terminal supports ANSI color codes).
-Well, the only colors are green and red, but that is still color.
-
-Note that the 'facets' gem is also required if you wish to use the
-progressbar output mode.
+Turn can be using from the command-line or via require. The command-line tool
+offers additional options for how one runs tests.
 
 === Command Line
 
@@ -87,7 +83,7 @@ scipt. Now your Rails tests will use TURN formatting.
 
 == REQUIREMENTS:
 
-* facets 2.0+ (for colorized output and progressbar output mode)
+* ansi 1.1+ (for colorized output and progressbar output mode)
 
 == INSTALL:
 
