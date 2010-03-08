@@ -134,7 +134,7 @@ controller = Turn::Controller.new do |c|
   c.pattern  = pattern
 end
 
-controller.start
+exit controller.start.passed?
 
 =begin
 else
