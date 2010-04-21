@@ -24,6 +24,7 @@ module Turn
       @loadpath = controller.loadpath
       @requires = controller.requires
       @live     = controller.live?
+      @minitest = controller.framework == :minitest
     end
 
   public
@@ -59,6 +60,7 @@ module Turn
         cmd << %[--loadpath="#{@loadpath.join(';')}"] unless @loadpath.empty?
         cmd << %[--requires="#{@requires.join(';')}"] unless @requires.empty?
         cmd << %[--live] if @live
+        cmd << %[--minitest] if @minitest
         cmd << %[#{kase.files.join(' ')}]
         cmd = cmd.join(' ')
         result = `#{cmd}`
@@ -95,8 +97,14 @@ module Turn
 
       reporter.finish_suite(suite)
 
-      # shutdown test/unit auto runner if test/unit is loaded.
-      ::Test::Unit.run=true rescue nil
+      # shutdown auto runner
+      if @minitest
+
+      else
+        ::Test::Unit.run=true rescue nil
+      end
+
+      suite
     end
 
     #

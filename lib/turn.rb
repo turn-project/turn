@@ -1,6 +1,4 @@
-if defined?(MiniTest)
-  require 'turn/autorun/miniunit'
-else
-  require 'turn/autorun/testunit'
-end
+autoload(:Test,     'turn/autorun/testunit')
+autoload(:MiniTest, 'turn/autorun/minitest')
+
 

@@ -92,16 +92,16 @@ module Turn
     def t_fault(fault)
       case fault
       when ::Test::Unit::Error
-        msg = ""
-        msg << fault.to_s.split("\n")[2..-1].join("\n")
-        @t_test.error!(msg)
-        @t_reporter.error(msg)
+        #msg = ""
+        #msg << fault.to_s.split("\n")[2..-1].join("\n")
+        @t_test.error!(fault)
+        @t_reporter.error(fault)
       when ::Test::Unit::Failure
-        msg = ""
-        msg << fault.location[0] << "\n"
-        msg << fault.message #.gsub("\n","\n")
-        @t_test.fail!(msg)
-        @t_reporter.fail(msg)
+        #msg = ""
+        #msg << fault.location[0] << "\n"
+        #msg << fault.message #.gsub("\n","\n")
+        @t_test.fail!(fault)
+        @t_reporter.fail(fault)
       end
     end
 

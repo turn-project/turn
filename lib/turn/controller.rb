@@ -10,7 +10,6 @@ module Turn
   require 'turn/reporters/progress_reporter'
   require 'turn/reporters/dot_reporter'
 
-  require 'turn/runners/testrunner'
   require 'turn/runners/solorunner'
   require 'turn/runners/crossrunner'
 
@@ -53,6 +52,9 @@ module Turn
     # Verbose output?
     attr_accessor :verbose
 
+    # Test framework, either :minitest or :testunit
+    attr_accessor :framework
+
     def verbose? ; @verbose ; end
     def live?    ; @live    ; end
 
@@ -72,7 +74,7 @@ module Turn
       @live     ||= false
       @log      ||= true
       @reporter ||= OutlineReporter.new($stdout)
-      @runner   ||= TestRunner.new
+      @runner   ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
       @pattern  ||= /.*/
     end
 

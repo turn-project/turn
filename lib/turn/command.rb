@@ -121,7 +121,7 @@ module Turn
         end
 
         opts.on('--cross', "run each pair of test files in a separate process") do
-          @crossmode = :solo
+          @runmode = :cross
         end
 
         #opts.on('--load', "") do
@@ -198,13 +198,17 @@ module Turn
 
     # Select runner based on run mode.
     def runner
+      if framework == :minitest
+        require 'turn/runners/minirunner'
+      else
+        require 'turn/runners/testrunner'
+      end
+
       case runmode
       when :marshal
         if framework == :minitest
-          require 'turn/runners/minirunner'
           Turn::MiniRunner
         else
-          require 'turn/runners/testrunner'
           Turn::TestRunner
         end
       when :solo
@@ -215,10 +219,8 @@ module Turn
         Turn::CrossRunner
       else
         if framework == :minitest
-          require 'turn/runners/minirunner'
           Turn::MiniRunner
         else
-          require 'turn/runners/testrunner'
           Turn::TestRunner
         end
       end

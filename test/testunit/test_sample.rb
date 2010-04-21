@@ -1,6 +1,3 @@
-require 'test/unit'
-require 'turn'
-
 class TC_Sample < Test::Unit::TestCase
 
   def test_sample_pass
