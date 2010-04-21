@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-
-load 'turn/command.rb'
+require 'turn/command'
+Turn::Command.main(*ARGV)
 
