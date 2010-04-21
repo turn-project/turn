@@ -45,19 +45,23 @@ module Turn
       end
     end
 
-    def fail(message=nil)
+    def fail(assertion)
       io.puts(" #{FAIL}")
-      if message
+      #message = assertion.location[0] + "\n" + assertion.message #.gsub("\n","\n")
+      message = assertion.to_s
+      #if message
         message = ::ANSI::Code.magenta(message) if COLORIZE
         message = message.to_s.tabto(8)
         io.puts(message)
-      end
+      #end
       show_captured_output
     end
 
-    def error(message=nil)
+    def error(exception)
+      #message = exception.to_s.split("\n")[2..-1].join("\n")
+      message = exception.to_s
       io.puts("#{ERROR}")
-      io.puts(message.to_s) if message
+      io.puts(message) #if message
     end
 
     def finish_test(test)

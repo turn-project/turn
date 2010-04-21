@@ -24,31 +24,31 @@ module Turn
 
     # These methods are called in the process of running the tests.
 
-    def start_suite(suite)
+    def start_suite(test_suite)
     end
 
-    def start_case(kase)
+    def start_case(test_case)
     end
 
     def start_test(test)
     end
 
-    def pass(message=nil)
+    def pass()
     end
 
-    def fail(message=nil)
+    def fail(assertion)
     end
 
-    def error(message=nil)
+    def error(exception)
     end
 
     def finish_test(test)
     end
 
-    def finish_case(kase)
+    def finish_case(test_case)
     end
 
-    def finish_suite(suite)
+    def finish_suite(test_suite)
     end
 
   end

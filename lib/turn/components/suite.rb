@@ -76,6 +76,9 @@ module Turn
       @size ||= @cases.size
     end
 
+    def passed?
+      (count_failures == 0 && count_errors == 0)
+    end
   end
 
 end

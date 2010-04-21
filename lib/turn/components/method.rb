@@ -4,23 +4,27 @@ module Turn
   class TestMethod
     attr_accessor :name
     attr_accessor :file
+    attr_accessor :raised
     attr_accessor :message
 
     def initialize(name)
       @name    = name
       @fail    = false
       @error   = false
+      @raised  = nil
       @message = nil
     end
 
-    def fail!(message=nil)
+    def fail!(assertion)
       @fail, @error = true, false
-      @message = message if message
+      @rasied  = assertion
+      @message = assertion.message
     end
 
-    def error!(message=nil)
+    def error!(exception)
       @fail, @error = false, true
-      @message = message if message
+      @rasied  = exception
+      @message = exception.message
     end
 
     def fail?  ; @fail  ; end

@@ -50,7 +50,7 @@ module Turn
         #report << "\n\n-- Failures and Errors --\n\n"
         fails.uniq.each do |testrun|
           message = testrun.message.tabto(0)
-          message = ::ANSICode.magenta(message) if COLORIZE
+          message = ::ANSI::Code.magenta(message) if COLORIZE
           report << message << "\n"
         end
         report << "\n"
