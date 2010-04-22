@@ -27,6 +27,7 @@ module Turn
   #   -P --progress    indicates progress with progress bar
   #   -D --dotted      test/unit's traditonal dot-progress mode
   #   -M --marshal     dump output as YAML (normal run mode only)
+  #   -Q --queued      interactive testing
   #
   class Command
 
@@ -34,7 +35,6 @@ module Turn
     def self.main(*argv)
       new.main(*argv)
     end
-
 
     # Log output.
     attr :log
@@ -142,6 +142,10 @@ module Turn
           @outmode = :dotted
         end
 
+        opts.on('--cue', '-C', "cue for action on each failure/error") do
+          @outmode = :cue
+        end
+
         opts.on('--marshal', '-M', "dump output as YAML (normal run mode only)") do
           @runmode = :marshal
           @outmode = :marshal
@@ -191,6 +195,8 @@ module Turn
         Turn::ProgressReporter.new($stdout)
       when :dotted
         Turn::DotReporter.new($stdout)
+      when :cue
+        Turn::CueReporter.new($stdout)
       else
         Turn::OutlineReporter.new($stdout)
       end
