@@ -33,13 +33,13 @@ module Turn
     def start_test(test)
     end
 
-    def pass()
+    def pass(message=nil)
     end
 
-    def fail(assertion)
+    def fail(assertion, message=nil)
     end
 
-    def error(exception)
+    def error(exception, message=nil)
     end
 
     def finish_test(test)
