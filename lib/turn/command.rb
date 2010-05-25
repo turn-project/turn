@@ -76,7 +76,7 @@ module Turn
     def option_parser
       OptionParser.new do |opts|
 
-        opts.banner = "  # Turn - Pretty Unit Test Runner for Ruby"
+        opts.banner = "Turn - Pretty Unit Test Runner for Ruby"
 
         opts.separator " "
         opts.separator "SYNOPSIS"
@@ -138,7 +138,7 @@ module Turn
           @outmode = :progress
         end
 
-        opts.on('--dotted', '-D', "test/unit's traditonal dot-progress mode") do
+        opts.on('--dotted', '-D', "test-unit's traditonal dot-progress mode") do
           @outmode = :dotted
         end
 
