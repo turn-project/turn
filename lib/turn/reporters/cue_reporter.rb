@@ -27,7 +27,7 @@ module Turn
       #  @file = test.file
       #  io.puts(test.file)
       #end
-      io.print ::ANSI::Code.blue("    %-69s" % test.name)
+      io.print Colorize.blue("    %-69s" % test.name)
       $stdout = @stdout
       $stderr = @stderr
       $stdout.rewind
@@ -37,7 +37,7 @@ module Turn
     def pass(message=nil)
       io.puts " #{PASS}"
       if message
-        message = ::ANSI::Code.green(message) if COLORIZE
+        message = Colorize.green(message)
         message = message.to_s.tabto(8)
         io.puts(message)
       end
@@ -48,7 +48,7 @@ module Turn
       #message = assertion.location[0] + "\n" + assertion.message #.gsub("\n","\n")
       message = message || assertion.to_s
       #if message
-        message = ::ANSI::Code.red(message) if COLORIZE
+        message = Colorize.red(message)
         message = message.to_s.tabto(8)
         io.puts(message)
       #end
@@ -106,8 +106,8 @@ module Turn
 
       bar = '=' * 78
       if COLORIZE
-        bar = if pass == total then ::ANSI::Code.green bar
-              else ::ANSI::Code.red bar end
+        bar = if pass == total then Colorize.green(bar)
+              else Colorize.red(bar) end
       end
 
       tally = [total, suite.count_assertions]
