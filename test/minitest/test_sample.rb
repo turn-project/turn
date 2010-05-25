@@ -1,3 +1,6 @@
+require 'turn' unless defined? Turn
+if Turn.minitest?
+
 class TC_Sample < MiniTest::Unit::TestCase
 
   def test_sample_pass
@@ -12,3 +15,4 @@ class TC_Sample < MiniTest::Unit::TestCase
 
 end
 
+end

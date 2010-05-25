@@ -21,7 +21,6 @@ Bones {
   rdoc.exclude << '^lib'
 
   use_gmail
-  enable_sudo
 
   depend_on 'ansi'
   depend_on 'bones-git', :development => true

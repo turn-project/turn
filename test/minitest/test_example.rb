@@ -1,5 +1,5 @@
-#require 'test/unit'
-#require 'turn'
+require 'turn' unless defined? Turn
+if Turn.minitest?
 
 class TC_Example < MiniTest::Unit::TestCase
 
@@ -13,3 +13,4 @@ class TC_Example < MiniTest::Unit::TestCase
 
 end
 
+end
