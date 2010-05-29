@@ -1,4 +1,4 @@
-class TC_Example < Test::Unit::TestCase
+class TestFailure < Test::Unit::TestCase
 
   def test_example_pass
     assert_equal(4,4)

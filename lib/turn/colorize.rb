@@ -15,9 +15,6 @@ module Turn
     COLORIZE = defined?(::ANSI::Code) && ENV.has_key?('TERM')
 
     if COLORIZE
-      PASS  = ::ANSI::Code.green{ 'PASS' }
-      FAIL  = ::ANSI::Code.red{ 'FAIL' }
-      ERROR = ::ANSI::Code.white{ ::ANSI::Code.on_red{ 'ERROR' } }
     else
       PASS  = "PASS"
       FAIL  = "FAIL"
@@ -40,6 +37,23 @@ module Turn
       COLORIZE ? ::ANSI::Code.magenta{ string } : string
     end
 
+    def self.pass(string)
+      COLORIZE ? ::ANSI::Code.green{ string } : string
+    end
+
+    def self.fail(string)
+      COLORIZE ? ::ANSI::Code.red{ string } : string
+    end
+
+    def self.error(string)
+      COLORIZE ? ::ANSI::Code.white{ ::ANSI::Code.on_red{ string } } : string
+    end
+
+    PASS  = pass('PASS')
+    FAIL  = fail('FAIL')
+    ERROR = error('ERROR')
+
   end
 
 end
+

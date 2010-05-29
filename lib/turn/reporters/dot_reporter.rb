@@ -19,15 +19,15 @@ module Turn
     end
 
     def pass(message=nil)
-      io.print '.'; io.flush
+      io.print Colorize.pass('.'); io.flush
     end
 
     def fail(message=nil)
-      io.print 'F'; io.flush
+      io.print Colorize.fail('F'); io.flush
     end
 
     def error(message=nil)
-      io.print 'E'; io.flush
+      io.print Colorize.error('E'); io.flush
     end
 
     def finish_test(test)
@@ -58,7 +58,17 @@ module Turn
 
       io.puts report
 
-      io.puts "%s tests, %s assetions, %s failures, %s errors" % test_tally(suite)
+      count = test_tally(suite)
+
+      tally = "%s tests, %s assetions, %s failures, %s errors" % count
+ 
+      if count[-1] > 0 or count[-2] > 0
+        tally = Colorize.red(tally)
+      else
+        tally = Colorize.green(tally)
+      end
+
+      io.puts tally
     end
 
   private
