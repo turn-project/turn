@@ -1,5 +1,7 @@
 require 'minitest/unit'
 
+Test = MiniTest
+
 module Turn
 
   # = MiniTest TestRunner

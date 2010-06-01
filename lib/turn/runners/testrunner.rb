@@ -12,9 +12,6 @@ module Turn
 
   # = TestUnit TestRunner
   #
-  #--
-  # TODO: Add minitest runner.
-  #++
   class TestRunner < ::Test::Unit::UI::Console::TestRunner
 
     def initialize(controller)
