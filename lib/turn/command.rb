@@ -101,6 +101,11 @@ module Turn
           @framework = :minitest
         end
 
+        # Turn does not support Test::Unit 2.0+
+        #opts.on('-u', '--testunit', "Force use of TestUnit framework") do
+        #  @framework = :testunit
+        #end
+
         opts.on('--log', "log results to a file") do #|path|
           @log = true # TODO: support path/file
         end
@@ -175,60 +180,18 @@ module Turn
         c.loadpath  = loadpath
         c.requires  = requires
         c.tests     = tests
-        c.runner    = runner
-        c.reporter  = reporter
+        c.runmode   = runmode
+        c.format    = outmode
         c.pattern   = pattern
         c.framework = framework
       end
 
       result = controller.start
 
-      exit result.passed?
-    end
-
-    # Select reporter based on output mode.
-    def reporter
-      case outmode
-      when :marshal
-        Turn::MarshalReporter.new($stdout)
-      when :progress
-        Turn::ProgressReporter.new($stdout)
-      when :dotted
-        Turn::DotReporter.new($stdout)
-      when :cue
-        Turn::CueReporter.new($stdout)
-      else
-        Turn::OutlineReporter.new($stdout)
-      end
-    end
-
-    # Select runner based on run mode.
-    def runner
-      if framework == :minitest
-        require 'turn/runners/minirunner'
-      else
-        require 'turn/runners/testrunner'
-      end
-
-      case runmode
-      when :marshal
-        if framework == :minitest
-          Turn::MiniRunner
-        else
-          Turn::TestRunner
-        end
-      when :solo
-        require 'turn/runners/solorunner'
-        Turn::SoloRunner
-      when :cross
-        require 'turn/runners/crossrunner'
-        Turn::CrossRunner
-      else
-        if framework == :minitest
-          Turn::MiniRunner
-        else
-          Turn::TestRunner
-        end
+      if result
+        exit result.passed?
+      else # no tests
+        exit
       end
     end
 

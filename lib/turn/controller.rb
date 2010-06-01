@@ -38,11 +38,11 @@ module Turn
     # Libs to require when running tests.
     attr_accessor :requires
 
-    # Instance of Reporter.
-    attr_accessor :reporter
+    # Reporter type.
+    attr_accessor :format
 
-    # Insatance of Runner.
-    attr_accessor :runner
+    # Run mode.
+    attr_accessor :runmode
 
     # Test against live install (i.e. Don't use loadpath option)
     attr_accessor :live
@@ -74,8 +74,8 @@ module Turn
       @requires ||= []
       @live     ||= false
       @log      ||= true
-      @reporter ||= OutlineReporter.new($stdout)
-      @runner   ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
+      #@reporter ||= OutlineReporter.new($stdout)
+      #@runner   ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
       @pattern  ||= /.*/
     end
 
@@ -131,7 +131,7 @@ module Turn
           File.directory?(x) ? Dir[File.join(x, '**', '*')] : Dir[x]
         end
         ex = ex.flatten.reject{ |f| File.directory?(f) }
-        (fs - ex).uniq
+        (fs - ex).uniq.map{ |f| File.expand_path(f) }
       )
     end
 
@@ -146,6 +146,57 @@ module Turn
       testrun = runner.new(self)
 
       testrun.start
+    end
+
+    # Select reporter based on output mode.
+    def reporter
+      @reporter ||= (
+        case format
+        when :marshal
+          Turn::MarshalReporter.new($stdout)
+        when :progress
+          Turn::ProgressReporter.new($stdout)
+        when :dotted
+          Turn::DotReporter.new($stdout)
+        when :cue
+          Turn::CueReporter.new($stdout)
+        else
+          Turn::OutlineReporter.new($stdout)
+        end
+      )
+    end
+
+    # # Insatance of Runner, selected based on format and runmode.
+    def runner
+      @runner ||= (
+        case framework
+        when :minitest
+          require 'turn/runners/minirunner'
+        else
+          require 'turn/runners/testrunner'
+        end
+
+        case runmode
+        when :marshal
+          if framework == :minitest
+            Turn::MiniRunner
+          else
+            Turn::TestRunner
+          end
+        when :solo
+          require 'turn/runners/solorunner'
+          Turn::SoloRunner
+        when :cross
+          require 'turn/runners/crossrunner'
+          Turn::CrossRunner
+        else
+          if framework == :minitest
+            Turn::MiniRunner
+          else
+            Turn::TestRunner
+          end
+        end
+      )
     end
 
   end
