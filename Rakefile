@@ -13,7 +13,7 @@ Bones {
   authors      'Tim Pease'
   email        'tim.pease@gmail.com'
   url          'http://gemcutter.org/gems/turn'
-  version      File.read('.meta/version').strip
+  version      File.read('version.txt').strip
   ignore_file  '.gitignore'
   rubyforge.name 'codeforpeople'
 
