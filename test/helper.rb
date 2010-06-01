@@ -1,7 +1,7 @@
 require 'fileutils'
 
 #
-def setup_test(framework, required=false)
+def setup_test(framework, required=false, name=nil)
   text = ''
   text << "require '#{required}'\n" if required
   text << <<-HERE
@@ -11,12 +11,12 @@ end
   HERE
   #name = framwwork.downcase
   #name = name + '_required' if requires
-  save_test(text)
+  save_test(text, name)
 end
 
 #
-def save_test(text)
-  file = File.join('tmp', 'test.rb')
+def save_test(text, name=nil)
+  file = File.join('tmp', name || 'test.rb')
   FileUtils.mkdir_p('tmp')
   File.open(file, 'w'){ |f| f << text }
 end
@@ -24,7 +24,14 @@ end
 #
 def standard_test_body
 <<-HERE
+  def test_pass
+    assert_equal(1,1)
+  end
+HERE
+end
 
+def guanlent_test_body
+<<-HERE
   def test_pass
     assert_equal(1,1)
   end

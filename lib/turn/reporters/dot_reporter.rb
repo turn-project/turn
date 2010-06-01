@@ -60,7 +60,7 @@ module Turn
 
       count = test_tally(suite)
 
-      tally = "%s tests, %s assetions, %s failures, %s errors" % count
+      tally = "%s tests, %s assertions, %s failures, %s errors" % count
  
       if count[-1] > 0 or count[-2] > 0
         tally = Colorize.red(tally)
