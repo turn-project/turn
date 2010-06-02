@@ -38,20 +38,25 @@ module Turn
 
     def finish_suite(suite)
       io.puts("\nFinished in %.5f seconds." % [Time.now - @time])
-      io.puts
 
       report = ''
 
-      fails = suite.select do |testrun|
-        testrun.fail? || testrun.error?
+      list = []
+      suite.each do |testcase|
+        testcase.each do |testunit|
+          if testunit.fail? || testunit.error?
+            list << testunit
+          end
+        end
       end
 
-      unless fails.empty? # or verbose?
+      unless list.empty? # or verbose?
         #report << "\n\n-- Failures and Errors --\n\n"
-        fails.uniq.each do |testrun|
-          message = testrun.message.tabto(0)
-          message = Colorize.magenta(message)
-          report << message << "\n"
+        list.uniq.each do |testunit|
+          message = testunit.fail? ? ' '+FAIL : ERROR
+          message = message + ' ' + testunit.message.tabto(0)
+          message << "\n" + filter_backtrace(testunit.backtrace).first
+          report << "\n" << message << "\n"
         end
         report << "\n"
       end

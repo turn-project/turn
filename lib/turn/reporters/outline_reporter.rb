@@ -59,7 +59,9 @@ module Turn
 
     def error(exception)
       #message = exception.to_s.split("\n")[2..-1].join("\n")
-      message = exception.to_s
+      message = exception.message
+      message = Colorize.magenta(message)
+      message = message.to_s.tabto(8)
       io.puts("#{ERROR}")
       io.puts(message) #if message
     end
