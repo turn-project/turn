@@ -30,6 +30,7 @@ def standard_test_body
 HERE
 end
 
+#
 def guanlent_test_body
 <<-HERE
   def test_pass
@@ -44,5 +45,22 @@ def guanlent_test_body
     raise
   end
 HERE
+end
+
+#
+def setup_outline_test
+  text = <<-HERE
+class OutlineTest < Test::Unit::TestCase
+  def test_sample_pass
+    puts "You should not see me"
+    assert_equal(1,1)
+  end
+  def test_sample_fail
+    puts "You should see me"
+    assert_equal(1,2)
+  end
+end
+  HERE
+  save_test(text, 'outline_test.rb')
 end
 
