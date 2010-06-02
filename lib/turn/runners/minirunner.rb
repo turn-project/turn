@@ -1,4 +1,9 @@
+#
+
+# Becuase of some wierdness in MiniTest
+debug, $DEBUG = $DEBUG, false
 require 'minitest/unit'
+$DEBUG = debug
 
 Test = MiniTest
 
@@ -156,6 +161,7 @@ module Turn
 end
 
 class ::MiniTest::Unit::TestCase
+  old_verbose, $VERBOSE = $VERBOSE, false
   # Overwrite #run method so that is uses symbols
   # as return values rather than characters.
   def run(runner)
@@ -177,5 +183,6 @@ class ::MiniTest::Unit::TestCase
     end
     result
   end
+  $VERBOSE = old_verbose
 end
 
