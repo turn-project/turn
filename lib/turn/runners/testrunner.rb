@@ -20,7 +20,11 @@ module Turn
       controller.loadpath.each{ |path| $: << path } unless controller.live?
       controller.requires.each{ |path| require(path) }
 
-      [controller.files].flatten.each{ |path| require(path) }
+      files = [controller.files].flatten
+      files.each{ |path| require(path) }   
+
+      # TODO: Better name ?
+      name = files.map{ |path| File.dirname(path).sub(Dir.pwd+'/','') }.uniq.join(',')
 
       sub_suites = []
       ObjectSpace.each_object(Class) do |klass|
@@ -28,7 +32,8 @@ module Turn
           sub_suites << klass.suite
         end
       end
-      suite = Test::Unit::TestSuite.new('')  # FIXME: Name?
+      suite = Test::Unit::TestSuite.new(name)
+
       sub_suites.sort_by{|s|s.name}.each{|s| suite << s}
 
       suite.tests.each do |c|
@@ -65,7 +70,7 @@ module Turn
     end
 
     def t_started(result)
-      @t_suite = Turn::TestSuite.new #@suite
+      @t_suite = Turn::TestSuite.new(@suite.name)
       @t_suite.size = @suite.size
       @t_result = result
       @t_reporter.start_suite(@t_suite)
@@ -91,8 +96,8 @@ module Turn
       when ::Test::Unit::Error
         #msg = ""
         #msg << fault.to_s.split("\n")[2..-1].join("\n")
-        @t_test.error!(fault)
-        @t_reporter.error(fault)
+        @t_test.error!(fault.exception)
+        @t_reporter.error(fault.exception)
       when ::Test::Unit::Failure
         #msg = ""
         #msg << fault.location[0] << "\n"
