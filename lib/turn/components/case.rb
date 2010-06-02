@@ -18,7 +18,7 @@ module Turn
     #attr_accessor :count_errors
     #attr_accessor :count_tests
 
-    # This can;t be calculated, so it must be
+    # This can't be calculated, so it must be
     # assigned by the runner.
     attr_accessor :count_assertions
 

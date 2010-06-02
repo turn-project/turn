@@ -8,6 +8,10 @@ require 'test/unit/ui/console/testrunner'
 #require 'turn/reporters/outline_reporter.rb'
 #require 'turn/reporters/progress_reporter.rb'
 
+class Test::Unit::Failure
+  alias_method :backtrace, :location
+end
+
 module Turn
 
   # = TestUnit TestRunner
@@ -62,6 +66,8 @@ module Turn
 
       @t_result   = nil
       @t_fault    = nil
+
+      @not_first_case = nil
 
       @t_previous_run_count       = 0
       @t_previous_error_count     = 0
@@ -120,7 +126,6 @@ module Turn
       #f = @t_result.failure_count   - @t_previous_failure_count
       #e = @t_result.error_count     - @t_previous_error_count
       a = @t_result.assertion_count - @t_previous_assertion_count
-
       #@t_case.counts(t,a,f,e)
 
       @t_case.count_assertions = a
