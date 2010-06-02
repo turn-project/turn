@@ -19,6 +19,7 @@ def save_test(text, name=nil)
   file = File.join('tmp', name || 'test.rb')
   FileUtils.mkdir_p('tmp')
   File.open(file, 'w'){ |f| f << text }
+  return file
 end
 
 #
@@ -62,5 +63,19 @@ class OutlineTest < Test::Unit::TestCase
 end
   HERE
   save_test(text, 'outline_test.rb')
+end
+
+#
+def setup_minitest_autorun
+  text = <<-HERE
+require 'minitest/unit'
+MiniTest::Unit.autorun
+class TestTest < MiniTest::Unit::TestCase
+  def test_sample_pass
+    assert_equal(1,1)
+  end
+end
+  HERE
+  save_test(text, 'minitest_autorun_test.rb')
 end
 

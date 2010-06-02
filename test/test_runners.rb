@@ -3,17 +3,37 @@ require File.dirname(__FILE__) + '/helper.rb'
 class TestRunners < Test::Unit::TestCase
 
   def test_solo
-    setup_test('Test')
-    result = `turn --solo tmp/test.rb`
+    file = setup_test('Test')
+    result = `turn --solo #{file}`
     assert result.index('fail: 0')
     assert result.index('error: 0')
   end
 
   def test_cross
-    setup_test('Test', false, 'test1.rb')
-    setup_test('Test', false, 'test2.rb')
-    result = `turn --cross tmp/test1.rb tmp/test2.rb`
+    file1 = setup_test('Test', false, 'test1.rb')
+    file2 = setup_test('Test', false, 'test2.rb')
+    result = `turn --cross #{file1} #{file2}`
     assert !result.index('FAIL')
+  end
+
+  if RUBY_VERSION < '1.9'
+
+    def test_autorun
+      file = setup_test('Test', 'test/unit')
+      result = `ruby #{file} 2>&1`
+      assert result.index('fail: 0')
+      assert result.index('error: 0')
+    end
+
+  else
+
+    def test_autorun
+      file = setup_minitest_autorun
+      result = `ruby #{file} 2>&1`
+      assert result.index('0 failures')
+      assert result.index('0 errors')
+    end
+
   end
 
 end
