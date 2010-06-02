@@ -37,6 +37,10 @@ module Turn
       COLORIZE ? ::ANSI::Code.magenta{ string } : string
     end
 
+    def self.bold(string)
+      COLORIZE ? ::ANSI::Code.bold{ string } : string
+    end
+
     def self.pass(string)
       COLORIZE ? ::ANSI::Code.green{ string } : string
     end

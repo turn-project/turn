@@ -10,6 +10,7 @@ module Turn
   #++
   class OutlineReporter < Reporter
 
+    #
     def start_suite(suite)
       @suite = suite
       @time  = Time.now
@@ -20,22 +21,26 @@ module Turn
       #io.puts "Started"
     end
 
+    #
     def start_case(kase)
-      io.puts(kase.name)
+      io.puts("\n#{kase.name}")
     end
 
+    #
     def start_test(test)
       #if @file != test.file
       #  @file = test.file
       #  io.puts(test.file)
       #end
       io.print "    %-69s" % test.name
+
       $stdout = @stdout
       $stderr = @stderr
       $stdout.rewind
       $stderr.rewind
     end
 
+    #
     def pass(message=nil)
       io.puts " #{PASS}"
       if message
@@ -45,37 +50,48 @@ module Turn
       end
     end
 
+    #
     def fail(assertion)
+      message   = assertion.message.to_s
+      backtrace = filter_backtrace(assertion.backtrace)
+
       io.puts(" #{FAIL}")
-      #message = assertion.location[0] + "\n" + assertion.message #.gsub("\n","\n")
-      message = assertion.to_s
-      #if message
-        message = Colorize.magenta(message)
-        message = message.to_s.tabto(8)
-        io.puts(message)
-      #end
+      io.puts Colorize.bold(message).tabto(8)
+      unless backtrace.empty?
+        backtrace = "Assertion at " + filter_backtrace(assertion.backtrace).first
+        io.puts "\nSTDERR:".tabto(8)
+        io.puts(backtrace.tabto(8))
+        io.puts
+      end
       show_captured_output
     end
 
+    #
     def error(exception)
-      #message = exception.to_s.split("\n")[2..-1].join("\n")
-      message = exception.message
-      message = Colorize.magenta(message)
-      message = message.to_s.tabto(8)
+      message   = exception.message
+      backtrace = "Exception `#{exception.class}' at " + filter_backtrace(exception.backtrace).join("\n")
+      message = Colorize.bold(message)
       io.puts("#{ERROR}")
-      io.puts(message) #if message
+      io.puts(message.tabto(8))
+      io.puts "\nSTDERR:".tabto(8)
+      io.puts(backtrace.tabto(8))
+      io.puts
+      show_captured_output
     end
 
+    #
     def finish_test(test)
       $stdout = STDOUT
       $stderr = STDERR
     end
 
+    #
     def show_captured_output
       show_captured_stdout
-      show_captured_stderr
+      #show_captured_stderr
     end
 
+    #
     def show_captured_stdout
       @stdout.rewind
       return if @stdout.eof?
@@ -85,6 +101,8 @@ module Turn
       output
     end
 
+# No longer used b/c of error messages are fairly extraneous.
+=begin
     def show_captured_stderr
       @stderr.rewind
       return if @stderr.eof?
@@ -93,10 +111,13 @@ module Turn
 #{@stderr.read}
       output
     end
+=end
 
+    #
     #def finish_case(kase)
     #end
 
+    #
     def finish_suite(suite)
       total   = suite.count_tests
       failure = suite.count_failures

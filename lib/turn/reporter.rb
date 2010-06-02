@@ -55,9 +55,12 @@ module Turn
 
     # TODO: backtrace filter probably could use some refinement.
     def filter_backtrace(bt)
-      return ["No backtrace"] unless bt
-      return ["No backtrace"] if bt.empty?
-      bt.reject{ |line| line.rindex('minitest') }
+      return [] unless bt
+      bt.reject!{ |line| line.rindex('minitest') }
+      bt.reject!{ |line| line.rindex('test/unit') }
+      bt.reject!{ |line| line.rindex('lib/turn') }
+      bt.reject!{ |line| line.rindex('bin/turn') }
+      bt.map{ |line| line.sub(Dir.pwd+'/', '') }
     end
 
   end
