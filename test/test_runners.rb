@@ -19,10 +19,10 @@ class TestRunners < Test::Unit::TestCase
   if RUBY_VERSION < '1.9'
 
     def test_autorun
-      file = setup_test('Test', 'test/unit')
+      file = setup_test('Test', 'test/unit', 'test_autorun.rb')
       result = `ruby #{file} 2>&1`
-      assert result.index('fail: 0')
-      assert result.index('error: 0')
+      assert result.index('0 failures')
+      assert result.index('0 errors')
     end
 
   else
