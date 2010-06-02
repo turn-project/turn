@@ -9,7 +9,7 @@ class SampleTest < Test::Unit::TestCase
   end
 
   def test_sample_error
-    raise StandardError, "Sample of a raised exception."
+    raise StandardError, "Raised exception!"
   end
 
 end
