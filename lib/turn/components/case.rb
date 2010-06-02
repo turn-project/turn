@@ -2,6 +2,7 @@ module Turn
 
   #
   class TestCase
+    include Enumerable
 
     # Name of test case.
     attr_accessor :name
@@ -71,6 +72,8 @@ module Turn
       tests.size
     end
 
+    alias_method :size, :count_tests
+
     def count_failures
       sum = 0; tests.each{ |t| sum += 1 if t.fail? }; sum
     end
@@ -92,6 +95,9 @@ module Turn
       tests.collect{ |t| t.message }.join("\n")
     end
 
+    def each(&block)
+      tests.each(&block)
+    end
   end
 
 end

@@ -33,6 +33,18 @@ module Turn
       c
     end
 
+    def count_tests
+      #@count_tests ||= (
+        sum = 0; each{ |c| sum += c.count_tests }; sum
+      #)
+    end
+
+    def count_assertions
+      #@count_assertions ||= (
+        sum = 0; each{ |c| sum += c.count_assertions }; sum
+      #)
+    end
+
     def count_failures
       #@count_failures ||= (
         sum = 0; each{ |c| sum += c.count_failures }; sum
@@ -51,21 +63,9 @@ module Turn
       #)
     end
 
-    def count_tests
-      #@count_tests ||= (
-        sum = 0; each{ |c| sum += c.count_tests }; sum
-      #)
-    end
-
-    def count_assertions
-      #@count_assertions ||= (
-        sum = 0; each{ |c| sum += c.count_assertions }; sum
-      #)
-    end
-
     # Convenience methods --this is what is typcially wanted.
     def counts
-      return count_tests, count_assertions, count_failures, count_errors
+      return count_tests, count_assertions, count_failures, count_errors #,count_skips
     end
 
     def each(&block)
