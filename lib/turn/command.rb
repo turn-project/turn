@@ -164,6 +164,11 @@ module Turn
         opts.separator " "
         opts.separator "COMMAND OPTIONS"
 
+        opts.on('--debug', "turn debug mode on") do
+          $VERBOSE = true
+          $DEBUG   = true
+        end
+
         opts.on_tail('--help', '-h', "display this help information") do
           puts opts
           exit
