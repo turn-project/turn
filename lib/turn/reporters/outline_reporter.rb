@@ -17,13 +17,13 @@ module Turn
       @stdout = StringIO.new
       @stderr = StringIO.new
       #files = suite.collect{ |s| s.file }.join(' ')
-      io.puts "Loaded suite #{suite.name}"
+      io.puts "LOADED SUITE #{suite.name}"
       #io.puts "Started"
     end
 
     #
     def start_case(kase)
-      io.puts("\n#{kase.name}")
+      io.puts(Colorize.bold("#{kase.name}"))
     end
 
     #
@@ -59,9 +59,8 @@ module Turn
       io.puts Colorize.bold(message).tabto(8)
       unless backtrace.empty?
         backtrace = "Assertion at " + filter_backtrace(assertion.backtrace).first
-        io.puts "\nSTDERR:".tabto(8)
+        io.puts "STDERR:".tabto(8)
         io.puts(backtrace.tabto(8))
-        io.puts
       end
       show_captured_output
     end
@@ -73,9 +72,8 @@ module Turn
       message = Colorize.bold(message)
       io.puts("#{ERROR}")
       io.puts(message.tabto(8))
-      io.puts "\nSTDERR:".tabto(8)
+      io.puts "STDERR:".tabto(8)
       io.puts(backtrace.tabto(8))
-      io.puts
       show_captured_output
     end
 

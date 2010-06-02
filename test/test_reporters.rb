@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/helper.rb'
 
-class TestRunners < Test::Unit::TestCase
+class TestReporters < Test::Unit::TestCase
 
   def test_progress
     file = setup_test('Test')
