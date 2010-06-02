@@ -51,6 +51,15 @@ module Turn
     def finish_suite(test_suite)
     end
 
+  private
+
+    # TODO: backtrace filter probably could use some refinement.
+    def filter_backtrace(bt)
+      return ["No backtrace"] unless bt
+      return ["No backtrace"] if bt.empty?
+      bt.reject{ |line| line.rindex('minitest') }
+    end
+
   end
 
 end

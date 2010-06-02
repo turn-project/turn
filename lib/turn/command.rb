@@ -26,6 +26,7 @@ module Turn
   #   -O --outline     turn's original case/test outline mode [default]
   #   -P --progress    indicates progress with progress bar
   #   -D --dotted      test/unit's traditonal dot-progress mode
+  #      --pretty      new pretty reporter
   #   -M --marshal     dump output as YAML (normal run mode only)
   #   -Q --queued      interactive testing
   #
@@ -145,6 +146,10 @@ module Turn
 
         opts.on('--dotted', '-D', "test-unit's traditonal dot-progress mode") do
           @outmode = :dotted
+        end
+
+        opts.on('--pretty', '-T', "new pretty output mode") do
+          @outmode = :pretty
         end
 
         opts.on('--cue', '-C', "cue for action on each failure/error") do
