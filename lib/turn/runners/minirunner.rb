@@ -126,6 +126,7 @@ module Turn
           @test_count += 1
           @assertion_count += inst._assertions
         end
+        @turn_case.count_assertions = @assertion_count  # for lack of a better appraoch
         @turn_logger.finish_case(@turn_case)
       end
       @turn_logger.finish_suite(@turn_suite)
