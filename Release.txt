@@ -1,50 +1,33 @@
-= Turn 0.6.1
+= Turn 0.8.0
 
-The facets/ansicode.rb library has been spun off as a separate
-project called 'ansi'. So this version swaps out its optional
-color support for the new project as well. You can install it via:
+Version 0.8.0 is a fairly significant release for Turn. This release
+adds support for Ruby 1.9's Minitest framework. You can even use
+minitest with Ruby 1.8 by supplying the --minitest option on the turn
+command line.
 
-  gem install ansi
+In addition, two new reporters have been a added, a new "pretty" reporter
+which provides a more a modern "OSX" look (thanks Paydro) and a Cue
+reporter which seeks user input with each failure or error (thanks
+Shindo).
 
-You might want to take at the library, it has a few other
-interesting ANSI-related classes as well.
+With this release we are encouraging users to move away from using
+autorun modes. Autorunning is when your test script includes code
+that "automagically" sets up a test runner, e.g. require 'test/unit'
+and MiniTest::Unit.autorun, and by simply running the scripts
+through the ruby interpretor the tests get run. There are a number
+of problems with this approach. To begin with, running tests this way
+limits Turn of a single mode of operation (that's no fun!) More
+importantly it prevents interoperability between the old TestUnit
+and the new MiniTest systems. By leaving these out and using a 
+commandline runner you can use the same tests for each version of
+Ruby. This may require some adjutments to build tools, but hell,
+why not use Turn there too. The Turn::Controller class makes it
+damn easy.
 
-== As of 0.6.0
-
-Turn 0.6 is now compatible with Test/Unit 2.0. 
-
-A instance variable name change made between 1.x and 2.0 series
-of test/unit prevent the Turn modified Testrunner from working
-correctly.
-
-Other than that this release is the same as the 0.5.1 release.
-
-== As of 0.5.0
-
-As of 0.5.0, Turn has some signifficant new features:
-
-While Turn still provides the exact same functionality for running
-tests via ruby or testrb as previous versions. The turn commandline 
-utility has been completely rewritten with expanded capabilites. 
-
-The turn command now features three run modes:
-
-* Solo runner for running each test file in a separate process.
-* Cross runner for running test file pairs in separate processes.
-* Normal runner, which of course runs all test in a single process.
-
-It also support three report modes:
-
-* Progress reporter which uses a progress bar.
-* Minimal reporter which provides traditional "dot" progress.
-* Outline reporter populaized by turn.
-
-The is also a special Marshal Mode which dumps test results as YAML.
-And the underlying API makes it easy create new reporters.
-
-To get a quick rundown on how to use the new commandline:
-
-  $ turn --help
+One last note. Turn is no longer compatible with TestUnit 2.0+.
+TestUnit and MiniTest are deverging and after some consideration
+it was decided that Turn's goal is to support Ruby's native test
+framework, whatever it may be.
 
 Enjoy!
 
