@@ -8,6 +8,7 @@ module Turn
   require 'turn/reporters/cue_reporter'
   require 'turn/reporters/dot_reporter'
   require 'turn/reporters/outline_reporter'
+  require 'turn/reporters/pretty_reporter'
   require 'turn/reporters/marshal_reporter'
   require 'turn/reporters/progress_reporter'
 
@@ -158,6 +159,8 @@ module Turn
           Turn::ProgressReporter.new($stdout)
         when :dotted
           Turn::DotReporter.new($stdout)
+        when :pretty
+          Turn::PrettyReporter.new($stdout)
         when :cue
           Turn::CueReporter.new($stdout)
         else
