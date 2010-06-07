@@ -5,16 +5,6 @@ module Turn
   require 'turn/components/case.rb'
   require 'turn/components/method.rb'
 
-  require 'turn/reporters/cue_reporter'
-  require 'turn/reporters/dot_reporter'
-  require 'turn/reporters/outline_reporter'
-  require 'turn/reporters/pretty_reporter'
-  require 'turn/reporters/marshal_reporter'
-  require 'turn/reporters/progress_reporter'
-
-  require 'turn/runners/solorunner'
-  require 'turn/runners/crossrunner'
-
   # = Controller
   #
   #--
@@ -154,16 +144,22 @@ module Turn
       @reporter ||= (
         case format
         when :marshal
+          require 'turn/reporters/marshal_reporter'
           Turn::MarshalReporter.new($stdout)
         when :progress
+          require 'turn/reporters/progress_reporter'
           Turn::ProgressReporter.new($stdout)
         when :dotted
+          require 'turn/reporters/dot_reporter'
           Turn::DotReporter.new($stdout)
         when :pretty
+          require 'turn/reporters/pretty_reporter'
           Turn::PrettyReporter.new($stdout)
         when :cue
+          require 'turn/reporters/cue_reporter'
           Turn::CueReporter.new($stdout)
         else
+          require 'turn/reporters/outline_reporter'
           Turn::OutlineReporter.new($stdout)
         end
       )

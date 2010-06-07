@@ -1,5 +1,9 @@
 require 'fileutils'
 
+def turn(*args)
+  `ruby -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
+end
+
 #
 def setup_test(framework, required=false, name=nil)
   text = ''

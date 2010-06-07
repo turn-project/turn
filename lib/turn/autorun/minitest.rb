@@ -136,16 +136,16 @@ class MiniTest::Unit
       begin
         @passed = nil
         self.setup
-        self.__send__ self.name
+        self.__send__ self.__name__
         @passed = true
       rescue Exception => e
         @passed = false
-        result = runner.puke(self.class, self.name, e)
+        result = runner.puke(self.class, self.__name__, e)
       ensure
         begin
           self.teardown
         rescue Exception => e
-          result = runner.puke(self.class, self.name, e)
+          result = runner.puke(self.class, self.__name__, e)
         end
       end
       result

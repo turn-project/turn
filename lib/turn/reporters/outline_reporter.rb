@@ -1,4 +1,5 @@
 require 'turn/reporter'
+require 'stringio'
 
 module Turn
 

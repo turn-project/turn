@@ -53,9 +53,12 @@ module Turn
       suite.each_with_index do |kase, index|
         reporter.start_case(kase)
 
+        turn_path = File.expand_path(File.dirname(__FILE__) + '/../bin.rb')
+
         # FRACKING GENIUS RIGHT HERE !!!!!!!!!!!!
         cmd = []
-        cmd << %[turn]
+        cmd << %[ruby]
+        cmd << turn_path
         cmd << %[--marshal]
         cmd << %[--loadpath="#{@loadpath.join(';')}"] unless @loadpath.empty?
         cmd << %[--requires="#{@requires.join(';')}"] unless @requires.empty?
