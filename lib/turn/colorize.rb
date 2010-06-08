@@ -14,13 +14,6 @@ module Turn
 
     COLORIZE = defined?(::ANSI::Code) && ENV.has_key?('TERM')
 
-    if COLORIZE
-    else
-      PASS  = "PASS"
-      FAIL  = "FAIL"
-      ERROR = "ERROR"
-    end
-
     def self.red(string)
       COLORIZE ? ::ANSI::Code.red{ string } : string
     end

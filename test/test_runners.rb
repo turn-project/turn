@@ -4,7 +4,7 @@ class TestRunners < Test::Unit::TestCase
 
   def test_solo
     file = setup_test('Test', false, 'test_solo.rb')
-    result = turn '--solo', file
+    result = turn2 '--solo', file
     assert result.index('fail: 0')
     assert result.index('error: 0')
   end
@@ -12,7 +12,7 @@ class TestRunners < Test::Unit::TestCase
   def test_cross
     file1 = setup_test('Test', false, 'test1.rb')
     file2 = setup_test('Test', false, 'test2.rb')
-    result = turn '--cross', file1, file2
+    result = turn2 '--cross', file1, file2
     assert !result.index('FAIL')
   end
 

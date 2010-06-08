@@ -1,5 +1,6 @@
 module Turn
   require 'turn/colorize'
+  require 'yaml'
 
   # = IsoRunner
   #

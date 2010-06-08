@@ -2,10 +2,14 @@ require File.dirname(__FILE__) + '/helper.rb'
 
 class TestReporters < Test::Unit::TestCase
 
-  def test_progress
-    file = setup_test('Test')
-    result = turn '--progress', file
-    assert result.index('PASS')
+  begin
+    require 'ansi'
+    def test_progress
+      file = setup_test('Test')
+      result = turn '--progress', file
+      assert(result.index('PASS'), result)
+    end
+  rescue LoadError
   end
 
   def test_dotted

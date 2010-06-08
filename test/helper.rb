@@ -1,7 +1,19 @@
 require 'fileutils'
 
+if RUBY_VERSION < "1.9"
+  require 'test/unit'
+else
+  require 'minitest/unit'
+end
+
+#
 def turn(*args)
   `ruby -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
+end
+
+#
+def turn2(*args)
+  `ruby -Ilib bin/turn -Ilib #{args.join(' ')}`
 end
 
 #
