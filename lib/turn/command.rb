@@ -87,11 +87,11 @@ module Turn
         opts.separator "GENERAL OPTIONS"
 
         opts.on('-I', '--loadpath=PATHS', "add paths to $LOAD_PATH") do |path|
-          @loadpath << path
+          @loadpath.concat(path.split(':'))
         end
 
         opts.on('-r', '--require=LIBS', "require libraries") do |lib|
-          @requires << lib
+          @requires.concat(lib.split(':'))
         end
 
         opts.on('-n', '--name=PATTERN', "only run tests that match PATTERN") do |pattern|

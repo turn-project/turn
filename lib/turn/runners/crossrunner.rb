@@ -16,19 +16,21 @@ module Turn
       suite = TestSuite.new
 
       files = @controller.files
-      viles = @controller.files # TODO: viles this selectable
+      viles = @controller.files # TODO: make selectable ?
 
       #files = files.select{ |f| File.extname(f) == '.rb' and File.file?(f) }
       #viles = viles.select{ |f| File.extname(f) == '.rb' and File.file?(f) }
 
-      max = (files+viles).collect{ |f| f.size }.max
-
       pairs = files.inject([]){ |m, f| viles.collect{ |v| m << [f,v] }; m }
       pairs = pairs.reject{ |f,v| f == v }
 
-      testruns = pairs.collect do |file, versus|
-        name = "%-#{max}s %-#{max}s" % [file, versus]
-        suite.new_case(name, file, versus)
+      max = files.collect{ |f| f.sub(Dir.pwd+'/','').size }.max
+
+      testruns = pairs.collect do |file1, file2|
+        name1 = file1.sub(Dir.pwd+'/','')
+        name2 = file2.sub(Dir.pwd+'/','')
+        name = "%-#{max}s %-#{max}s" % [name1, name2]
+        suite.new_case(name, file1, file2)
       end
 
       test_loop_runner(suite)

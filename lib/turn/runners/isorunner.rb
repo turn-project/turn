@@ -1,6 +1,7 @@
 module Turn
   require 'turn/colorize'
   require 'yaml'
+  require 'open3'
 
   # = IsoRunner
   #
@@ -36,7 +37,8 @@ module Turn
     def start
       suite = TestSuite.new
       testruns = @controller.files.collect do |file|
-        suite.new_case(file)
+        name = file.sub(Dir.pwd+'/','')
+        suite.new_case(name, file)
       end
       test_loop_runner(suite)
     end
@@ -56,22 +58,35 @@ module Turn
 
         turn_path = File.expand_path(File.dirname(__FILE__) + '/../bin.rb')
 
+        files = kase.files.map{ |f| f.sub(Dir.pwd+'/', '') }
+
         # FRACKING GENIUS RIGHT HERE !!!!!!!!!!!!
         cmd = []
-        cmd << %[ruby]
+        cmd << "ruby"
+        cmd << "-I#{@loadpath.join(':')}" unless @loadpath.empty?
+        cmd << "-r#{@requires.join(':')}" unless @requires.empty?
+        cmd << "--"
         cmd << turn_path
-        cmd << %[--marshal]
-        cmd << %[--loadpath="#{@loadpath.join(';')}"] unless @loadpath.empty?
-        cmd << %[--requires="#{@requires.join(';')}"] unless @requires.empty?
-        cmd << %[--live] if @live
-        cmd << %[--minitest] if @minitest
-        cmd << %[#{kase.files.join(' ')}]
+        cmd << "--marshal"
+        cmd << %[--loadpath="#{@loadpath.join(':')}"] unless @loadpath.empty?
+        cmd << %[--requires="#{@requires.join(':')}"] unless @requires.empty?
+        cmd << "--live" if @live
+        cmd << "--minitest" if @minitest
+        cmd << files.join(' ')
         cmd = cmd.join(' ')
-        result = `#{cmd}`
+
+        #out = `#{cmd}`
+
+        out, err = nil, nil
+        Open3.popen3(cmd) do |stdin, stdout, stderr|
+          stdin.close
+          out = stdout.read.chomp
+          err = stderr.read.chomp
+        end
 
         files = kase.files
 
-        head, yaml = *result.split('---')
+        head, yaml = *out.split('---')
         sub_suite = YAML.load(yaml)
 
         # TODO: How to handle pairs?
