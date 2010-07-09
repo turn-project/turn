@@ -24,7 +24,7 @@ class TestRunners < Test::Unit::TestCase
 
     def test_autorun
       file = setup_test('Test', 'turn', 'test_autorun.rb')
-      result = `ruby #{file} 2>&1`
+      result = `ruby -Ilib #{file} 2>&1`
       assert(result.index('pass: 1'))
       assert(result.index('fail: 0'))
       assert(result.index('error: 0'))
@@ -34,7 +34,7 @@ class TestRunners < Test::Unit::TestCase
 
     def test_autorun
       file = setup_minitest_autorun
-      result = `ruby #{file} 2>&1`
+      result = `ruby -Ilib #{file} 2>&1`
       assert result.index('0 failures')
       assert result.index('0 errors')
     end
