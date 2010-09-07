@@ -19,14 +19,14 @@ module Turn
 
     def fail!(assertion)
       @fail, @error = true, false
-      @rasied    = assertion
+      @raised    = assertion
       @message   = assertion.message
       @backtrace = assertion.backtrace
     end
 
     def error!(exception)
       @fail, @error = false, true
-      @rasied    = exception
+      @raised    = exception
       @message   = exception.message
       @backtrace = exception.backtrace
     end
