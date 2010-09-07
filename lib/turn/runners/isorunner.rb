@@ -76,6 +76,7 @@ module Turn
         cmd = cmd.join(' ')
 
         #out = `#{cmd}`
+        #err = ''
 
         out, err = nil, nil
         Open3.popen3(cmd) do |stdin, stdout, stderr|
@@ -84,9 +85,17 @@ module Turn
           err = stderr.read.chomp
         end
 
+        # TODO: how to report? will need to add something to reporter
+        # b/c it may have redirected stdout. Or use STDOUT?
+        #if !err.empty?
+        #  puts err
+        #  raise
+        #end
+
         files = kase.files
 
-        head, yaml = *out.split('---')
+        # remove any unexpected output injected at the beginning
+        yaml = out[out.index(/^---/)..-1]
         sub_suite = YAML.load(yaml)
 
         # TODO: How to handle pairs?
@@ -100,9 +109,11 @@ module Turn
           kase.tests.each do |test|
             reporter.start_test(test)
             if test.error?
-              reporter.error(test.message)
+              #reporter.error(test.message)
+              reporter.error(test.raised)
             elsif test.fail?
-              reporter.fail(test.message)
+              #reporter.fail(test.message)
+              reporter.error(test.raised)
             else
               reporter.pass
             end

@@ -53,9 +53,9 @@ module Turn
       unless list.empty? # or verbose?
         #report << "\n\n-- Failures and Errors --\n\n"
         list.uniq.each do |testunit|
-          message = testunit.fail? ? ' '+FAIL : ERROR
+          message = testunit.fail? ? ' ' + FAIL : ERROR
           message = message + ' ' + testunit.message.tabto(0)
-          message << "\n" + filter_backtrace(testunit.backtrace).first
+          message << "\n" + (filter_backtrace(testunit.backtrace).first || '')
           report << "\n" << message << "\n"
         end
         report << "\n"

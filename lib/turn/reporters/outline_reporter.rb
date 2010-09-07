@@ -35,10 +35,11 @@ module Turn
       #end
       io.print "    %-69s" % test.name
 
+      @stdout.rewind
+      @stderr.rewind
+
       $stdout = @stdout
-      $stderr = @stderr
-      $stdout.rewind
-      $stderr.rewind
+      $stderr = @stderr unless $DEBUG
     end
 
     #
