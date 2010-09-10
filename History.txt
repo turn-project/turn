@@ -1,3 +1,7 @@
+== 0.8.1 / 2010-09-10
+  * Fix misspelling of "raised" which prevented proper recording of errors.
+  * Fix IsoRunner so it passes error, not just error message.
+
 == 0.8.0 / 2010-06-02
   * Mintest support
   * Two new reporters
