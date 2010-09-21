@@ -69,8 +69,10 @@ module Console
         turn_out.puts ERROR
         msg << fault.to_s.split("\n")[2..-1].join("\n\t")
       when ::Test::Unit::Failure
+        test_name =  underscore(fault.test_name.match(/\((.*)\)/)[1])
+        better_location = fault.location.detect{|line|line.include?(test_name)} || fault.location[0]
         turn_out.puts " #{FAIL}"
-        msg << fault.location[0].to_s << "\n\t"
+        msg << better_location.to_s << "\n\t"
         msg << fault.message.gsub("\n","\n\t")
       end
 
@@ -79,6 +81,18 @@ module Console
     end
 
     private
+
+    # Taken from ActiveSupport::Inflector
+    def underscore(camel_cased_word)
+      word = camel_cased_word.to_s.dup
+      word.gsub!(/::/, '/')
+      word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+      word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+      word.tr!("-", "_")
+      word.downcase!
+      word
+    end
+
     def setup_mediator
        @mediator = create_mediator(@suite)
        suite_name = @suite.to_s
