@@ -12,11 +12,10 @@ module Turn
   #++
   class Controller
 
-    # File glob pattern of tests to run.
-    # Can be an array of files/globs.
+    # List of if file names or glob pattern of tests to run.
     attr_accessor :tests
 
-    # Files globs to specially exclude.
+    # List of file names or globs to exclude from +tests+ list.
     attr_accessor :exclude
 
     # Regexp pattern that all test name's must
@@ -60,12 +59,12 @@ module Turn
     #
     def initialize_defaults
       @loadpath ||= ['lib']
-      @tests    ||= "test/**/{test,}*{,test}"
+      @tests    ||= ["test/**/{test,}*{,test}.rb"]
       @exclude  ||= []
       @requires ||= []
       @live     ||= false
       @log      ||= true
-      #@reporter ||= OutlineReporter.new($stdout)
+      #@format  ||= nil
       #@runner   ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
       @pattern  ||= /.*/
     end
@@ -100,6 +99,10 @@ module Turn
 
   public
 
+    def tests=(paths)
+      @tests = list_option(paths)
+    end
+
     def loadpath=(paths)
       @loadpath = list_option(paths)
     end
@@ -112,16 +115,19 @@ module Turn
       @requires = list_option(paths)
     end
 
+    # Test files.
     def files
       @files ||= (
         fs = tests.map do |t|
           File.directory?(t) ? Dir[File.join(t, '**', '*')] : Dir[t]
         end
         fs = fs.flatten.reject{ |f| File.directory?(f) }
+
         ex = exclude.map do |x|
           File.directory?(x) ? Dir[File.join(x, '**', '*')] : Dir[x]
         end
         ex = ex.flatten.reject{ |f| File.directory?(f) }
+
         (fs - ex).uniq.map{ |f| File.expand_path(f) }
       )
     end
