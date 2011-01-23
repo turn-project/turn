@@ -46,16 +46,9 @@ module Turn
       super()
 
       # route minitests traditional output to nowhere
+      # (instead of overriding #puts and #print)
       @@out = StringIO.new
     end
-
-    #
-    #def puts(*)
-    #end
-
-    #
-    #def print(*)
-    #end
 
     # Turn calls this method to start the test run.
     def start(args=[])
@@ -70,7 +63,8 @@ module Turn
 
       @turn_logger.start_suite(@turn_suite)
 
-      result = super(suites, type) #suites.map { |suite| _run_suite suite, type }
+      #result = super(suites, type)
+      result = suites.map { |suite| _run_suite suite, type }
 
       @turn_logger.finish_suite(@turn_suite)
 
@@ -133,6 +127,46 @@ module Turn
         @turn_logger.error(err)
       end
       super(klass, meth, err)
+    end
+
+    # To maintain compatibility with old versions of MiniTest.
+    if ::MiniTest::Unit::VERSION < '2.0'
+
+      attr_accessor :options
+
+      #
+      def run(args=[])
+        @options = {}
+
+        @options[:filter] = (
+          if args.first =~ /^(-n|--name)$/
+            args.shift
+            args.shift
+            #arg =~ /\/(.*)\// ? Regexp.new($1) : arg
+          else
+            nil # anything - ^test_ already filtered by #tests
+          end
+        )
+
+        suites = ::MiniTest::Unit::TestCase.test_suites
+        return if suites.empty?
+
+        @test_count, @assertion_count = 0, 0
+        sync = @@out.respond_to? :"sync=" # stupid emacs
+        old_sync, @@out.sync = @@out.sync, true if sync
+
+        results = _run_suites suites, :test #type
+
+        @test_count      = results.inject(0) { |sum, (tc, _)| sum + tc }
+        @assertion_count = results.inject(0) { |sum, (_, ac)| sum + ac }
+
+        @@out.sync = old_sync if sync
+
+        return failures + errors if @test_count > 0 # or return nil...
+      rescue Interrupt
+        abort 'Interrupted'
+      end
+
     end
 
   end
