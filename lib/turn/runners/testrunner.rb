@@ -118,7 +118,7 @@ module Turn
       @t_reporter.finish_test(@t_test)
     end
 
-      def t_case_finished(name)
+    def t_case_finished(name)
       # Err.. why is testunit running this on the suite?
       return if name=='' # FIXME skip suite call
 
