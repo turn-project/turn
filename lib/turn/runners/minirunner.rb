@@ -15,6 +15,7 @@ module Turn
 
     # Override initialize to take controller argument.
     def initialize(controller)
+      @turn_controller = controller
 
       controller.loadpath.each{ |path| $: << path } unless controller.live?
       controller.requires.each{ |path| require(path) }
@@ -76,8 +77,8 @@ module Turn
       # suites are cases in minitest
       @turn_case = @turn_suite.new_case(suite.name)
 
-      filter = options[:filter] || '/./'
-      filter = Regexp.new $1 if filter =~ /\/(.*)\//
+      filter = @turn_controller.pattern || /./
+      #filter = Regexp.new $1 if filter =~ /\/(.*)\//
 
       suite.send("#{type}_methods").grep(filter).each do |test|
         @turn_case.new_test(test)
@@ -132,22 +133,10 @@ module Turn
     # To maintain compatibility with old versions of MiniTest.
     if ::MiniTest::Unit::VERSION < '2.0'
 
-      attr_accessor :options
+      #attr_accessor :options
 
       #
       def run(args=[])
-        @options = {}
-
-        @options[:filter] = (
-          if args.first =~ /^(-n|--name)$/
-            args.shift
-            args.shift
-            #arg =~ /\/(.*)\// ? Regexp.new($1) : arg
-          else
-            nil # anything - ^test_ already filtered by #tests
-          end
-        )
-
         suites = ::MiniTest::Unit::TestCase.test_suites
         return if suites.empty?
 
