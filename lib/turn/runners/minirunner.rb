@@ -64,8 +64,11 @@ module Turn
 
       @turn_logger.start_suite(@turn_suite)
 
-      #result = super(suites, type)
-      result = suites.map { |suite| _run_suite suite, type }
+      if @turn_controller.matchcase
+        suites = suites.select{ |suite| @turn_controller.matchcase =~ suite.name }
+      end
+
+      result = suites.map { |suite| _run_suite(suite, type) }
 
       @turn_logger.finish_suite(@turn_suite)
 
@@ -78,7 +81,6 @@ module Turn
       @turn_case = @turn_suite.new_case(suite.name)
 
       filter = @turn_controller.pattern || /./
-      #filter = Regexp.new $1 if filter =~ /\/(.*)\//
 
       suite.send("#{type}_methods").grep(filter).each do |test|
         @turn_case.new_test(test)

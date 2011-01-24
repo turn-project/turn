@@ -46,6 +46,9 @@ module Turn
     # Only run tests matching this pattern.
     attr :pattern
 
+    # Only run testcases matching this pattern.
+    attr :matchcase
+
     # List of paths to add to $LOAD_PATH
     attr :loadpath
 
@@ -66,6 +69,7 @@ module Turn
       @live      = nil
       @log       = nil
       @pattern   = nil
+      @matchcase = nil
       @loadpath  = []
       @requires  = []
       @runmode   = nil
@@ -95,7 +99,19 @@ module Turn
         end
 
         opts.on('-n', '--name=PATTERN', "only run tests that match PATTERN") do |pattern|
-          @pattern = Regexp.new(pattern, Regexp::IGNORECASE)
+          if pattern =~ /\/(.*)\//
+            @pattern = Regexp.new($1)
+          else
+            @pattern = Regexp.new(pattern, Regexp::IGNORECASE)
+          end
+        end
+
+        opts.on('-t', '--testcase=PATTERN', "only run testcases that match PATTERN") do |pattern|
+          if pattern =~ /\/(.*)\//
+            @matchcase = Regexp.new($1)
+          else
+            @matchcase = Regexp.new(pattern, Regexp::IGNORECASE)
+          end
         end
 
         opts.on('-m', '--minitest', "Force use of MiniTest framework") do
@@ -193,6 +209,7 @@ module Turn
         c.runmode   = runmode
         c.format    = outmode
         c.pattern   = pattern
+        c.matchcase = matchcase
         c.framework = framework
       end
 

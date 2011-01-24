@@ -38,11 +38,16 @@ module Turn
       end
       suite = Test::Unit::TestSuite.new(name)
 
+      matchcase = controller.matchcase
+      pattern   = controller.pattern
+
+      if matchcase
+        sub_suites = sub_suites.select{|s| matchcase =~ s.name}
+      end
       sub_suites.sort_by{|s|s.name}.each{|s| suite << s}
 
       suite.tests.each do |c|
-        pattern = controller.pattern
-        c.tests.reject! { |t| pattern !~ t.method_name }
+        c.tests.reject!{ |t| pattern !~ t.method_name }
       end
 
       @t_reporter = controller.reporter

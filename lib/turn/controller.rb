@@ -22,6 +22,10 @@ module Turn
     # match to be eligible to run.
     attr_accessor :pattern
 
+    # Regexp pattern that all test cases must
+    # match to be eligible to run.
+    attr_accessor :matchcase
+
     # Add these folders to the $LOAD_PATH.
     attr_accessor :loadpath
 
