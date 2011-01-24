@@ -35,8 +35,8 @@ module Console
 
       bar = '=' * 78
       if COLORIZE
-        bar = if pass == total then ::ANSI::Code.green bar
-              else ::ANSI::Code.red bar end
+        bar = if pass == total then ::ANSI::Code.green{bar}
+              else ::ANSI::Code.red{bar} end
       end
 
       turn_out.puts bar
@@ -49,7 +49,7 @@ module Console
       method, file = name.scan(%r/^([^\(]+)\(([^\)]+)\)/o).flatten!
       if @t_cur_file != file
         @t_cur_file = file
-        file = COLORIZE ? ::ANSI::Code.yellow(file) : file
+        file = COLORIZE ? ::ANSI::Code.yellow{file} : file
         turn_out.puts file
       end
       turn_out.print "    %-69s" % method
@@ -74,7 +74,7 @@ module Console
         msg << fault.message.gsub("\n","\n\t")
       end
 
-      msg = ::ANSI::Code.magenta msg if COLORIZE
+      msg = ::ANSI::Code.magenta{msg} if COLORIZE
       turn_out.puts msg
     end
 
