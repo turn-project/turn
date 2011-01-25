@@ -1,4 +1,4 @@
-#
+require 'stringio'
 
 # Becuase of some wierdness in MiniTest
 debug, $DEBUG = $DEBUG, false
@@ -48,7 +48,7 @@ module Turn
 
       # route minitests traditional output to nowhere
       # (instead of overriding #puts and #print)
-      @@out = StringIO.new
+      @@out = ::StringIO.new
     end
 
     # Turn calls this method to start the test run.
