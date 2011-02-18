@@ -1,3 +1,8 @@
+== 0.8.2 / 2011-02-19
+  * Add version in code and cli option to diplay it.
+  * Fix for files lookup controller bug
+  * Limit default test matching to *.rb files.
+
 == 0.8.1 / 2010-09-10
   * Fix misspelling of "raised" which prevented proper recording of errors.
   * Fix IsoRunner so it passes error, not just error message.
