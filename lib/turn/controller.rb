@@ -1,6 +1,7 @@
 require 'fileutils'
 
 module Turn
+  require 'turn/version'
   require 'turn/components/suite.rb'
   require 'turn/components/case.rb'
   require 'turn/components/method.rb'

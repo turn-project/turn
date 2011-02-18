@@ -1,7 +1,7 @@
 require 'optparse'
-require 'turn/controller'
 
 module Turn
+  require 'turn/controller'
 
   # Turn - Pretty Unit Test Runner for Ruby
   #
@@ -183,6 +183,11 @@ module Turn
         opts.on('--debug', "turn debug mode on") do
           $VERBOSE = true
           $DEBUG   = true
+        end
+
+        opts.on_tail('--version', "display version") do
+          puts VERSION
+          exit
         end
 
         opts.on_tail('--help', '-h', "display this help information") do
