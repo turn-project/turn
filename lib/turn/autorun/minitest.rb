@@ -14,7 +14,12 @@ class MiniTest::Unit
     filter = if args.first =~ /^(-n|--name)$/ then
                args.shift
                arg = args.shift
-               arg =~ /\/(.*)\// ? Regexp.new($1) : arg
+               if arg =~ /\/(.*)\//
+                 Regexp.new($1)
+               else
+                 # Turn 'sample error1' into 'test_sample_error1'
+                 arg[0..4] == "test_" ? arg.gsub(" ", "_") : "test_" + arg.gsub(" ", "_")
+               end
              else
                /./ # anything - ^test_ already filtered by #tests
              end
@@ -73,7 +78,7 @@ class MiniTest::Unit
                     end)
 
 
-        @@out.print " #{test}"
+        @@out.print " #{test.gsub("test_", "").gsub(/_/, " ")}"
         @@out.print " (%.2fs) " % (Time.now - t)
 
         if @broken
