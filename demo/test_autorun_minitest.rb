@@ -1,6 +1,8 @@
 require 'minitest/unit'
 require 'turn'
 
+MiniTest::Unit.use_natural_language_case_names = true
+
 class SampleCase1 < MiniTest::Unit::TestCase
   def test_sample_pass1
     assert_equal(1,1)
