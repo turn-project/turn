@@ -14,7 +14,6 @@ Bones {
   url          'http://gemcutter.org/gems/turn'
   version      File.read('Version.txt').strip
   ignore_file  '.gitignore'
-  rubyforge.name 'codeforpeople'
 
   exclude      << '^work'
   rdoc.exclude << '^lib'
