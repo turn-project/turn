@@ -1,7 +1,9 @@
-== 0.8.2 / 2011-02-19
+== 0.8.2 / 2011-03-31
   * Add version in code and cli option to diplay it.
   * Fix for files lookup controller bug
   * Limit default test matching to *.rb files.
+  * Show first line from the test file when showing stack traces [F. Morgan Whitney]
+  * Make minitest output compatible with natural language case naming [David Heinemeier Hansson]
 
 == 0.8.1 / 2010-09-10
   * Fix misspelling of "raised" which prevented proper recording of errors.
