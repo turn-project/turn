@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Pease"]
   s.date = %q{2011-03-31}
-  s.default_executable = %q{turn}
   s.description = %q{TURN is a new way to view Test::Unit results. With longer running tests, it
 can be very frustrating to see a failure (....F...) and then have to wait till
 all the tests finish before you can see what the exact failure was. TURN
