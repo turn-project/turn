@@ -90,3 +90,18 @@ end
   save_test(text, 'minitest_autorun_test.rb')
 end
 
+
+def setup_minitest_autorun_with_fail
+  text = <<-HERE
+require 'minitest/unit'
+require 'rubygems'
+require 'turn'
+MiniTest::Unit.autorun
+class TestTest < MiniTest::Unit::TestCase
+  def test_sample_pass
+    assert_equal(0,1)
+  end
+end
+  HERE
+  save_test(text, 'minitest_autorun_test_with_fail.rb')
+end
