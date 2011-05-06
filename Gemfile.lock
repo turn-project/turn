@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    ansi (1.2.5)
     bones (3.6.5)
       little-plugger (>= 1.1.2)
       loquacious (>= 1.7.0)
@@ -13,4 +14,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ansi (>= 1.2.2)
   bones
