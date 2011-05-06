@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/helper.rb'
+require File.dirname(File.expand_path(__FILE__)) + '/helper.rb'
 
 class TestRunners < Test::Unit::TestCase
 

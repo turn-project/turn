@@ -1,10 +1,5 @@
 require 'fileutils'
-
-if RUBY_VERSION < "1.9"
-  require 'test/unit'
-else
-  require 'minitest/unit'
-end
+require 'test/unit'
 
 #
 def turn(*args)
