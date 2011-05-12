@@ -7,6 +7,16 @@ class MiniTest::Unit
   include ANSI::Code
 
   PADDING_SIZE = 4
+  
+  @@use_natural_language_case_names = false
+  def self.use_natural_language_case_names=(boolean)
+    @use_natural_language_case_names = boolean
+  end
+  
+  def self.use_natural_language_case_names?
+    @use_natural_language_case_names
+  end
+  
 
   def run(args = [])
     @verbose = true
@@ -14,7 +24,14 @@ class MiniTest::Unit
     filter = if args.first =~ /^(-n|--name)$/ then
                args.shift
                arg = args.shift
-               arg =~ /\/(.*)\// ? Regexp.new($1) : arg
+               if arg =~ /\/(.*)\//
+                 Regexp.new($1)
+               elsif MiniTest::Unit.use_natural_language_case_names?
+                 # Turn 'sample error1' into 'test_sample_error1'
+                 arg[0..4] == "test_" ? arg.gsub(" ", "_") : "test_" + arg.gsub(" ", "_")
+               else
+                 arg
+               end
              else
                /./ # anything - ^test_ already filtered by #tests
              end
@@ -73,7 +90,8 @@ class MiniTest::Unit
                     end)
 
 
-        @@out.print " #{test}"
+        @@out.print MiniTest::Unit.use_natural_language_case_names? ? 
+          " #{test.gsub("test_", "").gsub(/_/, " ")}" : " #{test}"
         @@out.print " (%.2fs) " % (Time.now - t)
 
         if @broken

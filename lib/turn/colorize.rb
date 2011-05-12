@@ -12,7 +12,8 @@ module Turn
 
   module Colorize
 
-    COLORIZE = defined?(::ANSI::Code) && ENV.has_key?('TERM')
+    COLORLESS_TERMINALS = ['dumb']	
+    COLORIZE = defined?(::ANSI::Code) && ENV.has_key?('TERM') && !COLORLESS_TERMINALS.include?(ENV['TERM'])
 
     def self.red(string)
       COLORIZE ? ::ANSI::Code.red{ string } : string
