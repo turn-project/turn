@@ -5,7 +5,7 @@ debug, $DEBUG = $DEBUG, false
 require 'minitest/unit'
 $DEBUG = debug
 
-Test = MiniTest
+autoload "Test", 'test/unit' #Test = MiniTest
 
 module Turn
 
