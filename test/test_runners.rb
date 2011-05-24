@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/helper.rb'
+require File.dirname(File.expand_path(__FILE__)) + '/helper.rb'
 
 class TestRunners < Test::Unit::TestCase
 
@@ -39,7 +39,18 @@ class TestRunners < Test::Unit::TestCase
       assert result.index('0 errors')
     end
 
-  end
+    def test_autorun_with_fail
+      file = setup_minitest_autorun_with_fail
+      result = `ruby -Ilib #{file} --debug 2>&1`
+      assert result.index('1 failures')
+      assert result.index('0 errors')
+      assert result.scan(/\.rb:\d+:in/).length > 1
 
+      result = `ruby -Ilib #{file} -d 2>&1`
+      assert result.index('1 failures')
+      assert result.index('0 errors')
+      assert result.scan(/\.rb:\d+:in/).length > 1
+    end
+  end
 end
 

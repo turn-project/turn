@@ -1,9 +1,8 @@
-require File.dirname(__FILE__) + '/helper.rb'
+require File.dirname(File.expand_path(__FILE__)) + '/helper.rb'
 
 class TestReporters < Test::Unit::TestCase
 
   begin
-    require 'ansi'
     def test_progress
       file = setup_test('Test')
       result = turn '--progress', file
