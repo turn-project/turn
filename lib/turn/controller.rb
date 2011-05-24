@@ -51,6 +51,9 @@ module Turn
     # Test framework, either :minitest or :testunit
     attr_accessor :framework
 
+    # Enable full backtrace
+    attr_accessor :trace
+
     def verbose? ; @verbose ; end
     def live?    ; @live    ; end
 
@@ -171,7 +174,7 @@ module Turn
           Turn::CueReporter.new($stdout)
         else
           require 'turn/reporters/outline_reporter'
-          Turn::OutlineReporter.new($stdout)
+          Turn::OutlineReporter.new($stdout, :trace => @trace)
         end
       )
     end

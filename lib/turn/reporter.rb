@@ -18,8 +18,9 @@ module Turn
 
     attr :io
 
-    def initialize(io)
+    def initialize(io, opts={})
       @io = io || $stdout
+      @trace = opts[:trace]
     end
 
     # These methods are called in the process of running the tests.

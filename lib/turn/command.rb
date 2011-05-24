@@ -16,6 +16,7 @@ module Turn
   #   -I --loadpath=PATHS   add given PATHS to the $LOAD_PATH
   #   -r --requires=LIBS    require given LIBS before running tests
   #   -m --minitest         Force use of MiniTest framework.
+  #   -t --trace            Turn on invoke/execute tracing, enable full backtrace.
   #
   # RUN MODES
   #      --normal      run all tests in a single process [default]
@@ -64,6 +65,9 @@ module Turn
     # Output mode.
     attr :outmode
 
+    # Enable full backtrace
+    attr :trace
+
     #
     def initialize
       @live      = nil
@@ -75,6 +79,7 @@ module Turn
       @runmode   = nil
       @outmode   = nil
       @framework = RUBY_VERSION >= "1.9" ? :minitest : :testunit
+      @trace     = nil
     end
 
     #
@@ -116,6 +121,10 @@ module Turn
 
         opts.on('-m', '--minitest', "Force use of MiniTest framework") do
           @framework = :minitest
+        end
+
+        opts.on("-t", '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
+          @trace = true
         end
 
         # Turn does not support Test::Unit 2.0+
@@ -216,6 +225,7 @@ module Turn
         c.pattern   = pattern
         c.matchcase = matchcase
         c.framework = framework
+        c.trace     = trace
       end
 
       result = controller.start
