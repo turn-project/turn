@@ -165,7 +165,7 @@ module Turn
           Turn::ProgressReporter.new($stdout)
         when :dotted
           require 'turn/reporters/dot_reporter'
-          Turn::DotReporter.new($stdout)
+          Turn::DotReporter.new($stdout, :trace => @trace)
         when :pretty
           require 'turn/reporters/pretty_reporter'
           Turn::PrettyReporter.new($stdout)
