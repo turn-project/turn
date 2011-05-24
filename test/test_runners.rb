@@ -41,12 +41,12 @@ class TestRunners < Test::Unit::TestCase
 
     def test_autorun_with_fail
       file = setup_minitest_autorun_with_fail
-      result = `ruby -Ilib #{file} --trace 2>&1`
+      result = `ruby -Ilib #{file} --debug 2>&1`
       assert result.index('1 failures')
       assert result.index('0 errors')
       assert result.scan(/\.rb:\d+:in/).length > 1
 
-      result = `ruby -Ilib #{file} -t 2>&1`
+      result = `ruby -Ilib #{file} -d 2>&1`
       assert result.index('1 failures')
       assert result.index('0 errors')
       assert result.scan(/\.rb:\d+:in/).length > 1

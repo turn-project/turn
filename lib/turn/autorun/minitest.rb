@@ -20,7 +20,7 @@ class MiniTest::Unit
 
   def run(args = [])
     @verbose = true
-    options = args.getopts("n:t", "name:", "trace")
+    options = args.getopts("n:d", "name:", "debug")
     filter = if name = options["n"] || options["name"]
                if name =~ /\/(.*)\//
                  Regexp.new($1)
@@ -34,7 +34,7 @@ class MiniTest::Unit
                /./ # anything - ^test_ already filtered by #tests
              end
 
-    @trace = options['t'] || options['trace']
+    @debug = options['d'] || options['debug']
 
     @@out.puts "Loaded suite #{$0.sub(/\.rb$/, '')}\nStarted"
 
@@ -101,7 +101,7 @@ class MiniTest::Unit
           @@out.puts pad(report[:message], 10)
 
           trace = MiniTest::filter_backtrace(report[:exception].backtrace)
-          if @trace
+          if @debug
             @@out.print trace.map{|t| pad(t, 10) }.join("\n")
           else
             @@out.print pad(trace.first, 10)
