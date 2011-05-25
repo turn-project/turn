@@ -66,16 +66,19 @@ module Turn
 
       message = assertion.message
 
-      if assertion.respond_to?(:backtrace)
-        trace = filter_backtrace(assertion.backtrace).first
-      else
-        trace = filter_backtrace(assertion.location).first
-      end
-
+      _trace = if assertion.respond_to?(:backtrace)
+                 filter_backtrace(assertion.backtrace)
+               else
+                 filter_backtrace(assertion.location).first
+               end
       io.puts
-      #io.puts pad(message, 10)
-      io.puts message.tabto(10)
-      io.puts trace.tabto(10)
+      tabsize = 10
+      #io.puts pad(message, tabsize)
+      io.puts message.tabto(tabsize)
+      io.puts _trace.shift.tabto(tabsize)
+      if @trace
+        io.puts _trace.map{|l| l.tabto(tabsize) }.join("\n")
+      end
       #show_captured_output
     end
 
@@ -89,15 +92,19 @@ module Turn
 
       message = exception.message
 
-      if exception.respond_to?(:backtrace)
-        trace = filter_backtrace(exception.backtrace).first
-      else
-        trace = filter_backtrace(exception.location).first
-      end
-
+      _trace = if exception.respond_to?(:backtrace)
+                 filter_backtrace(exception.backtrace)
+               else
+                 filter_backtrace(exception.location)
+               end
+      trace = _trace.shift
       io.puts
-      io.puts message.tabto(10)
-      io.puts trace.tabto(10)
+      tabsize = 10
+      io.puts message.tabto(tabsize)
+      io.puts trace.tabto(tabsize)
+      if @trace
+        io.puts _trace.map{|l| l.tabto(tabsize) }.join("\n")
+      end
     end
 
     # TODO: skip support

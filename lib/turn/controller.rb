@@ -51,6 +51,9 @@ module Turn
     # Test framework, either :minitest or :testunit
     attr_accessor :framework
 
+    # Enable full backtrace
+    attr_accessor :trace
+
     def verbose? ; @verbose ; end
     def live?    ; @live    ; end
 
@@ -162,16 +165,16 @@ module Turn
           Turn::ProgressReporter.new($stdout)
         when :dotted
           require 'turn/reporters/dot_reporter'
-          Turn::DotReporter.new($stdout)
+          Turn::DotReporter.new($stdout, :trace => @trace)
         when :pretty
           require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout)
+          Turn::PrettyReporter.new($stdout, :trace => @trace)
         when :cue
           require 'turn/reporters/cue_reporter'
           Turn::CueReporter.new($stdout)
         else
           require 'turn/reporters/outline_reporter'
-          Turn::OutlineReporter.new($stdout)
+          Turn::OutlineReporter.new($stdout, :trace => @trace)
         end
       )
     end
