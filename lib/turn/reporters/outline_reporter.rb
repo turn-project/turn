@@ -61,7 +61,6 @@ module Turn
       io.puts Colorize.bold(message).tabto(8)
       unless backtrace.empty?
         _backtrace = filter_backtrace(assertion.backtrace)
-        _backtrace << "error hogehoge"
         label = "Assertion at "
         tabsize = 8
         backtrace = label + _backtrace.shift
