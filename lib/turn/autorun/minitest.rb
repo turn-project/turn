@@ -74,7 +74,7 @@ class MiniTest::Unit
 
         @broken = nil
 
-        @@out.print(case inst.run(self)
+        @@out.print(case run_testcase(inst, self)
                     when :pass
                       @broken = false
                       green { pad_with_size "PASS" }
@@ -145,28 +145,15 @@ class MiniTest::Unit
     result
   end
 
-
-  class TestCase
-    # Overwrite #run method so that is uses symbols
-    # as return values rather than characters.
-    def run(runner)
-      result = :pass
-      begin
-        @passed = nil
-        self.setup
-        self.__send__ self.__name__
-        @passed = true
-      rescue Exception => e
-        @passed = false
-        result = runner.puke(self.class, self.__name__, e)
-      ensure
-        begin
-          self.teardown
-        rescue Exception => e
-          result = runner.puke(self.class, self.__name__, e)
-        end
-      end
-      result
+private
+  # A wrapper over MiniTest::Unit::TestCase.run() that returns
+  # :pass whenever the test succeeds (i.e. run() returns "" or ".")
+  def run_testcase(testcase, runner)
+    original_result = testcase.run(runner)
+    if original_result == "" || original_result == "."
+        :pass
+    else
+        original_result
     end
   end
 end
