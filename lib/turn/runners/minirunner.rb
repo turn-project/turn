@@ -53,6 +53,11 @@ module Turn
 
     # Turn calls this method to start the test run.
     def start(args=[])
+      # minitest changed #run in 6023c879cf3d5169953e on April 6th, 2011
+      if ::MiniTest::Unit.respond_to?(:runner=)
+        ::MiniTest::Unit.runner = self
+      end
+      # FIXME: why isn't @test_count set?
       run(args)
       return @turn_suite
     end
@@ -133,6 +138,8 @@ module Turn
     end
 
     # To maintain compatibility with old versions of MiniTest.
+    #
+    # Hey, Ryan Davis wrote this code!
     if ::MiniTest::Unit::VERSION < '2.0'
 
       #attr_accessor :options
