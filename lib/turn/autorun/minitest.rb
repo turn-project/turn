@@ -20,21 +20,21 @@ class MiniTest::Unit
 
   def run(args = [])
     @verbose = true
-
-    filter = if args.first =~ /^(-n|--name)$/ then
-               args.shift
-               arg = args.shift
-               if arg =~ /\/(.*)\//
+    options = args.getopts("n:t", "name:", "trace")
+    filter = if name = options["n"] || options["name"]
+               if name =~ /\/(.*)\//
                  Regexp.new($1)
                elsif MiniTest::Unit.use_natural_language_case_names?
                  # Turn 'sample error1' into 'test_sample_error1'
-                 arg[0..4] == "test_" ? arg.gsub(" ", "_") : "test_" + arg.gsub(" ", "_")
+                 name[0..4] == "test_" ? name.gsub(" ", "_") : "test_" + name.gsub(" ", "_")
                else
-                 arg
+                 name
                end
              else
                /./ # anything - ^test_ already filtered by #tests
              end
+
+    @trace = options['t'] || options['trace']
 
     @@out.puts "Loaded suite #{$0.sub(/\.rb$/, '')}\nStarted"
 
@@ -99,8 +99,13 @@ class MiniTest::Unit
 
           report = @report.last
           @@out.puts pad(report[:message], 10)
-          trace = MiniTest::filter_backtrace(report[:exception].backtrace).first
-          @@out.print pad(trace, 10)
+
+          trace = MiniTest::filter_backtrace(report[:exception].backtrace)
+          if @trace
+            @@out.print trace.map{|t| pad(t, 10) }.join("\n")
+          else
+            @@out.print pad(trace.first, 10)
+          end
 
           @@out.puts
         end

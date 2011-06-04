@@ -55,7 +55,11 @@ module Turn
         list.uniq.each do |testunit|
           message = testunit.fail? ? ' ' + FAIL : ERROR
           message = message + ' ' + testunit.message.tabto(0)
-          message << "\n" + (filter_backtrace(testunit.backtrace).first || '')
+          backtrace = filter_backtrace(testunit.backtrace)
+          message << "\n" + (backtrace.shift || '')
+          if @trace
+            message << "\n" + backtrace.join("\n")
+          end
           report << "\n" << message << "\n"
         end
         report << "\n"
