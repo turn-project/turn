@@ -9,6 +9,13 @@ if RUBY_VERSION >= '1.9'
       setup_test('MiniTest')
       result = turn 'tmp/test.rb'
       assert result.index('PASS')
+      assert result.index('[0m')
+    end
+
+    def test_ruby19_minitest_without_color_on_dumb_terminal
+      setup_test('MiniTest')
+      result = turn_with_term 'dumb', 'tmp/test.rb'
+      assert !result.index('[0m')
     end
 
     def test_ruby19_minitest_force

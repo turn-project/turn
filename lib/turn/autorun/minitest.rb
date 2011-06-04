@@ -1,11 +1,9 @@
 require 'minitest/unit'
 require 'minitest/spec'
 #require 'rubygems'
-require 'ansi'
+require 'turn/colorize'
 
 class MiniTest::Unit
-  include ANSI::Code
-
   PADDING_SIZE = 4
   
   @@use_natural_language_case_names = false
@@ -48,9 +46,9 @@ class MiniTest::Unit
 
     @@out.print "%d tests, " % test_count
     @@out.print "%d assertions, " % assertion_count
-    @@out.print red { "%d failures, " % failures }
-    @@out.print yellow { "%d errors, " % errors }
-    @@out.puts cyan { "%d skips" % skips}
+    @@out.print Turn::Colorize.fail("%d failures, " % failures)
+    @@out.print Turn::Colorize.error("%d errors, " % errors)
+    @@out.puts Turn::Colorize.skip("%d skips" % skips)
 
     return failures + errors if @test_count > 0 # or return nil...
   end
@@ -77,16 +75,16 @@ class MiniTest::Unit
         @@out.print(case run_testcase(inst, self)
                     when :pass
                       @broken = false
-                      green { pad_with_size "PASS" }
+                      Turn::Colorize.pass(pad_with_size "PASS")
                     when :error
                       @broken = true
-                      yellow { pad_with_size "ERROR" }
+                      Turn::Colorize.error(pad_with_size "ERROR")
                     when :fail
                       @broken = true
-                      red { pad_with_size "FAIL" }
+                      Turn::Colorize.fail(pad_with_size "FAIL")
                     when :skip
                       @broken = false
-                      cyan { pad_with_size "SKIP" }
+                      Turn::Colorize.skip(pad_with_size "SKIP")
                     end)
 
 

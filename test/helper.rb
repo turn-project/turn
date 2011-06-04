@@ -17,6 +17,10 @@ def turn2(*args)
   `ruby -Ilib bin/turn -Ilib #{args.join(' ')}`
 end
 
+def turn_with_term(term, *args)
+  `TERM="#{term}" ruby -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
+end
+
 #
 def setup_test(framework, required=false, name=nil)
   text = ''
