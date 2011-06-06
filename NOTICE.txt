@@ -1,0 +1,35 @@
+= Copyright Noitces
+
+== Turn
+
+Copyright:: (c) 2006-2008 Tim Pease
+License:: MIT License 
+
+See license/MIT-LICENSE.txt for license details.
+
+
+== MiniTest
+
+Copyright:: (c) Ryan Davis, Seattle.rb
+License:: MIT License 
+
+See license/MIT-LICENSE.txt for license details.
+
+Turn tightly couples with MiniTest which means in some cases
+MiniTest code might be reused and modified so Turn will
+interface with MiniTest effectively.
+
+
+== TestUnit
+
+Copyright:: (c) Nathaniel Talbott
+License:: The Ruby License
+
+This software is distributed under the same terms as ruby.
+
+See license/RUBY-LICENSE.txt for detiails.
+
+Turn tightly couples with TesUnit which means in some cases
+TestUnit code might be reused and modified so Turn will
+interface with TestUnit effectively.
+
