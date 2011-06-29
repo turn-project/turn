@@ -20,6 +20,7 @@ Well, the only colors are green and red, but that is still color.
 
 General usage provides better test output. Here is some sample output:
 
+<pre>
   TestMyClass
       test_alt                                                            PASS
       test_alt_eq                                                         PASS
@@ -36,6 +37,7 @@ General usage provides better test output. Here is some sample output:
     pass: 7,  fail: 1,  error: 0
     total: 15 tests with 42 assertions in 0.018 seconds
   ============================================================================
+</pre>
 
 Turn also provides solo and cross test modes when run from the *turn* commandline
 application.
