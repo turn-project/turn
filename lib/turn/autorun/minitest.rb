@@ -8,11 +8,11 @@ class MiniTest::Unit
   
   @@use_natural_language_case_names = false
   def self.use_natural_language_case_names=(boolean)
-    @use_natural_language_case_names = boolean
+    @@use_natural_language_case_names = boolean
   end
   
   def self.use_natural_language_case_names?
-    @use_natural_language_case_names
+    @@use_natural_language_case_names
   end
   
 
