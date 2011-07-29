@@ -18,7 +18,18 @@ class MiniTest::Unit
 
   def run(args = [])
     @verbose = true
-    options = args.getopts("n:t", "name:", "trace")
+
+    # args[0] contains the path to test definitions (i.e. something
+    # like "test/**/*_test.rb"). It does not look like a valid
+    # command-line option to getopts() and causes it to stop processing
+    # and just return. Remove it so that options like "name" and "trace"
+    # are properly processed.
+    # NOTE: I'd rather use Array.slice() here, but args returned
+    # object does not have getopts() method.
+    testopts = args.clone
+    testopts.delete_at(0)
+
+    options = testopts.getopts("n:t", "name:", "trace")
     filter = if name = options["n"] || options["name"]
                if name =~ /\/(.*)\//
                  Regexp.new($1)
