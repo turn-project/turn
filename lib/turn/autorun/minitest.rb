@@ -12,7 +12,7 @@ class MiniTest::Unit
   end
   
   def self.use_natural_language_case_names?
-    @use_natural_language_case_names
+    @use_natural_language_case_names ||= false
   end
   
 
