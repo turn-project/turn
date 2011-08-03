@@ -29,7 +29,7 @@ class MiniTest::Unit
     testopts = args.clone
     testopts.delete_at(0)
 
-    options = testopts.getopts("n:t", "name:", "trace")
+    options = testopts.getopts("n:t", "name:", "trace", "tracetype:")
     filter = if name = options["n"] || options["name"]
                if name =~ /\/(.*)\//
                  Regexp.new($1)
@@ -44,6 +44,7 @@ class MiniTest::Unit
              end
 
     @trace = options['t'] || options['trace']
+	@trace_type = options['tracetype'] || "application"
 
     @@out.puts "Loaded suite #{$0.sub(/\.rb$/, '')}\nStarted"
 
@@ -109,7 +110,20 @@ class MiniTest::Unit
           report = @report.last
           @@out.puts pad(report[:message], 10)
 
-          trace = MiniTest::filter_backtrace(report[:exception].backtrace)
+		  # If we're using Rails we can show only interesting for us part of the backtrace
+		  if defined?(Rails) && Rails.respond_to?(:backtrace_cleaner)
+			case @trace_type
+			  when "application"
+				trace = MiniTest::filter_backtrace(Rails.backtrace_cleaner.clean(report[:exception].backtrace, :silent))
+			  when "framework"
+				trace = MiniTest::filter_backtrace(Rails.backtrace_cleaner.clean(report[:exception].backtrace, :noise))
+			  when "full"
+				trace = MiniTest::filter_backtrace(report[:exception].backtrace)
+			end
+		  else
+			trace = MiniTest::filter_backtrace(report[:exception].backtrace)
+		  end
+
           if @trace
             @@out.print trace.map{|t| pad(t, 10) }.join("\n")
           else
