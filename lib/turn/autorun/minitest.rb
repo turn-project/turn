@@ -18,7 +18,18 @@ class MiniTest::Unit
 
   def run(args = [])
     @verbose = true
-    options = args.getopts("n:t", "name:", "trace")
+
+    # args[0] contains the path to test definitions (i.e. something
+    # like "test/**/*_test.rb"). It does not look like a valid
+    # command-line option to getopts() and causes it to stop processing
+    # and just return. Remove it so that options like "name" and "trace"
+    # are properly processed.
+    # NOTE: I'd rather use Array.slice() here, but args returned
+    # object does not have getopts() method.
+    testopts = args.clone
+    testopts.delete_at(0)
+
+    options = testopts.getopts("n:t", "name:", "trace", "tracetype:")
     filter = if name = options["n"] || options["name"]
                if name =~ /\/(.*)\//
                  Regexp.new($1)
@@ -33,6 +44,7 @@ class MiniTest::Unit
              end
 
     @trace = options['t'] || options['trace']
+    @tracetype = options['tracetype'] || "application"
 
     @@out.puts "Loaded suite #{$0.sub(/\.rb$/, '')}\nStarted"
 
@@ -98,11 +110,28 @@ class MiniTest::Unit
           report = @report.last
           @@out.puts pad(report[:message], 10)
 
-          trace = MiniTest::filter_backtrace(report[:exception].backtrace)
-          if @trace
-            @@out.print trace.map{|t| pad(t, 10) }.join("\n")
+          # If we're using Rails we can show only interesting for us part of the backtrace
+          if defined?(Rails) && Rails.respond_to?(:backtrace_cleaner)
+            case @tracetype
+            when "application"
+              filtered_backtrace = MiniTest::filter_backtrace(Rails.backtrace_cleaner.clean(report[:exception].backtrace, :silent))
+            when "framework"
+              filtered_backtrace = MiniTest::filter_backtrace(Rails.backtrace_cleaner.clean(report[:exception].backtrace, :noise))
+            when "full"
+              filtered_backtrace = MiniTest::filter_backtrace(report[:exception].backtrace)
+            else
+              @@out.puts "Unidentified trace type, setting to full"
+              @@out.puts @tracetype
+              filtered_backtrace = MiniTest::filter_backtrace(report[:exception].backtrace)
+            end
           else
-            @@out.print pad(trace.first, 10)
+            filtered_backtrace = MiniTest::filter_backtrace(report[:exception].backtrace)
+          end
+
+          if @trace
+            @@out.print filtered_backtrace.map{|t| pad(t, 10) }.join("\n")
+          else
+            @@out.print pad(filtered_backtrace.first, 10)
           end
 
           @@out.puts

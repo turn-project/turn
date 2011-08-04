@@ -54,6 +54,9 @@ module Turn
     # Enable full backtrace
     attr_accessor :trace
 
+    # Selecting trace type (Rails)
+    attr_accessor :tracetype
+
     def verbose? ; @verbose ; end
     def live?    ; @live    ; end
 
@@ -66,15 +69,16 @@ module Turn
 
     #
     def initialize_defaults
-      @loadpath ||= ['lib']
-      @tests    ||= ["test/**/{test,}*{,test}.rb"]
-      @exclude  ||= []
-      @requires ||= []
-      @live     ||= false
-      @log      ||= true
-      #@format  ||= nil
-      #@runner   ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
-      @pattern  ||= /.*/
+      @loadpath  ||= ['lib']
+      @tests     ||= ["test/**/{test,}*{,test}.rb"]
+      @exclude   ||= []
+      @requires  ||= []
+      @live      ||= false
+      @log       ||= true
+      #@format    ||= nil
+      #@runner    ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
+      @pattern   ||= /.*/
+      @tracetype ||= "application"
     end
 
     # Collect test configuation.

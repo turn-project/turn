@@ -68,6 +68,9 @@ module Turn
     # Enable full backtrace
     attr :trace
 
+    # Selecting trace type (Rails)
+    attr :tracetype
+
     #
     def initialize
       @live      = nil
@@ -80,6 +83,7 @@ module Turn
       @outmode   = nil
       @framework = RUBY_VERSION >= "1.9" ? :minitest : :testunit
       @trace     = nil
+      @tracetype = nil
     end
 
     #
@@ -125,6 +129,11 @@ module Turn
 
         opts.on("-t", '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
           @trace = true
+        end
+
+        opts.on('--tracetype=TYPE', 'for RAILS - select "application" backtrace (default),
+                                     "framework" backtrace or "full" backtrace') do |type|
+          @tracetype = type
         end
 
         # Turn does not support Test::Unit 2.0+
@@ -226,6 +235,7 @@ module Turn
         c.matchcase = matchcase
         c.framework = framework
         c.trace     = trace
+        c.tracetype = tracetype
       end
 
       result = controller.start
