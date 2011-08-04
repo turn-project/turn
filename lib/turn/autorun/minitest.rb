@@ -44,7 +44,7 @@ class MiniTest::Unit
              end
 
     @trace = options['t'] || options['trace']
-	@trace_type = options['tracetype'] || "application"
+    @tracetype = options['tracetype'] || "application"
 
     @@out.puts "Loaded suite #{$0.sub(/\.rb$/, '')}\nStarted"
 
@@ -110,24 +110,28 @@ class MiniTest::Unit
           report = @report.last
           @@out.puts pad(report[:message], 10)
 
-		  # If we're using Rails we can show only interesting for us part of the backtrace
-		  if defined?(Rails) && Rails.respond_to?(:backtrace_cleaner)
-			case @trace_type
-			  when "application"
-				trace = MiniTest::filter_backtrace(Rails.backtrace_cleaner.clean(report[:exception].backtrace, :silent))
-			  when "framework"
-				trace = MiniTest::filter_backtrace(Rails.backtrace_cleaner.clean(report[:exception].backtrace, :noise))
-			  when "full"
-				trace = MiniTest::filter_backtrace(report[:exception].backtrace)
-			end
-		  else
-			trace = MiniTest::filter_backtrace(report[:exception].backtrace)
-		  end
+          # If we're using Rails we can show only interesting for us part of the backtrace
+          if defined?(Rails) && Rails.respond_to?(:backtrace_cleaner)
+            case @tracetype
+            when "application"
+              filtered_backtrace = MiniTest::filter_backtrace(Rails.backtrace_cleaner.clean(report[:exception].backtrace, :silent))
+            when "framework"
+              filtered_backtrace = MiniTest::filter_backtrace(Rails.backtrace_cleaner.clean(report[:exception].backtrace, :noise))
+            when "full"
+              filtered_backtrace = MiniTest::filter_backtrace(report[:exception].backtrace)
+            else
+              @@out.puts "Unidentified trace type, setting to full"
+              @@out.puts @tracetype
+              filtered_backtrace = MiniTest::filter_backtrace(report[:exception].backtrace)
+            end
+          else
+            filtered_backtrace = MiniTest::filter_backtrace(report[:exception].backtrace)
+          end
 
           if @trace
-            @@out.print trace.map{|t| pad(t, 10) }.join("\n")
+            @@out.print filtered_backtrace.map{|t| pad(t, 10) }.join("\n")
           else
-            @@out.print pad(trace.first, 10)
+            @@out.print pad(filtered_backtrace.first, 10)
           end
 
           @@out.puts
