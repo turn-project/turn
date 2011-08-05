@@ -29,7 +29,7 @@ class MiniTest::Unit
     testopts = args.clone
     testopts.delete_at(0)
 
-    options = testopts.getopts("n:t", "name:", "trace", "tracetype:")
+    options = testopts.getopts("n:", "name:", "notrace", "tracetype:")
     filter = if name = options["n"] || options["name"]
                if name =~ /\/(.*)\//
                  Regexp.new($1)
@@ -43,7 +43,7 @@ class MiniTest::Unit
                /./ # anything - ^test_ already filtered by #tests
              end
 
-    @trace = options['t'] || options['trace']
+    @trace = !options['notrace']
     @tracetype = options['tracetype'] || "application"
 
     @@out.puts "Loaded suite #{$0.sub(/\.rb$/, '')}\nStarted"

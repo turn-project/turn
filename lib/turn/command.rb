@@ -115,7 +115,7 @@ module Turn
           end
         end
 
-        opts.on('-t', '--testcase=PATTERN', "only run testcases that match PATTERN") do |pattern|
+        opts.on('--testcase=PATTERN', "only run testcases that match PATTERN") do |pattern|
           if pattern =~ /\/(.*)\//
             @matchcase = Regexp.new($1)
           else
@@ -127,11 +127,14 @@ module Turn
           @framework = :minitest
         end
 
-        opts.on("-t", '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
-          @trace = true
+        #opts.on("-t", '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
+        #  @trace = true
+        #end
+        opts.on('--notrace', 'Disable showing backtrace in case of failure/error') do
+          @trace = false
         end
 
-        opts.on('--tracetype=TYPE', 'for RAILS - select "application" backtrace (default),
+        opts.on('--tracetype=TYPE', 'For RAILS - select "application" backtrace (default),
                                      "framework" backtrace or "full" backtrace') do |type|
           @tracetype = type
         end

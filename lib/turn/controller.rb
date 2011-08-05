@@ -78,6 +78,7 @@ module Turn
       #@format    ||= nil
       #@runner    ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
       @pattern   ||= /.*/
+      @trace     ||= true
       @tracetype ||= "application"
     end
 
