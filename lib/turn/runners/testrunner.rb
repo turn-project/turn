@@ -14,22 +14,20 @@ end
 
 module Turn
 
-  # = TestUnit TestRunner
+  # Turn's Test::Unit console test runner.
   #
   class TestRunner < ::Test::Unit::UI::Console::TestRunner
 
-    def initialize(controller)
-      output_level = 2 # 2-NORMAL 3-VERBOSE
+    #
+    def initialize(suite, output_level, stdout=$stdout)
+      turn_config = Turn.config
 
-      controller.loadpath.each{ |path| $: << path } unless controller.live?
-      controller.requires.each{ |path| require(path) }
+      #output_level = 2 # 2-NORMAL 3-VERBOSE
 
-      files = [controller.files].flatten
-      files.each{ |path| require(path) }   
+      name = turn_config.suite_name
 
-      # TODO: Better name ?
-      name = files.map{ |path| File.dirname(path).sub(Dir.pwd+'/','') }.uniq.join(',')
-
+      # TODO: instead of building up a new suite, filter the suite
+      # passed into initialize.
       sub_suites = []
       ObjectSpace.each_object(Class) do |klass|
         if(Test::Unit::TestCase > klass)
@@ -38,8 +36,8 @@ module Turn
       end
       suite = Test::Unit::TestSuite.new(name)
 
-      matchcase = controller.matchcase
-      pattern   = controller.pattern
+      matchcase = turn_config.matchcase
+      pattern   = turn_config.pattern
 
       if matchcase
         sub_suites = sub_suites.select{|s| matchcase =~ s.name}
@@ -50,9 +48,9 @@ module Turn
         c.tests.reject!{ |t| pattern !~ t.method_name }
       end
 
-      @t_reporter = controller.reporter
+      @t_reporter = turn_config.reporter
 
-      super(suite, output_level, $stdout)
+      super(suite, output_level, stdout)
     end
 
     # Is this needed?
@@ -168,4 +166,3 @@ module Turn
   end#class TestRunner
 
 end#module Turn
-

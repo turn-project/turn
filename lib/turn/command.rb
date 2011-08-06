@@ -214,7 +214,7 @@ module Turn
 
       tests = ARGV.empty? ? nil : ARGV.dup
 
-      controller = Turn::Controller.new do |c|
+      config = Turn::Configuration.new do |c|
         c.live      = live
         c.log       = log
         c.loadpath  = loadpath
@@ -227,6 +227,8 @@ module Turn
         c.framework = framework
         c.trace     = trace
       end
+
+      controller = Turn::Controller.new(config)
 
       result = controller.start
 

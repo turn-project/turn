@@ -1,7 +1,9 @@
 require 'minitest/unit'
 require 'turn'
 
-MiniTest::Unit.use_natural_language_case_names = true
+Turn.config do |c|
+  c.natural = true
+end
 
 class SampleCase1 < MiniTest::Unit::TestCase
   def test_sample_pass1
@@ -15,7 +17,7 @@ class SampleCase1 < MiniTest::Unit::TestCase
     assert_equal(1,2)
   end
   def test_sample_fail2
-    assert_include(1,[])
+    assert_includes(1,[])
   end
 
   def test_sample_error1

@@ -6,12 +6,19 @@ module Turn
   require 'turn/components/case.rb'
   require 'turn/components/method.rb'
 
-  # = Controller
+  # Configure Turn
+  def self.config(&block)
+    @config ||= Configuration.new
+    block.call(@config) if block
+    @config
+  end
+
+  #
   #
   #--
   # TODO: Add support to test run loggging.
   #++
-  class Controller
+  class Configuration
 
     # List of if file names or glob pattern of tests to run.
     attr_accessor :tests
@@ -54,8 +61,12 @@ module Turn
     # Enable full backtrace
     attr_accessor :trace
 
+    # Use natural language case names.
+    attr_accessor :natural
+
     def verbose? ; @verbose ; end
     def live?    ; @live    ; end
+    def natural? ; @natural ; end
 
   private
 
@@ -66,15 +77,19 @@ module Turn
 
     #
     def initialize_defaults
-      @loadpath ||= ['lib']
-      @tests    ||= ["test/**/{test,}*{,test}.rb"]
-      @exclude  ||= []
-      @requires ||= []
-      @live     ||= false
-      @log      ||= true
-      #@format  ||= nil
+      @loadpath  ||= ['lib']
+      @tests     ||= ["test/**/{test,}*{,test}.rb"]
+      @exclude   ||= []
+      @requires  ||= []
+      @live      ||= false
+      @log       ||= true
+      #@format   ||= nil
       #@runner   ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
-      @pattern  ||= /.*/
+      @matchcase ||= nil
+      @pattern   ||= /.*/
+      @natural   ||= false
+
+      @files = nil  # reset files just in case
     end
 
     # Collect test configuation.
@@ -137,59 +152,86 @@ module Turn
         ex = ex.flatten.reject{ |f| File.directory?(f) }
 
         (fs - ex).uniq.map{ |f| File.expand_path(f) }
-      )
+      ).flatten
     end
 
-    def start
-      @files = nil  # reset files just in case
-
-      if files.empty?
-        $stderr.puts "No tests."
-        return
-      end
-
-      testrun = runner.new(self)
-
-      testrun.start
+    # TODO: Better name ?
+    def suite_name
+      files.map{ |path| File.dirname(path).sub(Dir.pwd+'/','') }.uniq.join(',')
     end
 
     # Select reporter based on output mode.
     def reporter
       @reporter ||= (
+        opts = { :trace=>trace, :natural=>natural? }
         case format
         when :marshal
           require 'turn/reporters/marshal_reporter'
-          Turn::MarshalReporter.new($stdout)
+          Turn::MarshalReporter.new($stdout, opts)
         when :progress
           require 'turn/reporters/progress_reporter'
-          Turn::ProgressReporter.new($stdout)
+          Turn::ProgressReporter.new($stdout, opts)
         when :dotted
           require 'turn/reporters/dot_reporter'
-          Turn::DotReporter.new($stdout, :trace => @trace)
+          Turn::DotReporter.new($stdout, opts)
         when :pretty
           require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, :trace => @trace)
+          Turn::PrettyReporter.new($stdout, opts)
         when :cue
           require 'turn/reporters/cue_reporter'
-          Turn::CueReporter.new($stdout)
+          Turn::CueReporter.new($stdout, opts)
         else
           require 'turn/reporters/outline_reporter'
-          Turn::OutlineReporter.new($stdout, :trace => @trace)
+          Turn::OutlineReporter.new($stdout, opts)
         end
       )
+    end
+
+  end
+
+  # = Controller
+  #
+  class Controller
+
+    #
+    def initialize(config=Turn.config)
+      @config = config
+    end
+
+    #
+    attr :config
+
+    #
+    def start
+      if config.files.empty?
+        $stderr.puts "No tests."
+        return
+      end
+
+      setup
+
+      testrun = runner.new
+      testrun.start
+    end
+
+    #
+    def setup
+      config.loadpath.each{ |path| $: << path } unless live?
+      config.requires.each{ |path| require(path) }
+      config.files.each{ |path| require(path) }
     end
 
     # # Insatance of Runner, selected based on format and runmode.
     def runner
       @runner ||= (
-        case framework
+        case config.framework
         when :minitest
           require 'turn/runners/minirunner'
         else
           require 'turn/runners/testrunner'
         end
 
-        case runmode
+        case config.runmode
         when :marshal
           if framework == :minitest
             Turn::MiniRunner
@@ -215,4 +257,3 @@ module Turn
   end
 
 end
-
