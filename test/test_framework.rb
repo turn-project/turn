@@ -9,7 +9,7 @@ if RUBY_VERSION >= '1.9'
       setup_test('MiniTest')
       result = turn 'tmp/test.rb'
       assert result.index('PASS')
-      assert result.index('[0m')
+      assert result.index('[0m') if $ansi
     end
 
     def test_ruby19_minitest_without_color_on_dumb_terminal

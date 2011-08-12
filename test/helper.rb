@@ -90,8 +90,9 @@ end
 #
 def setup_minitest_autorun
   text = <<-HERE
-require 'minitest/unit'
+require 'turn'
 MiniTest::Unit.autorun
+#require 'minitest/unit'
 class TestTest < MiniTest::Unit::TestCase
   def test_sample_pass
     assert_equal(1,1)
@@ -102,12 +103,15 @@ end
 end
 
 
-def setup_minitest_autorun_with_fail
+def setup_minitest_autorun_with_trace
   text = <<-HERE
-require 'minitest/unit'
-require 'rubygems'
+#require 'minitest/unit'
+#require 'rubygems'
 require 'turn'
 MiniTest::Unit.autorun
+Turn.config do |c|
+  c.trace = true
+end
 class TestTest < MiniTest::Unit::TestCase
   def test_sample_pass
     assert_equal(0,1)
