@@ -1,7 +1,9 @@
 require 'fileutils'
 
 module Turn
+
   require 'turn/version'
+  require 'turn/autoload'
   require 'turn/components/suite.rb'
   require 'turn/components/case.rb'
   require 'turn/components/method.rb'
@@ -216,7 +218,7 @@ module Turn
 
     #
     def setup
-      config.loadpath.each{ |path| $: << path } unless live?
+      config.loadpath.each{ |path| $: << path } unless config.live?
       config.requires.each{ |path| require(path) }
       config.files.each{ |path| require(path) }
     end
@@ -233,7 +235,7 @@ module Turn
 
         case config.runmode
         when :marshal
-          if framework == :minitest
+          if config.framework == :minitest
             Turn::MiniRunner
           else
             Turn::TestRunner
@@ -245,7 +247,7 @@ module Turn
           require 'turn/runners/crossrunner'
           Turn::CrossRunner
         else
-          if framework == :minitest
+          if config.framework == :minitest
             Turn::MiniRunner
           else
             Turn::TestRunner

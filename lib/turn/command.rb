@@ -123,7 +123,7 @@ module Turn
           @framework = :minitest
         end
 
-        opts.on("-t", '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
+        opts.on("-T", '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
           @trace = true
         end
 
@@ -212,9 +212,10 @@ module Turn
 
       @loadpath = ['lib'] if loadpath.empty?
 
-      tests = ARGV.empty? ? nil : ARGV.dup
+      tests = ARGV.empty? ? nil : argv.dup
 
-      config = Turn::Configuration.new do |c|
+      #config = Turn::Configuration.new do |c|
+      config = Turn.config do |c|
         c.live      = live
         c.log       = log
         c.loadpath  = loadpath

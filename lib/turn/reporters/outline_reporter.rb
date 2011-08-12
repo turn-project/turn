@@ -66,14 +66,14 @@ module Turn
 
       io.puts(" #{FAIL}")
       io.puts Colorize.bold(message).tabto(8)
+
       unless backtrace.empty?
-        _backtrace = filter_backtrace(assertion.backtrace)
         label = "Assertion at "
         tabsize = 8
-        backtrace = label + _backtrace.shift
-        io.puts(backtrace.tabto(tabsize))
+        backtrace1 = label + backtrace.shift
+        io.puts(backtrace1.tabto(tabsize))
         if @trace
-          io.puts _backtrace.map{|l| l.tabto(label.length + tabsize) }.join("\n")
+          io.puts backtrace.map{|l| l.tabto(label.length + tabsize) }.join("\n")
         end
       end
       show_captured_output

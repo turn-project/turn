@@ -1,11 +1,9 @@
 require 'stringio'
 
 # Becuase of some wierdness in MiniTest
-debug, $DEBUG = $DEBUG, false
-require 'minitest/unit'
-$DEBUG = debug
-
-autoload "Test", 'test/unit' #Test = MiniTest
+#debug, $DEBUG = $DEBUG, false
+#require 'minitest/unit'
+#$DEBUG = debug
 
 module Turn
 
@@ -115,12 +113,10 @@ module Turn
       super(klass, meth, err)
     end
 
-=begin
     # To maintain compatibility with old versions of MiniTest.
     #
     # Hey, Ryan Davis wrote this code!
-    if ::MiniTest::Unit::VERSION < '2.0'
-
+    if ::MiniTest::Unit::VERSION < '2.0'    
       #attr_accessor :options
 
       #
@@ -145,7 +141,6 @@ module Turn
       end
 
     end
-=end
 
   end
 

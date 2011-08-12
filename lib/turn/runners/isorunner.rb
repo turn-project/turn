@@ -19,14 +19,15 @@ module Turn
 
   private
 
-    def initialize(controller)
-      @controller = controller
-      @reporter   = controller.reporter
+    def initialize
+      @config = Turn.config
+
+      @reporter = @config.reporter
       #yield(self) if block_given?
-      @loadpath = controller.loadpath
-      @requires = controller.requires
-      @live     = controller.live?
-      @minitest = controller.framework == :minitest
+      @loadpath = @config.loadpath
+      @requires = @config.requires
+      @live     = @config.live?
+      @minitest = @config.framework == :minitest
     end
 
   public
@@ -36,7 +37,7 @@ module Turn
     #
     def start
       suite = TestSuite.new
-      testruns = @controller.files.collect do |file|
+      testruns = @config.files.collect do |file|
         name = file.sub(Dir.pwd+'/','')
         suite.new_case(name, file)
       end
@@ -95,7 +96,8 @@ module Turn
         files = kase.files
 
         # remove any unexpected output injected at the beginning
-        yaml = out[out.index(/^---/)..-1]
+        b = out.index(/^---/)
+        yaml = out[b..-1]
         sub_suite = YAML.load(yaml)
 
         # TODO: How to handle pairs?
@@ -164,4 +166,3 @@ module Turn
   end#class IsoRunner
 
 end#module Turn
-

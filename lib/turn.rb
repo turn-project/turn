@@ -6,6 +6,8 @@ module Turn
   end
 end
 
+require 'turn/autoload'
+
 unless defined?(Turn::Command)
   if Turn.minitest?
     require 'turn/autorun/minitest'
@@ -13,7 +15,5 @@ unless defined?(Turn::Command)
   else
     require 'turn/autorun/testunit'
   end
-  #autoload :Test,     'turn/autorun/testunit'
-  #autoload :MiniTest, 'turn/autorun/minitest'
 end
 

@@ -15,8 +15,8 @@ module Turn
     def start
       suite = TestSuite.new
 
-      files = @controller.files
-      viles = @controller.files # TODO: make selectable ?
+      files = @config.files
+      viles = @config.files # TODO: make selectable ?
 
       #files = files.select{ |f| File.extname(f) == '.rb' and File.file?(f) }
       #viles = viles.select{ |f| File.extname(f) == '.rb' and File.file?(f) }

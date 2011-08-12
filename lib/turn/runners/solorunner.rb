@@ -3,6 +3,5 @@ module Turn
 
   class SoloRunner < IsoRunner
   end
-
 end
 
