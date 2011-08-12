@@ -1,8 +1,8 @@
-= TURN - Test::Unit Reporter (New)
+# TURN - Test::Unit Reporter (New)
     by Tim Pease
     http://codeforpeople.rubyforge.org/turn
 
-== DESCRIPTION:
+## DESCRIPTION:
 
 TURN is a new way to view Test::Unit results. With longer running tests, it
 can be very frustrating to see a failure (....F...) and then have to wait till
@@ -16,7 +16,7 @@ Well, the only colors are green and red, but that is still color.
 
 <b>Intersted in imporving Turn?</b> Please read this[https://github.com/TwP/turn/wiki/Implementation].
 
-== FEATURES:
+## FEATURES:
 
 General usage provides better test output. Here is some sample output:
 
@@ -42,16 +42,16 @@ General usage provides better test output. Here is some sample output:
 Turn also provides solo and cross test modes when run from the *turn* commandline
 application.
 
-== SYNOPSIS:
+## SYNOPSIS:
 
 Turn can be using from the command-line or via require. The command-line tool
 offers additional options for how one runs tests.
 
-=== Command Line
+### Command Line
 
 You can use the *turn* executable in place of the *ruby* interpreter.
 
-  turn -Ilib test/test_all.rb
+    $ turn -Ilib test/test_all.rb
 
 This will invoke the ruby interpreter and automatically require the turn
 formatting library. All command line arguments are passed "as is" to the
@@ -59,25 +59,25 @@ ruby interpreter.
 
 To use the solo runner.
 
-  turn --solo -Ilib test/
+    $ turn --solo -Ilib test/
 
 This will run all tests in the test/ directory in a separate process.
 Likewise for the cross runner.
 
-  turn --cross -Ilib test/
+    $ turn --cross -Ilib test/
 
 This will run every pairing of tests in a separate process.
 
-=== Require
+### Require
 
 Simply require the TURN package from within your test suite.
 
-  require 'turn'
+    $ require 'turn'
 
 This will configure Test::Unit to use TURN formatting for displaying test
 restuls. A better line to use, though, is the following:
 
-  begin; require 'turn'; rescue LoadError; end
+    begin; require 'turn'; rescue LoadError; end
 
 When you distribute your code, the test suite can be run without requiring
 the end user to install the TURN package.
@@ -85,15 +85,15 @@ the end user to install the TURN package.
 For a Rails application, put the require line into the 'test/test_helper.rb'
 scipt. Now your Rails tests will use TURN formatting.
 
-== REQUIREMENTS:
+## REQUIREMENTS:
 
 * ansi 1.1+ (for colorized output and progressbar output mode)
 
-== INSTALL:
+## INSTALL:
 
 * sudo gem install turn
 
-== LICENSE:
+## LICENSE:
 
 MIT License
 
