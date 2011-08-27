@@ -137,7 +137,7 @@ module Turn
       pass    = total - failure - error
 
       bar = '=' * 78
-      if COLORIZE
+      if colorize?
         bar = if pass == total then Colorize.green(bar)
               else Colorize.red(bar) end
       end
