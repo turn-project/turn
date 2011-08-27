@@ -67,14 +67,14 @@ module Console
       when ::Test::Unit::Error
         msg = "\t"
         msg << fault.to_s.split("\n")[2..-1].join("\n\t")
-        msg = ::ANSI::Code.magenta(msg) if COLORIZE
+        msg = ::ANSI::Code.magenta(msg) if colorize?
         @t_test.error!(msg)
         @t_reporter.error(msg)
       when ::Test::Unit::Failure
         msg = "\t"
         msg << fault.location[0] << "\n\t"
         msg << fault.message.gsub("\n","\n\t")
-        msg = ::ANSI::Code.magenta(msg) if COLORIZE
+        msg = ::ANSI::Code.magenta(msg) if colorize?
         @t_test.fail!(msg)
         @t_reporter.fail(msg)
       end

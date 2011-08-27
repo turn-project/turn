@@ -9,13 +9,27 @@ if RUBY_VERSION >= '1.9'
       setup_test('MiniTest')
       result = turn 'tmp/test.rb'
       assert result.index('PASS')
-      assert result.index('[0m') if $ansi
     end
 
-    def test_ruby19_minitest_without_color_on_dumb_terminal
-      setup_test('MiniTest')
-      result = turn_with_term 'dumb', 'tmp/test.rb'
-      assert !result.index('[0m')
+    def test_ruby19_minitest_color
+      term, stdout = ENV['TERM'], $stdout
+      $stdout = $stdout.dup
+      def $stdout.tty?
+        true
+      end
+      ENV['TERM'] = 'xterm'
+      assert_equal true, Turn::Colorize.colorize?
+      ENV['TERM'] = 'dumb'
+      assert_equal false, Turn::Colorize.colorize?
+      ENV['TERM'] = nil
+      assert_equal false, Turn::Colorize.colorize?
+      ENV['TERM'] = 'xterm'
+      def $stdout.tty?
+        false
+      end
+      assert_equal false, Turn::Colorize.colorize?
+    ensure
+      ENV['TERM'], $stdout = term, stdout
     end
 
     def test_ruby19_minitest_force
