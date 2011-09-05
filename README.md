@@ -83,7 +83,7 @@ When you distribute your code, the test suite can be run without requiring
 the end user to install the TURN package.
 
 For a Rails application, put the require line into the 'test/test_helper.rb'
-scipt. Now your Rails tests will use TURN formatting.
+script. Now your Rails tests will use TURN formatting.
 
 ## REQUIREMENTS:
 
