@@ -14,7 +14,7 @@ If you have the 'ansi' gem installed, then TURN output will be displayed in
 wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
 
-<b>Intersted in imporving Turn?</b> Please read this[https://github.com/TwP/turn/wiki/Implementation].
+<b>Interested in improving Turn?</b> Please read this[https://github.com/TwP/turn/wiki/Implementation].
 
 ## FEATURES:
 
@@ -87,7 +87,7 @@ scipt. Now your Rails tests will use TURN formatting.
 
 ## REQUIREMENTS:
 
-* ansi 1.1+ (for colorized output and progressbar output mode)
+* ansi 1.1+ (for colorized output and progress bar output mode)
 
 ## INSTALL:
 
@@ -117,4 +117,3 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
