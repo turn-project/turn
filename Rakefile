@@ -16,6 +16,7 @@ Bones {
   ignore_file  '.gitignore'
 
   exclude      << '^work'
+  include      << 'lib/turn/autoload'
   rdoc.exclude << '^lib'
 
   use_gmail
