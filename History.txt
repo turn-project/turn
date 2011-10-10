@@ -1,3 +1,28 @@
+== 0.8.3 / 2011-10-10
+  * Merge pull request #56 from codeinvain/master
+  * Merge pull request #52 from markburns/patch-2
+  * Merge pull request #51 from markburns/patch-1
+  * Merge pull request #50 from tpope/stdout_tty
+  * Switch COLORIZE to method for easier testing
+  * Don't show colors if stdout is not a tty
+  * Use global config.
+  * Autoload Test::Unit and MiniTest.
+  * Autorun uses Turn's runner classes.
+  * minitest changed Unit#run, set Unit.runner= if method exists
+  * Merge pull request #39 from dubek/fix_term_detection_for_ruby_19
+  * Merge pull request #38 from cameel/fix-minitest-run-monkeypatch-no-trace
+  * Merge pull request #36 from yalab/master
+  * Don't use ANSI codes on dumb terminals in Ruby 1.9
+  * Make Turn work with gems that monkey-patch MiniTest::Unit::TestCase.run()
+  * Fixed pretty_reporter to use 'trace' option.
+  * Fixed dot_reporter to use 'trace' option.
+  * Fixed outline_reporter to use 'trace' option.
+  * Add -t or --trace option for display all stacktrace.
+  * missing #skip! method in TestMethod
+  * Merge branch 'master' of github.com:TwP/turn
+  * use autoload to load MiniTests emulation of TestUnit
+  * do not use color if in a VIM session
+
 == 0.8.2 / 2011-03-31
   * Add version in code and cli option to display it.
   * Fix for files lookup controller bug
