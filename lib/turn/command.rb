@@ -123,7 +123,7 @@ module Turn
           @framework = :minitest
         end
 
-        opts.on("-T", '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
+        opts.on('-b', '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
           @trace = true
         end
 
