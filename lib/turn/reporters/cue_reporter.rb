@@ -130,9 +130,11 @@ module Turn
         when 'c', ''
         when 'r'
           # how to reload and start over?
+          io.puts "restart has not been implemented yet"
         when 'i'
           # how to drop into an interactive console?
-        when 't'
+          io.puts "irb support has not been implemented yet"
+        when 'b', 't'
           io.puts $@
           raise ArgumentError
         when /^\d+$/
@@ -155,7 +157,7 @@ module Turn
       c continue
       r restart
       i irb
-      t backtrace
+      b backtrace
       # backtrace lines
       q quit
       ? help
