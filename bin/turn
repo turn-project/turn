@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
+
+root = File.expand_path('../../', __FILE__)
+$:.unshift File.join(root, 'lib')
+
 require 'turn/command'
 Turn::Command.main(*ARGV)
 
