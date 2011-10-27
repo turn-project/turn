@@ -12,6 +12,9 @@ module Turn
   class OutlineReporter < Reporter
 
     #
+    TAB_SIZE = 8
+
+    #
     def start_suite(suite)
       @suite = suite
       @time  = Time.now
@@ -54,40 +57,45 @@ module Turn
       io.puts " #{PASS}"
       if message
         message = Colorize.magenta(message)
-        message = message.to_s.tabto(8)
+        message = message.to_s.tabto(TAB_SIZE)
         io.puts(message)
       end
     end
 
     #
     def fail(assertion)
-      message   = assertion.message.to_s
-      backtrace = filter_backtrace(assertion.backtrace)
-
       io.puts(" #{FAIL}")
-      io.puts Colorize.bold(message).tabto(8)
 
-      unless backtrace.empty?
-        label = "Assertion at "
-        tabsize = 8
-        backtrace1 = label + backtrace.shift
-        io.puts(backtrace1.tabto(tabsize))
-        if @trace
-          io.puts backtrace.map{|l| l.tabto(label.length + tabsize) }.join("\n")
-        end
-      end
+      message = []
+      message << Colorize.bold(assertion.message.to_s)
+      message << "Assertion at:"
+      message << clean_backtrace(assertion.backtrace).join("\n")
+      message = message.join("\n")
+
+      io.puts(message.tabto(TAB_SIZE))
+
+      #unless backtrace.empty?
+      #  io.puts "Assertion at".tabto(TAB_SIZE)
+      #  io.puts backtrace.map{|l| l.tabto(TAB_SIZE)}.join("\n")
+      #end
+
+      #io.puts "STDERR:".tabto(TAB_SIZE)
       show_captured_output
     end
 
     #
     def error(exception)
-      message   = exception.message
-      backtrace = "Exception `#{exception.class}' at " + filter_backtrace(exception.backtrace).join("\n")
-      message = Colorize.bold(message)
-      io.puts("#{ERROR}")
-      io.puts(message.tabto(8))
-      io.puts "STDERR:".tabto(8)
-      io.puts(backtrace.tabto(8))
+      io.puts(" #{ERROR}")
+
+      message = []
+      message << Colorize.bold(exception.message)
+      message << "Exception `#{exception.class}' at:"
+      message << clean_backtrace(exception.backtrace).join("\n")
+      message = message.join("\n")
+
+      io.puts(message.tabto(TAB_SIZE))
+
+      #io.puts "STDERR:".tabto(TAB_SIZE)
       show_captured_output
     end
 

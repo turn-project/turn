@@ -9,6 +9,9 @@ module Turn
     PADDING_SIZE = 4
 
     #
+    TAB_SIZE = 10
+
+    #
     def start_suite(suite)
       #old_sync, @@out.sync = @@out.sync, true if io.respond_to? :sync=
       @suite  = suite
@@ -71,14 +74,14 @@ module Turn
                else
                  filter_backtrace(assertion.location).first
                end
+
       io.puts
-      tabsize = 10
       #io.puts pad(message, tabsize)
-      io.puts message.tabto(tabsize)
-      io.puts _trace.shift.tabto(tabsize)
-      if @trace
-        io.puts _trace.map{|l| l.tabto(tabsize) }.join("\n")
-      end
+      io.puts message.tabto(TAB_SIZE)
+
+      cnt = @trace ? @trace.to_i : _trace.size
+      io.puts _trace[0, cnt].map{|l| l.tabto(TAB_SIZE) }.join("\n")
+
       #show_captured_output
     end
 
@@ -93,18 +96,14 @@ module Turn
       message = exception.message
 
       _trace = if exception.respond_to?(:backtrace)
-                 filter_backtrace(exception.backtrace)
+                 clean_backtrace(exception.backtrace)
                else
-                 filter_backtrace(exception.location)
+                 clean_backtrace(exception.location)
                end
-      trace = _trace.shift
+
       io.puts
-      tabsize = 10
-      io.puts message.tabto(tabsize)
-      io.puts trace.tabto(tabsize)
-      if @trace
-        io.puts _trace.map{|l| l.tabto(tabsize) }.join("\n")
-      end
+      io.puts message.tabto(TAB_SIZE)
+      io.puts _trace.map{|l| l.tabto(TAB_SIZE) }.join("\n")
     end
 
     # TODO: skip support

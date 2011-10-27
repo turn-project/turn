@@ -123,8 +123,8 @@ module Turn
           @framework = :minitest
         end
 
-        opts.on('-b', '--trace', "Turn on invoke/execute tracing, enable full backtrace") do
-          @trace = true
+        opts.on('--backtrace', '--trace', '-b INT' "Limit the number of backtrace lines to output.") do |int|
+          @trace = int
         end
 
         # Turn does not support Test::Unit 2.0+
