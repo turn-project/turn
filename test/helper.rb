@@ -1,3 +1,6 @@
+$:.unshift './lib'
+
+require 'turn/colorize'
 require 'fileutils'
 
 if RUBY_VERSION < "1.9"
@@ -110,7 +113,7 @@ def setup_minitest_autorun_with_trace
 require 'turn'
 MiniTest::Unit.autorun
 Turn.config do |c|
-  c.trace = true
+  c.trace = 1
 end
 class TestTest < MiniTest::Unit::TestCase
   def test_sample_pass
