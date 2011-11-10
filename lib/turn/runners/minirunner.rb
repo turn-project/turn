@@ -113,35 +113,6 @@ module Turn
       super(klass, meth, err)
     end
 
-    # To maintain compatibility with old versions of MiniTest.
-    #
-    # Hey, Ryan Davis wrote this code!
-    if ::MiniTest::Unit::VERSION < '2.0'    
-      #attr_accessor :options
-
-      #
-      def run(args=[])
-        suites = ::MiniTest::Unit::TestCase.test_suites
-        return if suites.empty?
-
-        @test_count, @assertion_count = 0, 0
-        sync = @@out.respond_to? :"sync=" # stupid emacs
-        old_sync, @@out.sync = @@out.sync, true if sync
-
-        results = _run_suites suites, :test #type
-
-        @test_count      = results.inject(0) { |sum, (tc, _)| sum + tc }
-        @assertion_count = results.inject(0) { |sum, (_, ac)| sum + ac }
-
-        @@out.sync = old_sync if sync
-
-        return failures + errors if @test_count > 0 # or return nil...
-      rescue Interrupt
-        abort 'Interrupted'
-      end
-
-    end
-
   end
 
 end

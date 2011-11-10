@@ -25,7 +25,7 @@ interface with MiniTest effectively.
 Copyright:: (c) Nathaniel Talbott
 License:: The Ruby License
 
-This software is distributed under the same terms as ruby.
+This software is distributed under the same terms as Ruby.
 
 See license/RUBY-LICENSE.txt for detiails.
 

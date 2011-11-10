@@ -1,3 +1,6 @@
+== 0.8.4 / 2011-11-11
+  * Now must use MiniTest 2.0+.
+
 == 0.8.3 / 2011-10-10
   * Merge pull request #56 from codeinvain/master
   * Merge pull request #52 from markburns/patch-2
