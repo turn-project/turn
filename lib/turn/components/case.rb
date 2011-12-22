@@ -23,7 +23,7 @@ module Turn
     attr_accessor :count_assertions
 
     # Holds dump of test output (optional depending on runner).
-    attr_accessor :message
+    attr_writer :message
 
     # Command used to run test (optional depending on runner).
     #attr_accessor :command

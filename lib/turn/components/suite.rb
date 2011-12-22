@@ -6,12 +6,12 @@ module Turn
     include Enumerable
 
     attr_accessor :name
-    attr_accessor :size
+    attr_writer :size
     attr_accessor :cases
 
     # This one can be set manually since it
     # is not calculatable (beyond the case level).
-    attr_accessor :count_assertions
+    attr_writer :count_assertions
 
     #
     def initialize(name=nil)

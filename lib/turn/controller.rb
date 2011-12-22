@@ -23,10 +23,10 @@ module Turn
   class Configuration
 
     # List of if file names or glob pattern of tests to run.
-    attr_accessor :tests
+    attr_reader :tests
 
     # List of file names or globs to exclude from +tests+ list.
-    attr_accessor :exclude
+    attr_reader :exclude
 
     # Regexp pattern that all test name's must
     # match to be eligible to run.
@@ -37,10 +37,10 @@ module Turn
     attr_accessor :matchcase
 
     # Add these folders to the $LOAD_PATH.
-    attr_accessor :loadpath
+    attr_reader :loadpath
 
     # Libs to require when running tests.
-    attr_accessor :requires
+    attr_reader :requires
 
     # Reporter type.
     attr_accessor :format
