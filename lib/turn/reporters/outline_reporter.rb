@@ -100,6 +100,14 @@ module Turn
     end
 
     #
+    def skip(exception)
+      message   = exception.message      
+      io.puts(" #{SKIP}")
+      io.puts(message.tabto(8))
+      show_captured_output
+    end
+
+    #
     def finish_test(test)
       $stdout = STDOUT
       $stderr = STDERR

@@ -101,8 +101,8 @@ module Turn
     def puke(klass, meth, err)
       case err
       when MiniTest::Skip
-        @turn_test.skip!
-        turn_reporter.skip #(e)
+        @turn_test.skip!(err)
+        turn_reporter.skip(err)
       when MiniTest::Assertion
         @turn_test.fail!(err)
         turn_reporter.fail(err)
