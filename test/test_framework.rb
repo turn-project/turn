@@ -13,16 +13,25 @@ if RUBY_VERSION >= '1.9'
 
     def test_ruby19_minitest_color
       term, stdout = ENV['TERM'], $stdout
+      host_os, ansicon, = ::RbConfig::CONFIG['host_os'], ENV['ANSICON']
       $stdout = $stdout.dup
       def $stdout.tty?
         true
       end
+      ENV['ANSICON'] = nil
       ENV['TERM'] = 'xterm'
       assert_equal true, Turn::Colorize.colorize?
       ENV['TERM'] = 'dumb'
       assert_equal false, Turn::Colorize.colorize?
       ENV['TERM'] = nil
       assert_equal false, Turn::Colorize.colorize?
+      ['mingw32', 'mswin32'].each do |os|
+        ::RbConfig::CONFIG['host_os'] = os
+        ENV['ANSICON'] = '120x5000 (120x50)'
+        assert_equal true, Turn::Colorize.colorize?
+        ENV['ANSICON'] = nil
+        assert_equal false, Turn::Colorize.colorize?
+      end
       ENV['TERM'] = 'xterm'
       def $stdout.tty?
         false
@@ -30,6 +39,7 @@ if RUBY_VERSION >= '1.9'
       assert_equal false, Turn::Colorize.colorize?
     ensure
       ENV['TERM'], $stdout = term, stdout
+      ::RbConfig::CONFIG['host_os'], ENV['ANSICON'] = host_os, ansicon
     end
 
     def test_ruby19_minitest_force
