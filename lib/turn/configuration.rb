@@ -81,6 +81,7 @@ module Turn
       @matchcase ||= nil
       @pattern   ||= /.*/
       @natural   ||= false
+      @trace     ||= environment_trace
 
       @files = nil  # reset files just in case
     end
@@ -178,6 +179,11 @@ module Turn
           Turn::OutlineReporter.new($stdout, opts)
         end
       )
+    end
+
+    #
+    def environment_trace
+      (ENV['backtrace'] ? ENV['backtrace'].to_i : nil)
     end
 
   end
