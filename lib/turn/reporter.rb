@@ -38,13 +38,13 @@ module Turn
     def pass(message=nil)
     end
 
-    def skip(exception, message=nil)
-    end
-
     def fail(assertion, message=nil)
     end
 
     def error(exception, message=nil)
+    end
+
+    def skip(exception, message=nil)
     end
 
     def finish_test(test)
@@ -64,13 +64,23 @@ module Turn
     end
 
     # TODO: backtrace filter probably could use some refinement.
+    $RUBY_IGNORE_CALLERS ||= []
+    $RUBY_IGNORE_CALLERS.concat([
+      /lib\/turn.*\.rb$/,
+      /bin\/turn$/,
+      /lib\/minitest.*\.rb$/,
+      /lib\/test\/unit.*\.rb$/
+    ])
+
+    #
     def filter_backtrace(backtrace)
       return [] unless backtrace
       bt = backtrace.dup
-      bt.reject!{ |line| line.rindex('minitest') }
-      bt.reject!{ |line| line.rindex('test/unit') }
-      bt.reject!{ |line| line.rindex('lib/turn') }
-      bt.reject!{ |line| line.rindex('bin/turn') }
+      bt.reject!{ |line| $RUBY_IGNORE_CALLERS.any?{ |re| re =~ line } }
+      #bt.reject!{ |line| line.rindex('minitest') }
+      #bt.reject!{ |line| line.rindex('test/unit') }
+      #bt.reject!{ |line| line.rindex('lib/turn') }
+      #bt.reject!{ |line| line.rindex('bin/turn') }
       bt = backtrace if bt.empty?  # if empty just dump the whole thing
       bt.map{ |line| line.sub(Dir.pwd+'/', '') }
     end
