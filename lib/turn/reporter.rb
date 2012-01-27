@@ -2,8 +2,6 @@ module Turn
   require 'turn/colorize'
   require 'turn/core_ext'
 
-  # = Reporter
-  #
   # There are two distinct way in which a report may be utilized
   # by a Runner: per-call or per-file. The method #pass, #fail
   # and #error are generic, and will be used in either case.
@@ -16,6 +14,7 @@ module Turn
 
     include Colorize
 
+    # Where to send report, defaults to `$stdout`.
     attr :io
 
     def initialize(io, opts={})
@@ -26,33 +25,43 @@ module Turn
 
     # These methods are called in the process of running the tests.
 
+    # At the very start, before any testcases are run, this is called.
     def start_suite(test_suite)
     end
 
+    # Invoked before a testcase is run.
     def start_case(test_case)
     end
 
+    # Invoked before a test is run.
     def start_test(test)
     end
 
+    # Invoked when a test passes.
     def pass(message=nil)
     end
 
+    # Invoked when a test raises an assertion.
     def fail(assertion, message=nil)
     end
 
+    # Invoked when a test raises an exception.
     def error(exception, message=nil)
     end
 
+    # Invoked when a test is skipped.
     def skip(exception, message=nil)
     end
 
+    # Invoked after a test has been run.
     def finish_test(test)
     end
 
+    # Invoked after all tests in a testcase have ben run.
     def finish_case(test_case)
     end
 
+    # After all tests are run, this is the last observable action.
     def finish_suite(test_suite)
     end
 
@@ -63,20 +72,22 @@ module Turn
       limit_backtrace(filter_backtrace(backtrace))
     end
 
-    # TODO: backtrace filter probably could use some refinement.
     $RUBY_IGNORE_CALLERS ||= []
     $RUBY_IGNORE_CALLERS.concat([
-      /lib\/turn.*\.rb$/,
-      /bin\/turn$/,
-      /lib\/minitest.*\.rb$/,
-      /lib\/test\/unit.*\.rb$/
+      /\/turn.*\.rb/,
+      /\/bin\/turn/,
+      /\/minitest.*\.rb/,
+      /\/test\/unit.*\.rb/
     ])
 
-    #
+    # Filter backtrace of unimportant entries, and applies count limit if set in
+    # configuration. Setting $DEBUG to true will deactivate filter, or if the filter
+    # happens to remove all backtrace entries it will revert to the full backtrace,
+    # as that probably means there was an issue with the test harness itself.
     def filter_backtrace(backtrace)
       return [] unless backtrace
       bt = backtrace.dup
-      bt.reject!{ |line| $RUBY_IGNORE_CALLERS.any?{ |re| re =~ line } }
+      bt.reject!{ |line| $RUBY_IGNORE_CALLERS.any?{ |re| re =~ line } } unless $DEBUG
       #bt.reject!{ |line| line.rindex('minitest') }
       #bt.reject!{ |line| line.rindex('test/unit') }
       #bt.reject!{ |line| line.rindex('lib/turn') }
@@ -85,7 +96,7 @@ module Turn
       bt.map{ |line| line.sub(Dir.pwd+'/', '') }
     end
 
-    #
+    # Limit backtrace to number of lines if `trace` configuration option is set.
     def limit_backtrace(backtrace)
       return [] unless backtrace
       @trace ? backtrace[0, @trace.to_i] : backtrace
@@ -94,4 +105,3 @@ module Turn
   end
 
 end
-
