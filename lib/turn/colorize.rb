@@ -15,9 +15,15 @@ module Turn
     COLORLESS_TERMINALS = ['dumb']
 
     def colorize?
-      defined?(::ANSI::Code) &&
-        ENV.has_key?('TERM') &&
-        !COLORLESS_TERMINALS.include?(ENV['TERM']) &&
+      defined?(::ANSI::Code) && (
+        (
+          ENV.has_key?('TERM') &&
+            !COLORLESS_TERMINALS.include?(ENV['TERM'])
+        ) || (
+          ::RbConfig::CONFIG['host_os'] =~ /mswin|mingw/ &&
+            ENV.has_key?('ANSICON')
+        )
+      ) &&
         $stdout.tty?
     end
     module_function :colorize?
