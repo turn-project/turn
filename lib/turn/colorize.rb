@@ -15,17 +15,13 @@ module Turn
     COLORLESS_TERMINALS = ['dumb']
 
     def colorize?
-      defined?(::ANSI::Code) && (
-        (
-          ENV.has_key?('TERM') &&
-            !COLORLESS_TERMINALS.include?(ENV['TERM'])
-        ) || (
-          ::RbConfig::CONFIG['host_os'] =~ /mswin|mingw/ &&
-            ENV.has_key?('ANSICON')
-        )
-      ) &&
-        $stdout.tty?
+      return false unless defined?(::ANSI::Code)
+      return false unless $stdout.tty?
+      return true if ENV.has_key?('TERM') && !COLORLESS_TERMINALS.include?(ENV['TERM'])
+      return true if ::RbConfig::CONFIG['host_os'] =~ /mswin|mingw/ && ENV.has_key?('ANSICON')
+      return false
     end
+
     module_function :colorize?
 
     def self.red(string)
@@ -56,15 +52,8 @@ module Turn
       colorize? ? ::ANSI::Code.red{ string } : string
     end
 
-    def self.skip(string)
-      colorize? ? ::ANSI::Code.blue{ string } : string
-    end
-
-    #def self.error(string)
-    #  colorize? ? ::ANSI::Code.white{ ::ANSI::Code.on_red{ string } } : string
-    #end
-
     def self.error(string)
+      #colorize? ? ::ANSI::Code.white_on_red{ string } : string
       colorize? ? ::ANSI::Code.yellow{ string } : string
     end
 
