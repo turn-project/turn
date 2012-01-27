@@ -111,7 +111,7 @@ module Turn
           end
         end
 
-        opts.on('-t', '--testcase=PATTERN', "only run testcases that match PATTERN") do |pattern|
+        opts.on('-c', '--case=PATTERN', "only run test cases that match PATTERN") do |pattern|
           if pattern =~ /\/(.*)\//
             @matchcase = Regexp.new($1)
           else
@@ -123,7 +123,7 @@ module Turn
           @framework = :minitest
         end
 
-        opts.on('--backtrace', '--trace', '-b INT' "Limit the number of backtrace lines to output.") do |int|
+        opts.on('-b', '--backtrace', '--trace INT', "Limit the number of lines of backtrace.") do |int|
           @trace = int
         end
 
