@@ -165,7 +165,7 @@ module Turn
         when :progress
           require 'turn/reporters/progress_reporter'
           Turn::ProgressReporter.new($stdout, opts)
-        when :dotted
+        when :dotted, :dot
           require 'turn/reporters/dot_reporter'
           Turn::DotReporter.new($stdout, opts)
         when :pretty
