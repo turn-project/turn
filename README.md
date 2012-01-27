@@ -85,6 +85,32 @@ the end user to install the TURN package.
 For a Rails application, put the require line into the 'test/test_helper.rb'
 script. Now your Rails tests will use TURN formatting.
 
+
+## RAILS/BUNDLER USERS
+
+Bundler automatically requires everything listed in your Gemfile, e.g.
+when using `bundle exec`. This means `turn` will get automatically
+required too, which in turn means the Turn's test autorunner is doing
+to kick in. Obviously we don't want that to happen unless we are actually
+running tests.
+
+Turn was created well before Bundler existed, and the use of `require 'turn'`
+as the autorunner was the obvious convenience. Unfortunately Bundler's choice
+to force require all requirements by defualt can have unexpected consequences,
+as is the case here.
+
+Thankfully there is a work around. In your Gemfile add:
+
+    gem 'turn', :require => false
+
+The `:require` option will prevent Turn from trying to autorun tests.
+
+In the future we will change turn to use `reuqire 'turn/autorun'` instead,
+but that will require a lot of people to update a lot of tests, so it's not
+something to do lightly. Full change over will wait until the 1.0 release.
+In the mean time Turn will just put out a warning.
+
+
 ## REQUIREMENTS:
 
 * ansi 1.1+ (for colorized output and progress bar output mode)

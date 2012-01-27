@@ -6,9 +6,11 @@ module Turn
   end
 end
 
-require 'turn/autoload'
+#require 'turn/autoload'
 
+# TODO: Remove autorun in turn.rb for v1.0.
 unless defined?(Turn::Command)
+  warn "Use `require 'turn/autorun'` instead of `require 'turn'` for future versions."
   if Turn.minitest?
     require 'turn/autorun/minitest'
     MiniTest::Unit.autorun

@@ -1,5 +1,6 @@
 #require 'test/unit/ui/console/testrunner'
-require 'turn/autoload'
+require 'turn/autoload_trick'
+
 require 'turn/colorize'
 require 'turn/controller'
 require 'turn/runners/testrunner'
