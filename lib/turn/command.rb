@@ -68,6 +68,9 @@ module Turn
     # Enable full backtrace
     attr :trace
 
+    # Use natural test case names.
+    attr :natural
+
     #
     def initialize
       @live      = nil
@@ -80,6 +83,7 @@ module Turn
       @outmode   = nil
       @framework = RUBY_VERSION >= "1.9" ? :minitest : :testunit
       @trace     = nil
+      @natural   = false
     end
 
     #
@@ -125,6 +129,10 @@ module Turn
 
         opts.on('-b', '--backtrace', '--trace INT', "Limit the number of lines of backtrace.") do |int|
           @trace = int
+        end
+
+        opts.on('--natural', "Show natualized test names.") do |bool|
+          @natural = true
         end
 
         # Turn does not support Test::Unit 2.0+
@@ -227,6 +235,7 @@ module Turn
         c.matchcase = matchcase
         c.framework = framework
         c.trace     = trace
+        c.natural   = natural
       end
 
       controller = Turn::Controller.new(config)
