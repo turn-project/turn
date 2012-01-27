@@ -86,7 +86,7 @@ module Turn
     end
 
     #
-    def error(exception, message=nil))
+    def error(exception, message=nil)
       io.print pad_with_size("#{ERROR}")
       io.print " #{@test}"
       io.print " (%.2fs) " % (Time.now - @test_time)
