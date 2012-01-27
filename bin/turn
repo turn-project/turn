@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
-
 require 'turn/command'
-Turn::Command.main(*ARGV)
+begin
+  Turn::Command.main(*ARGV)
+rescue StandardError => e
+  raise if $DEBUG
+  puts e
+  exit -1
+end
 
