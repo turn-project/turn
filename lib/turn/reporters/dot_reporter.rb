@@ -19,7 +19,7 @@ module Turn
     end
 
     def pass(message=nil)
-      io.print Colorize.pass('.'); io.flush
+      io.print Colorize.pass('S'); io.flush
     end
 
     def fail(assertion, message=nil)
