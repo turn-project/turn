@@ -21,6 +21,7 @@ Bones {
   use_gmail
 
   depend_on 'ansi'
+  depend_on 'minitest'
   depend_on 'bones-git', :development => true
 }
 
