@@ -10,6 +10,8 @@ end
 
 module Turn
 
+  # Provides a uniform interface for colorizing Turn output.
+  #
   module Colorize
 
     COLORLESS_TERMINALS = ['dumb']
