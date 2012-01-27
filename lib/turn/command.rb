@@ -181,7 +181,7 @@ module Turn
           @outmode = :dotted
         end
 
-        opts.on('--pretty', '-T', "new pretty output mode") do
+        opts.on('--pretty', '-R', '-T', "new pretty output mode") do
           @outmode = :pretty
         end
 
