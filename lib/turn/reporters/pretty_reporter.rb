@@ -21,7 +21,7 @@ module Turn
       #files = suite.collect{ |s| s.file }.join(' ')
       io.puts "Loaded suite #{suite.name}"
       #io.puts "Loaded suite #{$0.sub(/\.rb$/, '')}\nStarted"
-      io.puts "Started"
+      io.puts "Started (#{suite.seed})"
     end
 
     #
