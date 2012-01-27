@@ -22,11 +22,15 @@ module Turn
       io.print Colorize.pass('.'); io.flush
     end
 
-    def fail(message=nil)
+    def skip(exception, message=nil)
+      io.print Colorize.skip('-'); io.flush
+    end
+
+    def fail(assertion, message=nil)
       io.print Colorize.fail('F'); io.flush
     end
 
-    def error(message=nil)
+    def error(exception, message=nil)
       io.print Colorize.error('E'); io.flush
     end
 

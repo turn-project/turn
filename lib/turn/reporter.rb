@@ -38,6 +38,9 @@ module Turn
     def pass(message=nil)
     end
 
+    def skip(exception, message=nil)
+    end
+
     def fail(assertion, message=nil)
     end
 

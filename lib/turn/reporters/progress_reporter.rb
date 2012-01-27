@@ -10,6 +10,7 @@ module Turn
       super(io, opts)
       @fails  = Hash.new{|h,k|h[k]=[]}
       @errors = Hash.new{|h,k|h[k]=[]}
+      @skips  = Hash.new{|h,k|h[k]=[]}
     end
 
     def start_suite(suite)
@@ -25,17 +26,17 @@ module Turn
     #end
 
     #def pass(message=nil)
-    #  #@pbar.inc
     #end
 
-    #def fail(message=nil)
+    def skip(exception, message=nil)
+      @skips[@_current_case] << exception
+    end
+
     def fail(assertion, message=nil)
-      #@pbar.inc
       @fails[@_current_case] << assertion
     end
 
     def error(exception, message=nil)
-      #@pbar.inc
       @errors[@_current_case] << exception
     end
 
