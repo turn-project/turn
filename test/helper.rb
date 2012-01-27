@@ -10,6 +10,8 @@ else
   require 'test/unit'
 end
 
+#
+#Turn.config.format = :pretty
 
 #
 def turn(*args)
