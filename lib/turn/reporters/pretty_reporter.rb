@@ -59,7 +59,7 @@ module Turn
     end
 
     #
-    def fail(assertion)
+    def fail(assertion, message=nil)
       io.print pad_with_size("#{FAIL}")
       io.print " #{@test}"
       io.print " (%.2fs) " % (Time.now - @test_time)
@@ -67,7 +67,7 @@ module Turn
       #message = assertion.location[0] + "\n" + assertion.message #.gsub("\n","\n")
       #trace   = MiniTest::filter_backtrace(report[:exception].backtrace).first
 
-      message = assertion.message
+      message ||= assertion.message
 
       _trace = if assertion.respond_to?(:backtrace)
                  filter_backtrace(assertion.backtrace)
@@ -86,14 +86,14 @@ module Turn
     end
 
     #
-    def error(exception)
+    def error(exception, message=nil))
       io.print pad_with_size("#{ERROR}")
       io.print " #{@test}"
       io.print " (%.2fs) " % (Time.now - @test_time)
 
       #message = exception.to_s.split("\n")[2..-1].join("\n")
 
-      message = exception.message
+      message ||= exception.message
 
       _trace = if exception.respond_to?(:backtrace)
                  clean_backtrace(exception.backtrace)
@@ -106,10 +106,24 @@ module Turn
       io.puts _trace.map{|l| l.tabto(TAB_SIZE) }.join("\n")
     end
 
-    # TODO: skip support
-    #def skip
-    #  io.puts(pad_with_size("#{SKIP}"))
-    #end
+    #
+    def skip(exception, message=nil)
+      io.print pad_with_size("#{SKIP}")
+      io.print " #{@test}"
+      io.print " (%.2fs) " % (Time.now - @test_time)
+
+      message ||= exception.message
+
+      _trace = if exception.respond_to?(:backtrace)
+                 clean_backtrace(exception.backtrace)
+               else
+                 clean_backtrace(exception.location)
+               end
+
+      io.puts
+      io.puts message.tabto(TAB_SIZE)
+      io.puts _trace.map{|l| l.tabto(TAB_SIZE) }.join("\n")
+    end
 
     #
     def finish_test(test)

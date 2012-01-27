@@ -67,6 +67,15 @@ module Turn
       prompt
     end
 
+    def skip(exception, message=nil)
+      message = message || exception.to_s
+      io.puts("#{SKIP}")
+      io.puts(message) #if message
+
+      #prompt
+    end
+
+
     def finish_test(test)
       $stdout = STDOUT
       $stderr = STDERR

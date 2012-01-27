@@ -16,11 +16,11 @@ module Turn
 
     #
     def start_suite(suite)
-      @suite = suite
-      @time  = Time.now
+      @suite  = suite
+      @time   = Time.now
       @stdout = StringIO.new
       @stderr = StringIO.new
-      #files = suite.collect{ |s| s.file }.join(' ')
+      #files  = suite.collect{ |s| s.file }.join(' ')
       io.puts "LOADED SUITE #{suite.name}"
       #io.puts "Started"
     end
@@ -101,9 +101,11 @@ module Turn
 
     #
     def skip(exception)
-      message   = exception.message      
+      message = exception.message      
+
       io.puts(" #{SKIP}")
       io.puts(message.tabto(8))
+
       show_captured_output
     end
 
@@ -145,7 +147,7 @@ module Turn
     #def finish_case(kase)
     #end
 
-    #
+    # TODO: pending (skip) counts
     def finish_suite(suite)
       total   = suite.count_tests
       failure = suite.count_failures

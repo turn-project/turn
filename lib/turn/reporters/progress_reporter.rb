@@ -28,16 +28,16 @@ module Turn
     #def pass(message=nil)
     #end
 
-    def skip(exception, message=nil)
-      @skips[@_current_case] << exception
-    end
-
     def fail(assertion, message=nil)
       @fails[@_current_case] << assertion
     end
 
     def error(exception, message=nil)
       @errors[@_current_case] << exception
+    end
+
+    def skip(exception, message=nil)
+      @skips[@_current_case] << exception
     end
 
     def finish_case(kase)
