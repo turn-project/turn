@@ -102,6 +102,24 @@ module Turn
       @trace ? backtrace[0, @trace.to_i] : backtrace
     end
 
+    #
+    def naturalized_name(test)
+      if @natural
+        " #{test.name.gsub("test_", "").gsub(/_/, " ")}" 
+      else
+        " #{test.name}"
+      end
+    end
+
+    #
+    def ticktock
+      s0 = Time.now - @time
+      s = s0.truncate
+      f = ((s0 - s) * 100000).to_i
+      h, s = s.divmod(60)
+      m, s = s.divmod(60)
+      "%01d:%02d:%02d:%03d" % [h,m,s,f]
+    end
   end
 
 end

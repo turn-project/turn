@@ -44,7 +44,7 @@ module Turn
                " #{test.name}"
              end
 
-      io.print "    %-69s" % name
+      io.print "    %-57s" % name
 
       @stdout.rewind
       @stderr.rewind
@@ -55,7 +55,8 @@ module Turn
 
     #
     def pass(message=nil)
-      io.puts " #{PASS}"
+      io.puts " %s %s" % [ticktock, PASS]
+
       if message
         message = Colorize.magenta(message)
         message = message.to_s.tabto(TAB_SIZE)
@@ -65,7 +66,7 @@ module Turn
 
     #
     def fail(assertion)
-      io.puts(" #{FAIL}")
+      io.puts " %s %s" % [ticktock, FAIL]
 
       message = []
       message << Colorize.bold(assertion.message.to_s)
@@ -86,7 +87,7 @@ module Turn
 
     #
     def error(exception)
-      io.puts(" #{ERROR}")
+      io.puts " %s %s" % [ticktock, ERROR]
 
       message = []
       message << Colorize.bold(exception.message)
@@ -102,9 +103,10 @@ module Turn
 
     #
     def skip(exception)
-      message = exception.message      
+      io.puts " %s %s" % [ticktock, SKIP]
 
-      io.puts(" #{SKIP}")
+      message = exception.message
+
       io.puts(message.tabto(8))
 
       show_captured_output
