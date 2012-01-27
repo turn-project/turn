@@ -50,6 +50,10 @@ module Turn
       colorize? ? ::ANSI::Code.red{ string } : string
     end
 
+    def self.skip(string)
+      colorize? ? ::ANSI::Code.blue{ string } : string
+    end
+
     #def self.error(string)
     #  colorize? ? ::ANSI::Code.white{ ::ANSI::Code.on_red{ string } } : string
     #end
