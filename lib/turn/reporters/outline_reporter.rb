@@ -22,6 +22,7 @@ module Turn
       @stderr = StringIO.new
       #files  = suite.collect{ |s| s.file }.join(' ')
       io.puts "LOADED SUITE #{suite.name}"
+      io.puts "SEED #{suite.seed}" if suite.seed
       #io.puts "Started"
     end
 

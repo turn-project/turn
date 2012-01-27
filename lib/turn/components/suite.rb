@@ -6,8 +6,8 @@ module Turn
     include Enumerable
 
     attr_accessor :name
-    attr_writer :size
     attr_accessor :cases
+    attr_accessor :seed
 
     # This one can be set manually since it
     # is not calculatable (beyond the case level).
@@ -16,8 +16,9 @@ module Turn
     #
     def initialize(name=nil)
       @name  = name
-      @size  = nil
       @cases = []
+      @size  = nil
+      @seed  = nil
 
       #@count_tests      = nil
       #@count_assertions = nil
@@ -74,6 +75,11 @@ module Turn
 
     def size
       @size ||= @cases.size
+    end
+
+    # Why the size would ever have to overridden... well who can say.
+    def size=(number)
+      @size = number.to_i
     end
 
     def passed?
