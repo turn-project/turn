@@ -1,3 +1,5 @@
+require 'turn/configuration'  # why is this needed here?
+
 begin
   require 'ansi/code'
 rescue LoadError
@@ -16,15 +18,24 @@ module Turn
 
     COLORLESS_TERMINALS = ['dumb']
 
-    def colorize?
+    def self.colorize?
+      @colorize ||= (
+        ansi = Turn.config.ansi?
+        if ansi.nil?
+          color_supported?
+        else
+          Turn.config.ansi?
+        end
+      )
+    end
+
+    def self.color_supported?
       return false unless defined?(::ANSI::Code)
       return false unless $stdout.tty?
       return true if ENV.has_key?('TERM') && !COLORLESS_TERMINALS.include?(ENV['TERM'])
       return true if ::RbConfig::CONFIG['host_os'] =~ /mswin|mingw/ && ENV.has_key?('ANSICON')
       return false
     end
-
-    module_function :colorize?
 
     def self.red(string)
       colorize? ? ::ANSI::Code.red{ string } : string
@@ -67,6 +78,10 @@ module Turn
     FAIL  = fail('FAIL')
     ERROR = error('ERROR')
     SKIP  = skip('SKIP')
+
+    def colorize?
+      Colorize.colorize?
+    end
 
   end
 

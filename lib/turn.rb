@@ -1,21 +1,18 @@
-module Turn
-  # Returns +true+ if the ruby version supports minitest.
-  # Otherwise, +false+ is returned.
-  def self.minitest?
-    RUBY_VERSION >= '1.9'
-  end
-end
+module Turn; end
 
-#require 'turn/autoload'
+require 'fileutils'
 
-# TODO: Remove autorun in turn.rb for v1.0.
-unless defined?(Turn::Command)
+require 'turn/version'
+require 'turn/autoload'
+require 'turn/configuration'
+require 'turn/colorize'
+require 'turn/components'
+require 'turn/controller'
+require 'turn/minitest'
+
+# TODO: Remove this in turn.rb for v1.0.
+if ENV['autorun']
   warn "Use `require 'turn/autorun'` instead of `require 'turn'` for future versions."
-  if Turn.minitest?
-    require 'turn/autorun/minitest'
-    MiniTest::Unit.autorun
-  else
-    require 'turn/autorun/testunit'
-  end
+  MiniTest::Unit.autorun
 end
 

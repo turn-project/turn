@@ -60,6 +60,7 @@ module Turn
     def verbose? ; @verbose ; end
     def live?    ; @live    ; end
     def natural? ; @natural ; end
+    def ansi?    ; @ansi    ; end
 
   private
 
@@ -115,6 +116,10 @@ module Turn
     end
 
   public
+
+    def ansi=(boolean)
+      @ansi = boolean ? true : false
+    end
 
     def tests=(paths)
       @tests = list_option(paths)

@@ -1,7 +1,7 @@
 require 'optparse'
+require 'turn'
 
 module Turn
-  require 'turn/controller'
 
   # Turn - Pretty Unit Test Runner for Ruby
   #
@@ -13,10 +13,11 @@ module Turn
   #      --live             don't use loadpath
   #      --log              log results to a file
   #   -n --name=PATTERN     only run tests that match regexp PATTERN
+  #   -c --case=PATTERN     only run testcases that match regexp PATTERN
   #   -I --loadpath=PATHS   add given PATHS to the $LOAD_PATH
   #   -r --requires=LIBS    require given LIBS before running tests
   #   -m --minitest         Force use of MiniTest framework.
-  #   -t --trace            Turn on invoke/execute tracing, enable full backtrace.
+  #   -b --backtrace=INT    Set the number of lines to show in backtrace.
   #
   # RUN MODES
   #      --normal      run all tests in a single process [default]
@@ -27,9 +28,9 @@ module Turn
   #   -O --outline     turn's original case/test outline mode [default]
   #   -P --progress    indicates progress with progress bar
   #   -D --dotted      test/unit's traditonal dot-progress mode
-  #      --pretty      new pretty reporter
+  #   -R --pretty      new pretty reporter
   #   -M --marshal     dump output as YAML (normal run mode only)
-  #   -Q --queued      interactive testing
+  #   -C --cue         interactive testing
   #
   class Command
 
@@ -57,7 +58,7 @@ module Turn
     attr :requires
 
     # Framework to use, :minitest or :testunit.
-    attr :framework
+    #attr :framework
 
     # Run mode.
     attr :runmode
@@ -71,6 +72,9 @@ module Turn
     # Use natural test case names.
     attr :natural
 
+    # Force ANSI use on or off.
+    attr :ansi
+
     #
     def initialize
       @live      = nil
@@ -81,9 +85,10 @@ module Turn
       @requires  = []
       @runmode   = nil
       @outmode   = nil
-      @framework = RUBY_VERSION >= "1.9" ? :minitest : :testunit
+      #@framework = RUBY_VERSION >= "1.9" ? :minitest : :testunit
       @trace     = nil
       @natural   = false
+      @ansi      = nil
     end
 
     #
@@ -123,16 +128,20 @@ module Turn
           end
         end
 
-        opts.on('-m', '--minitest', "Force use of MiniTest framework") do
-          @framework = :minitest
-        end
+        #opts.on('-m', '--minitest', "Force use of MiniTest framework") do
+        #  @framework = :minitest
+        #end
 
         opts.on('-b', '--backtrace', '--trace INT', "Limit the number of lines of backtrace.") do |int|
           @trace = int
         end
 
         opts.on('--natural', "Show natualized test names.") do |bool|
-          @natural = true
+          @natural = bool
+        end
+
+        opts.on('--[no-]ansi', "Force use of ANSI codes on or off.") do |bool|
+          @ansi = bool
         end
 
         # Turn does not support Test::Unit 2.0+
@@ -233,9 +242,10 @@ module Turn
         c.format    = outmode
         c.pattern   = pattern
         c.matchcase = matchcase
-        c.framework = framework
+        #c.framework = framework
         c.trace     = trace
         c.natural   = natural
+        c.ansi      = ansi unless ansi.nil?
       end
 
       controller = Turn::Controller.new(config)

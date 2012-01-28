@@ -1,6 +1,6 @@
 $:.unshift './lib'
 
-require 'turn/colorize'
+#require 'turn/colorize'
 require 'fileutils'
 
 if RUBY_VERSION < "1.9"
@@ -96,6 +96,7 @@ end
 def setup_minitest_autorun
   text = <<-HERE
 require 'turn'
+MiniTest::Unit.runner = Turn::MiniRunner.new
 MiniTest::Unit.autorun
 #require 'minitest/unit'
 class TestTest < MiniTest::Unit::TestCase
@@ -113,6 +114,7 @@ def setup_minitest_autorun_with_trace
 #require 'minitest/unit'
 #require 'rubygems'
 require 'turn'
+MiniTest::Unit.runner = Turn::MiniRunner.new
 MiniTest::Unit.autorun
 Turn.config do |c|
   c.trace = 1

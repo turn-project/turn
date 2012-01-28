@@ -20,23 +20,23 @@ if RUBY_VERSION >= '1.9'
       end
       ENV['ANSICON'] = nil
       ENV['TERM'] = 'xterm'
-      assert_equal true, Turn::Colorize.colorize?
+      assert_equal true, Turn::Colorize.color_supported?
       ENV['TERM'] = 'dumb'
-      assert_equal false, Turn::Colorize.colorize?
+      assert_equal false, Turn::Colorize.color_supported?
       ENV['TERM'] = nil
-      assert_equal false, Turn::Colorize.colorize?
+      assert_equal false, Turn::Colorize.color_supported?
       ['mingw32', 'mswin32'].each do |os|
         ::RbConfig::CONFIG['host_os'] = os
         ENV['ANSICON'] = '120x5000 (120x50)'
-        assert_equal true, Turn::Colorize.colorize?
+        assert_equal true, Turn::Colorize.color_supported?
         ENV['ANSICON'] = nil
-        assert_equal false, Turn::Colorize.colorize?
+        assert_equal false, Turn::Colorize.color_supported?
       end
       ENV['TERM'] = 'xterm'
       def $stdout.tty?
         false
       end
-      assert_equal false, Turn::Colorize.colorize?
+      assert_equal false, Turn::Colorize.color_supported?
     ensure
       ENV['TERM'], $stdout = term, stdout
       ::RbConfig::CONFIG['host_os'], ENV['ANSICON'] = host_os, ansicon
