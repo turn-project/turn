@@ -3,7 +3,7 @@ require 'stringio'
 
 module Turn
 
-  # = Outline Reporter (Turn's Original)
+  # Outline Reporter is Turn's Original.
   #
   #--
   # TODO: Should we fit reporter output to width of console?
@@ -21,9 +21,13 @@ module Turn
       @stdout = StringIO.new
       @stderr = StringIO.new
       #files  = suite.collect{ |s| s.file }.join(' ')
-      io.puts "LOADED SUITE #{suite.name}"
-      io.puts "SEED #{suite.seed}" if suite.seed
-      #io.puts "Started"
+      puts '=' * 78
+      if suite.seed
+        io.puts "SUITE #{suite.name} (SEED #{suite.seed})"
+      else
+        io.puts "SUITE #{suite.name}"
+      end
+      puts '=' * 78
     end
 
     #
@@ -38,11 +42,7 @@ module Turn
       #  io.puts(test.file)
       #end
 
-      name = if @natural
-               " #{test.name.gsub("test_", "").gsub(/_/, " ")}" 
-             else
-               " #{test.name}"
-             end
+      name = naturalized_name(test)
 
       io.print "    %-57s" % name
 

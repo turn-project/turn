@@ -1,3 +1,5 @@
+# DEPRECATED 
+
 require 'minitest/unit'
 require 'minitest/spec'
 #require 'rubygems'

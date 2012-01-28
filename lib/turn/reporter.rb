@@ -113,11 +113,12 @@ module Turn
 
     #
     def ticktock
-      s0 = Time.now - @time
-      s = s0.truncate
-      f = ((s0 - s) * 100000).to_i
-      h, s = s.divmod(60)
-      m, s = s.divmod(60)
+      t = Time.now - @time
+      h, t = t.divmod(60)
+      m, t = t.divmod(60)
+      s = t.truncate
+      f = ((t - s) * 1000).to_i
+
       "%01d:%02d:%02d:%03d" % [h,m,s,f]
     end
   end

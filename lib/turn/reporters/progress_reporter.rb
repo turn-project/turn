@@ -53,7 +53,7 @@ module Turn
     def post_report(suite)
       tally = test_tally(suite)
 
-      width = suite.collect{ |tr| tr.name.size }.max
+      width = suite.collect{ |tr| tr.name.to_s.size }.max
 
       headers = [ 'TESTCASE  ', '  TESTS   ', 'ASSERTIONS', ' FAILURES ', '  ERRORS   ' ]
       io.puts "\n\n%-#{width}s       %10s %10s %10s %10s\n" % headers

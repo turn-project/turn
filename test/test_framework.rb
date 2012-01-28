@@ -42,11 +42,11 @@ if RUBY_VERSION >= '1.9'
       ::RbConfig::CONFIG['host_os'], ENV['ANSICON'] = host_os, ansicon
     end
 
-    def test_ruby19_minitest_force
-      setup_test('MiniTest')
-      result = turn '--minitest tmp/test.rb'
-      assert result.index('PASS')
-    end
+    #def test_ruby19_minitest_force
+    #  setup_test('MiniTest')
+    #  result = turn '--minitest tmp/test.rb'
+    #  assert result.index('PASS')
+    #end
 
     def test_ruby19_minitest_required
       setup_test('MiniTest', 'minitest/unit')
@@ -54,11 +54,11 @@ if RUBY_VERSION >= '1.9'
       assert result.index('PASS')
     end
 
-    def test_ruby19_minitest_required_force
-      setup_test('MiniTest', 'minitest/unit')
-      result = turn '--minitest tmp/test.rb'
-      assert result.index('PASS')
-    end
+    #def test_ruby19_minitest_required_force
+    #  setup_test('MiniTest', 'minitest/unit')
+    #  result = turn '--minitest tmp/test.rb'
+    #  assert result.index('PASS')
+    #end
 
     def test_ruby19_minitest_mocking
       setup_test('Test')
@@ -66,11 +66,11 @@ if RUBY_VERSION >= '1.9'
       assert result.index('PASS')
     end
 
-    def test_ruby19_minitest_mocking_force
-      setup_test('Test')
-      result = turn '--minitest tmp/test.rb'
-      assert result.index('PASS')
-    end
+    #def test_ruby19_minitest_mocking_force
+    #  setup_test('Test')
+    #  result = turn '--minitest tmp/test.rb'
+    #  assert result.index('PASS')
+    #end
 
     def test_ruby19_minitest_mocking_required
       setup_test('Test', 'minitest/unit')
@@ -78,11 +78,11 @@ if RUBY_VERSION >= '1.9'
       assert result.index('PASS')
     end
 
-    def test_ruby19_minitest_mocking_required_force
-      setup_test('Test', 'minitest/unit')
-      result = turn '--minitest tmp/test.rb'
-      assert result.index('PASS')
-    end
+    #def test_ruby19_minitest_mocking_required_force
+    #  setup_test('Test', 'minitest/unit')
+    #  result = turn '--minitest tmp/test.rb'
+    #  assert result.index('PASS')
+    #end
 
     # Ruby 1.9 users must remove ++require 'test/unit'++ from their tests.
     #def test_ruby19_testunit_required

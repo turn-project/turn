@@ -44,7 +44,7 @@ end
 #
 def save_test(text, name=nil)
   file = File.join('tmp', name || 'test.rb')
-  FileUtils.mkdir_p('tmp')
+  FileUtils.mkdir_p('tmp') unless File.directory?('tmp')
   File.open(file, 'w'){ |f| f << text }
   return file
 end
