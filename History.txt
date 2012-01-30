@@ -1,3 +1,16 @@
+== 0.9.0 / 2012-01-30
+  * Fix bundle exec issue, which means...
+  * Developer's must require `turn/autorun` instead fo just `turn`.
+  * Improve detection of TestUnit 1.x vs. MiniTest
+  * Show randomization seed number in output.
+  * Pretty format option is now `-R` instead of `-T`.
+  * Rename case match shortcut to `-c` instead of `-t`.
+  * Add support for skipped tests.
+  * Support max backtrace limit via `-b` option.
+  * Use $RUBY_IGNORE_CALLERS to ignore lines of backtrace.
+  * Better color support on Windows (install ANSICON)
+  * MiniTest is a dependency (even if you are using it for TestUnit 1.x).
+
 == 0.8.4 / 2011-11-11
   * Now must use MiniTest 2.0+.
 
