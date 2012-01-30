@@ -10,6 +10,8 @@ else
   require 'test/unit'
 end
 
+require 'turn'
+
 #
 #Turn.config.format = :pretty
 

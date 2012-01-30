@@ -84,12 +84,12 @@ if RUBY_VERSION >= '1.9'
     #  assert result.index('PASS')
     #end
 
-    # Ruby 1.9 users must remove ++require 'test/unit'++ from their tests.
-    #def test_ruby19_testunit_required
-    #  setup_test('Test', 'test/unit')
-    #  result = turn 'turn tmp/test.rb'
-    #  assert result.index('PASS')
-    #end
+    #
+    def test_ruby19_testunit_required
+      setup_test('Test', 'test/unit')
+      result = turn 'turn tmp/test.rb'
+      assert result.index('PASS')
+    end
 
     # Turn does not support Test::Unit 2.0+.
     #def test_ruby19_testunit_force
@@ -159,4 +159,3 @@ else
   end
 
 end
-

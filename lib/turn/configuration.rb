@@ -83,6 +83,7 @@ module Turn
       @pattern   ||= /.*/
       @natural   ||= false
       @trace     ||= environment_trace
+      @ansi      ||= nil
 
       @files = nil  # reset files just in case
     end

@@ -21,15 +21,15 @@ class TestRunners < Test::Unit::TestCase
   # autorun
 
   #if RUBY_VERSION < '1.9'
-  #
-  #  def test_autorun
-  #    file = setup_test('Test', 'turn/autorun', 'test_autorun.rb')
-  #    result = `ruby -Ilib #{file} 2>&1`
-  #    assert(result.index('pass: 1'))
-  #    assert(result.index('fail: 0'))
-  #    assert(result.index('error: 0'))
-  #  end
-  #
+
+    def test_autorun_testunit
+      file = setup_test('Test', 'turn/autorun', 'test_autorun.rb')
+      result = `ruby -Ilib #{file} 2>&1`
+      assert(result.index('pass: 1'))
+      assert(result.index('fail: 0'))
+      assert(result.index('error: 0'))
+    end
+
   #else
 
     def test_autorun
