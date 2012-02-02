@@ -16,7 +16,6 @@ module Turn
   #   -c --case=PATTERN     only run testcases that match regexp PATTERN
   #   -I --loadpath=PATHS   add given PATHS to the $LOAD_PATH
   #   -r --requires=LIBS    require given LIBS before running tests
-  #   -m --minitest         Force use of MiniTest framework.
   #   -b --backtrace=INT    Set the number of lines to show in backtrace.
   #
   # RUN MODES
@@ -85,7 +84,6 @@ module Turn
       @requires  = []
       @runmode   = nil
       @outmode   = nil
-      #@framework = RUBY_VERSION >= "1.9" ? :minitest : :testunit
       @trace     = nil
       @natural   = false
       @ansi      = nil
@@ -127,10 +125,6 @@ module Turn
             @matchcase = Regexp.new(pattern, Regexp::IGNORECASE)
           end
         end
-
-        #opts.on('-m', '--minitest', "Force use of MiniTest framework") do
-        #  @framework = :minitest
-        #end
 
         opts.on('-b', '--backtrace', '--trace INT', "Limit the number of lines of backtrace.") do |int|
           @trace = int
@@ -242,7 +236,6 @@ module Turn
         c.format    = outmode
         c.pattern   = pattern
         c.matchcase = matchcase
-        #c.framework = framework
         c.trace     = trace
         c.natural   = natural
         c.ansi      = ansi unless ansi.nil?

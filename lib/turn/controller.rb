@@ -35,20 +35,11 @@ module Turn
     # Insatance of Runner, selected based on format and runmode.
     def runner
       @runner ||= (
-        #case config.framework
-        #when :minitest
-          require 'turn/runners/minirunner'
-        #else
-        #  require 'turn/runners/testrunner'
-        #end
+        require 'turn/runners/minirunner'
 
         case config.runmode
         when :marshal
-          #if config.framework == :minitest
-            Turn::MiniRunner
-          #else
-          #  Turn::TestRunner
-          #end
+          Turn::MiniRunner
         when :solo
           require 'turn/runners/solorunner'
           Turn::SoloRunner
@@ -56,11 +47,7 @@ module Turn
           require 'turn/runners/crossrunner'
           Turn::CrossRunner
         else
-          #if config.framework == :minitest
-            Turn::MiniRunner
-          #else
-          #  Turn::TestRunner
-          #end
+          Turn::MiniRunner
         end
       )
     end

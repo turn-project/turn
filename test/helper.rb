@@ -17,14 +17,23 @@ require 'turn'
 
 #
 def turn(*args)
-  `ruby -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
+  if RUBY_VERSION < '1.9'
+    `ruby1.8 -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
+  else
+    `ruby -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
+  end
 end
 
 #
 def turn2(*args)
-  `ruby -Ilib bin/turn -Ilib #{args.join(' ')}`
+  if RUBY_VERSION < '1.9'
+    `ruby1.8 -Ilib bin/turn -Ilib #{args.join(' ')}`
+  else
+    `ruby -Ilib bin/turn -Ilib #{args.join(' ')}`
+  end
 end
 
+#
 def turn_with_term(term, *args)
   `TERM="#{term}" ruby -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
 end
@@ -35,6 +44,20 @@ def setup_test(framework, required=false, name=nil)
   text << "require '#{required}'\n" if required
   text << <<-HERE
 class TestTest < #{framework}::Unit::TestCase
+#{standard_test_body}
+end
+  HERE
+  #name = framwwork.downcase
+  #name = name + '_required' if requires
+  save_test(text, name)
+end
+
+#
+def setup_testunit(required=false, name=nil)
+  text = ''
+  text << "require '#{required}'\n" if required
+  text << <<-HERE
+class TestTest < Test::Unit::TestCase
 #{standard_test_body}
 end
   HERE
@@ -78,7 +101,7 @@ HERE
 end
 
 #
-def setup_outline_test
+def setup_testunit_outline
   text = <<-HERE
 class OutlineTest < Test::Unit::TestCase
   def test_sample_pass

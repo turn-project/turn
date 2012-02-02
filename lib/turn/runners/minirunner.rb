@@ -41,7 +41,8 @@ module Turn
     # Override #_run_suite to setup Turn.
     def _run_suites suites, type
       # Someone want to explain to me why these are fucking here?
-      suites = suites - [MiniTest::Spec, Test::Unit::TestCase]
+      suites = suites - [MiniTest::Spec]
+      suites = suites - [Test::Unit::TestCase] if defined?(Test::Unit::TestCase)
 
       @turn_suite = Turn::TestSuite.new(@turn_config.suite_name)
       @turn_suite.size = suites.size  #::MiniTest::Unit::TestCase.test_suites.size

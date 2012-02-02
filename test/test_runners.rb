@@ -3,19 +3,19 @@ require File.expand_path(File.dirname(__FILE__)) + '/helper.rb'
 class TestRunners < Test::Unit::TestCase
 
   def test_solo
-    file = setup_test('Test', false, 'test_solo.rb')
+    file = setup_testunit(false, 'test_solo.rb')
     result = turn2 '--solo', file
-    assert result.index('pass: 1')
-    assert result.index('fail: 0')
-    assert result.index('error: 0')
+    assert result.index('pass: 1'),  "ACTUAL RESULT --->\n #{result}"
+    assert result.index('fail: 0'),  "ACTUAL RESULT --->\n #{result}"
+    assert result.index('error: 0'), "ACTUAL RESULT --->\n #{result}"
   end
 
   def test_cross
-    file1 = setup_test('Test', false, 'test1.rb')
-    file2 = setup_test('Test', false, 'test2.rb')
+    file1 = setup_testunit(false, 'test1.rb')
+    file2 = setup_testunit(false, 'test2.rb')
     result = turn2 '--cross', file1, file2
-    assert result.index('pass: 2')
-    assert result.index('error: 0')
+    assert result.index('pass: 2'),  "ACTUAL RESULT --->\n #{result}"
+    assert result.index('error: 0'), "ACTUAL RESULT --->\n #{result}"
   end
 
   # autorun
@@ -23,11 +23,11 @@ class TestRunners < Test::Unit::TestCase
   #if RUBY_VERSION < '1.9'
 
     def test_autorun_testunit
-      file = setup_test('Test', 'turn/autorun', 'test_autorun.rb')
+      file = setup_testunit('turn/autorun', 'test_autorun.rb')
       result = `ruby -Ilib #{file} 2>&1`
-      assert(result.index('pass: 1'))
-      assert(result.index('fail: 0'))
-      assert(result.index('error: 0'))
+      assert(result.index('pass: 1'),  "ACTUAL RESULT:\n #{result}")
+      assert(result.index('fail: 0'),  "ACTUAL RESULT:\n #{result}")
+      assert(result.index('error: 0'), "ACTUAL RESULT:\n #{result}")
     end
 
   #else
