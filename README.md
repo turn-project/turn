@@ -1,4 +1,4 @@
-# TURN - Test::Unit Reporter (New)
+# TURN - MiniTest Reporters
     by Tim Pease
     http://codeforpeople.rubyforge.org/turn
 
