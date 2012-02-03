@@ -4,7 +4,7 @@
 
 ## DESCRIPTION:
 
-TURN is a new way to view Test::Unit results. With longer running tests, it
+TURN is a new way to view test results. With longer running tests, it
 can be very frustrating to see a failure (....F...) and then have to wait till
 all the tests finish before you can see what the exact failure was. TURN
 displays each test on a separate line with failures being displayed
@@ -74,7 +74,7 @@ Simply require the TURN package from within your test suite.
 
     $ require 'turn'
 
-This will configure Test::Unit to use TURN formatting for displaying test
+This will configure MiniTest to use TURN formatting for displaying test
 restuls. A better line to use, though, is the following:
 
     begin; require 'turn'; rescue LoadError; end
