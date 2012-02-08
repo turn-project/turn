@@ -1,4 +1,4 @@
-#!mast bin lib test try [A-Z].*
+#!mast bin lib test try [A-Z]*.*
 bin/turn
 lib/turn/autoload.rb
 lib/turn/autorun.rb
@@ -39,3 +39,11 @@ try/test_autorun_testunit.rb
 try/test_counts.rb
 try/test_sample.rb
 try/test_sample2.rb
+LICENSE-MIT.txt
+Release.txt
+LICENSE.txt
+Version.txt
+README.md
+LICENSE-RUBY.txt
+LICENSE-GPL2.txt
+History.txt
