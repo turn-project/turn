@@ -6,6 +6,7 @@ require 'fileutils'
 if RUBY_VERSION < "1.9"
   require 'test/unit'
 else
+  gem 'minitest'
   require 'minitest/unit'
   require 'test/unit'
 end

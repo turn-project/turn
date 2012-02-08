@@ -1,12 +1,16 @@
 # make sure latest verison is used, rather than ruby's built-in
-begin; gem 'minitest'; rescue Exception; end
+begin
+  gem 'minitest'
+rescue Exception
+  warn "gem install minitest"
+end
 
 # we save the developer the trouble of having to load these (TODO: should we?)
 require 'minitest/unit'
 require 'minitest/spec'
 
 # compatability with old Test::Unit
-Test = MiniTest unless defined?(Test)
+#Test = MiniTest unless defined?(Test)
 
 # load Turn's minitest runner
 require 'turn/runners/minirunner'

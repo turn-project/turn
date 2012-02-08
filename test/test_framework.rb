@@ -21,9 +21,12 @@ if RUBY_VERSION >= '1.9'
         term, stdout = ENV['TERM'], $stdout
         host_os, ansicon, = ::RbConfig::CONFIG['host_os'], ENV['ANSICON']
         $stdout = $stdout.dup
-        def $stdout.tty?
-          true
-        end
+
+        verbose, debug   = $VERBOSE, $DEBUG
+        $VERBOSE, $DEBUG = false, false
+        def $stdout.tty? ; true ;  end
+        $VERBOSE, $DEBUG = verbose, debug
+
         ENV['ANSICON'] = nil
         ENV['TERM'] = 'xterm'
         assert_equal true, Turn::Colorize.color_supported?
@@ -39,9 +42,12 @@ if RUBY_VERSION >= '1.9'
           assert_equal false, Turn::Colorize.color_supported?
         end
         ENV['TERM'] = 'xterm'
-        def $stdout.tty?
-          false
-        end
+
+        verbose, debug   = $VERBOSE, $DEBUG
+        $VERBOSE, $DEBUG = false, false
+        def $stdout.tty? ; false ; end
+        $VERBOSE, $DEBUG = verbose, debug
+
         assert_equal false, Turn::Colorize.color_supported?
       ensure
         ENV['TERM'], $stdout = term, stdout
@@ -70,7 +76,7 @@ if RUBY_VERSION >= '1.9'
     def test_ruby19_minitest_mocking
       setup_testunit
       result = turn 'tmp/test.rb'
-      assert result.index('PASS')
+      assert result.index('PASS'), "RESULT:\n#{result}"
     end
 
     #def test_ruby19_minitest_mocking_force

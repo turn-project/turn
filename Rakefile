@@ -1,29 +1,9 @@
-begin
-  require 'bones'
-rescue LoadError
-  abort '### please install the "bones" gem ###'
-end
-
 task :default => 'test'
 
-Bones {
-  name         'turn'
-  summary      'Test::Unit Reporter (New) -- new output format for Test::Unit'
-  authors      'Tim Pease'
-  email        'tim.pease@gmail.com'
-  url          'http://gemcutter.org/gems/turn'
-  version      File.read('Version.txt').strip
-  ignore_file  '.gitignore'
-
-  exclude      << '^work'
-  rdoc.exclude << '^lib'
-
-  use_gmail
-
-  depend_on 'ansi'
-  depend_on 'minitest'
-  depend_on 'bones-git', :development => true
-}
+desc "Run unit tests"
+task :test do
+  sh 'test/runner'
+end
 
 # Might be useful one day, so we'll leave it here.
 #
