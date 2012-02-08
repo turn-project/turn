@@ -105,7 +105,7 @@ Thankfully there is a work around. In your Gemfile add:
 
 The `:require` option will prevent Turn from trying to autorun tests.
 
-In the future we will change turn to use `reuqire 'turn/autorun'` instead,
+In the future we will change turn to use `require 'turn/autorun'` instead,
 but that will require a lot of people to update a lot of tests, so it's not
 something to do lightly. Full change over will wait until the 1.0 release.
 In the mean time Turn will just put out a warning.
