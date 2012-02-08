@@ -16,19 +16,27 @@ module Turn
   #
   module Colorize
 
+    def self.included(base)
+      base.module_eval do
+        const_set :PASS,  Colorize.pass('PASS')
+        const_set :FAIL,  Colorize.fail('FAIL')
+        const_set :ERROR, Colorize.error('ERROR')
+        const_set :SKIP,  Colorize.skip('SKIP')
+      end
+    end
+
     COLORLESS_TERMINALS = ['dumb']
 
+    # Colorize output or not?
     def self.colorize?
+      return @colorize unless @colorize.nil?
       @colorize ||= (
         ansi = Turn.config.ansi?
-        if ansi.nil?
-          color_supported?
-        else
-          Turn.config.ansi?
-        end
+        ansi.nil? ? color_supported? : ansi
       )
     end
 
+    # Does the system support color?
     def self.color_supported?
       return false unless defined?(::ANSI::Code)
       return false unless $stdout.tty?
@@ -73,11 +81,6 @@ module Turn
     def self.skip(string)
       colorize? ? ::ANSI::Code.cyan{ string } : string
     end
-
-    PASS  = pass('PASS')
-    FAIL  = fail('FAIL')
-    ERROR = error('ERROR')
-    SKIP  = skip('SKIP')
 
     def colorize?
       Colorize.colorize?
