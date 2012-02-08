@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require 'turn/command'
+require 'turn'
 begin
   Turn::Command.main(*ARGV)
 rescue StandardError => e

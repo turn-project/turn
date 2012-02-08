@@ -9,5 +9,6 @@ require 'turn/configuration'
 require 'turn/colorize'
 require 'turn/components'
 require 'turn/controller'
+require 'turn/command'
 require 'turn/minitest'
 
