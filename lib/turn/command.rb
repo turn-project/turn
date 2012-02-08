@@ -1,5 +1,4 @@
 require 'optparse'
-require 'turn'
 
 module Turn
 
@@ -252,9 +251,9 @@ module Turn
       result = controller.start
 
       if result
-        exit result.passed?
+        exit (result.passed? ? 0 : -1)
       else # no tests
-        exit
+        exit -1
       end
     end
 
