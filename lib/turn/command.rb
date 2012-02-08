@@ -4,32 +4,38 @@ require 'turn'
 module Turn
 
   # Turn - Pretty Unit Test Runner for Ruby
-  #
+  #  
   # SYNOPSIS
-  #   turn [OPTIONS] [RUN MODE] [OUTPUT MODE] [test globs...]
-  #
-  # OPTIONS
-  #   -h --help             display this help information
-  #      --live             don't use loadpath
-  #      --log              log results to a file
-  #   -n --name=PATTERN     only run tests that match regexp PATTERN
-  #   -c --case=PATTERN     only run testcases that match regexp PATTERN
-  #   -I --loadpath=PATHS   add given PATHS to the $LOAD_PATH
-  #   -r --requires=LIBS    require given LIBS before running tests
-  #   -b --backtrace=INT    Set the number of lines to show in backtrace.
-  #
+  #   turn [OPTIONS] [RUN MODE] [OUTPUT MODE] [TEST GLOBS ...]
+  #  
+  # GENERAL OPTIONS
+  #     -I, --loadpath=PATHS             add paths to $LOAD_PATH
+  #     -r, --require=LIBS               require libraries
+  #     -n, --name=PATTERN               only run tests that match PATTERN
+  #     -c, --case=PATTERN               only run test cases that match PATTERN
+  #     -b, --backtrace, --trace INT     Limit the number of lines of backtrace.
+  #         --natural                    Show natualized test names.
+  #         --[no-]ansi                  Force use of ANSI codes on or off.
+  #         --log                        log results to a file
+  #         --live                       do not use local load path
+  #  
   # RUN MODES
-  #      --normal      run all tests in a single process [default]
-  #      --solo        run each test in a separate process
-  #      --cross       run each pair of test files in a separate process
-  #
+  #         --normal                     run all tests in a single process [default]
+  #         --solo                       run each test in a separate process
+  #         --cross                      run each pair of test files in a separate process
+  #  
   # OUTPUT MODES
-  #   -O --outline     turn's original case/test outline mode [default]
-  #   -P --progress    indicates progress with progress bar
-  #   -D --dotted      test/unit's traditonal dot-progress mode
-  #   -R --pretty      new pretty reporter
-  #   -M --marshal     dump output as YAML (normal run mode only)
-  #   -C --cue         interactive testing
+  #     -O, --outline                    turn's original case/test outline mode [default]
+  #     -P, --progress                   indicates progress with progress bar
+  #     -D, --dotted                     test-unit's traditonal dot-progress mode
+  #     -R, -T, --pretty                 new pretty output mode
+  #     -C, --cue                        cue for action on each failure/error
+  #     -M, --marshal                    dump output as YAML (normal run mode only)
+  #  
+  # COMMAND OPTIONS
+  #         --debug                      turn debug mode on
+  #         --version                    display version
+  #     -h, --help                       display this help information
   #
   class Command
 
