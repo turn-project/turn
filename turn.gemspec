@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_paths = [%q{lib}]
   s.rubyforge_project = %q{turn}
   s.rubygems_version = %q{1.8.6}
-  s.summary = %q{Test::Unit Reporter (New) -- new output format for Test::Unit}
+  s.summary = %q{Test Reporters (New) -- new output formats for your tests}
   s.test_files = [%q{test/test_framework.rb}, %q{test/test_reporters.rb}, %q{test/test_runners.rb}]
 
   if s.respond_to? :specification_version then
