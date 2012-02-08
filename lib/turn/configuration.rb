@@ -89,11 +89,11 @@ module Turn
       @requires  ||= []
       @live      ||= false
       @log       ||= true
-      #@format   ||= nil
       #@runner   ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
       @matchcase ||= nil
       @pattern   ||= /.*/
       @natural   ||= false
+      @format    ||= environment_format
       @trace     ||= environment_trace
       @ansi      ||= environment_ansi
 
@@ -193,10 +193,15 @@ module Turn
           require 'turn/reporters/cue_reporter'
           Turn::CueReporter.new($stdout, opts)
         else
-          require 'turn/reporters/outline_reporter'
+          require 'turn/reporters/pretty_reporter'
           Turn::OutlineReporter.new($stdout, opts)
         end
       )
+    end
+
+    #
+    def environment_format
+      ENV['rpt']
     end
 
     #
