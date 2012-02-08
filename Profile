@@ -6,9 +6,9 @@ version       Turn::VERSION  #File.read('Version.txt').strip
 
 name         'turn'
 title        'Turn'
-summary      'Test::Unit Reporter (New) -- new output format for Test::Unit'
+summary      'Test Reporters (New) -- new output formats for Testing'
 
-description "This project provides TAP and TAP-Y/J test output formats for the the TestUnit test framework."
+description "Turn provides a set of alternative runners for MiniTest, both colorful and informative."
 
 authors [
   'Thomas Sawyer <transfire@gmail.com>',

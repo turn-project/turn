@@ -35,7 +35,7 @@ revision: 0
 version: 0.9.2
 name: turn
 title: Turn
-summary: Test::Unit Reporter (New) -- new output format for Test::Unit
-description: This project provides TAP and TAP-Y/J test output formats for the the
-  TestUnit test framework.
+summary: Test Reporters (New) -- new output formats for Testing
+description: Turn provides a set of alternative runners for MiniTest, both colorful
+  and informative.
 date: '2012-02-08'
