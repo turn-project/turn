@@ -57,10 +57,22 @@ module Turn
     # Use natural language case names.
     attr_accessor :natural
 
-    def verbose? ; @verbose ; end
-    def live?    ; @live    ; end
-    def natural? ; @natural ; end
-    def ansi?    ; @ansi    ; end
+    #
+    def verbose?
+      @verbose
+    end
+
+    def live?
+      @live
+    end
+
+    def natural?
+      @natural
+    end
+
+    def ansi?
+      @ansi
+    end
 
   private
 
@@ -83,7 +95,7 @@ module Turn
       @pattern   ||= /.*/
       @natural   ||= false
       @trace     ||= environment_trace
-      @ansi      ||= nil
+      @ansi      ||= environment_ansi
 
       @files = nil  # reset files just in case
     end
@@ -190,6 +202,18 @@ module Turn
     #
     def environment_trace
       (ENV['backtrace'] ? ENV['backtrace'].to_i : nil)
+    end
+
+    #
+    def environment_ansi
+      case ENV['ansi']
+      when 'true','yes','on'
+        true
+      when 'false','no','off'
+        false
+      else
+        nil
+      end
     end
 
   end
