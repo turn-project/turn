@@ -74,9 +74,9 @@ module Turn
 
     $RUBY_IGNORE_CALLERS ||= []
     $RUBY_IGNORE_CALLERS.concat([
-      /\/turn.*\.rb/,
+      /\/lib\/turn.*\.rb/,
       /\/bin\/turn/,
-      /\/minitest.*\.rb/,
+      /\/lib\/minitest.*\.rb/,
       /\/test\/unit.*\.rb/
     ])
 
@@ -87,7 +87,7 @@ module Turn
     def filter_backtrace(backtrace)
       return [] unless backtrace
       bt = backtrace.dup
-      bt.reject!{ |line| $RUBY_IGNORE_CALLERS.any?{ |re| re =~ line } } unless $DEBUG
+      bt = bt.reject{ |line| $RUBY_IGNORE_CALLERS.any?{ |re| re =~ line } } unless $DEBUG
       #bt.reject!{ |line| line.rindex('minitest') }
       #bt.reject!{ |line| line.rindex('test/unit') }
       #bt.reject!{ |line| line.rindex('lib/turn') }
