@@ -5,6 +5,16 @@ task :test do
   sh 'test/runner'
 end
 
+desc "build gem package"
+task :gem => ['.ruby'] do
+  sh 'gem build .gemspec'
+  sh 'mv *.gem pkg/'
+end
+
+file '.ruby' => ['Profile', 'lib/turn/version.rb'] do
+  sh 'dotruby source Profile'
+end
+
 # Might be useful one day, so we'll leave it here.
 #
 # Rake::TaskManager.class_eval do
