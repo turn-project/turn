@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/lib/turn/version'
+
+version       Turn::VERSION  #File.read('Version.txt').strip
+
+name         'turn'
+title        'Turn'
+summary      'Test::Unit Reporter (New) -- new output format for Test::Unit'
+
+description "This project provides TAP and TAP-Y/J test output formats for the the TestUnit test framework."
+
+authors [
+  'Thomas Sawyer <transfire@gmail.com>',
+  'Tim Pease <tim.pease@gmail.com>'
+]
+
+requirements [
+  'ansi',
+  'minitest (test)',
+  'rake (build)'
+]
+
+resources(
+  'home' => 'http://rubygems.org/gems/turn',
+  'code' => 'http://github.com/TwP/turn'
+)
+
+copyrights [
+  '2008 Tim Pease (MIT)'
+]
+
+
+
