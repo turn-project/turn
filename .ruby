@@ -32,7 +32,7 @@ extra: {}
 load_path:
 - lib
 revision: 0
-version: 0.9.2
+version: 0.9.3
 name: turn
 title: Turn
 summary: Test Reporters (New) -- new output formats for Testing
