@@ -1,0 +1,33 @@
+require "autotest/bundler"
+require 'autotest/growl'
+#require 'autotest/fsevent'
+require "autotest/restart"
+
+Autotest::Growl::one_notification_per_run = true
+Autotest::Growl::remote_notification = true
+
+#Autotest.add_hook :initialize do |autotest|
+#  %w{.git .DS_Store tmp log}.each do |exception|
+#    autotest.add_exception(exception)
+#  end
+#end
+
+# Override autotest default magic to rerun all tests every time a
+# change is detected on the file system.
+#class Autotest
+#
+#  def get_to_green
+#    begin
+#      rerun_all_tests
+#      wait_for_changes unless all_good
+#    end until all_good
+#  end
+#
+#end
+
+Autotest.add_hook :initialize do |at|
+  at.testlib = 'lib/example'
+
+  at.extra_class_map["ExampleTest"] = "test/test_example.rb"
+end
+
