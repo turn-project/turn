@@ -1,5 +1,4 @@
-require 'minitest/unit'
-require 'turn'
+require 'turn/autorun'
 
 Turn.config do |c|
   c.natural = true

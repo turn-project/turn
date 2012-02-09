@@ -1,5 +1,4 @@
-require 'test/unit'
-require 'turn'
+require 'turn/testunit'
 
 class SampleCase1 < Test::Unit::TestCase
   def test_sample_pass1
