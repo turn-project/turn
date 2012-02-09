@@ -86,9 +86,14 @@ module Turn
       sum = 0; tests.each{ |t| sum += 1 if t.pass? }; sum
     end
 
+    def count_skips
+      # Why not use tests.select(&:skip?).size ?
+      sum = 0; tests.each{ |t| sum += 1 if t.skip? }; sum
+    end
+
     #
     def counts
-      return count_tests, count_assertions, count_failures, count_errors
+      return count_tests, count_assertions, count_failures, count_errors, count_skips
     end
 
     def message
