@@ -186,15 +186,18 @@ module Turn
         when :dotted, :dot
           require 'turn/reporters/dot_reporter'
           Turn::DotReporter.new($stdout, opts)
-        when :pretty
-          require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, opts)
+        when :outline
+          require 'turn/reporters/outline_reporter'
+          Turn::OutlineReporter.new($stdout, opts)
         when :cue
           require 'turn/reporters/cue_reporter'
           Turn::CueReporter.new($stdout, opts)
+        when :pretty
+          require 'turn/reporters/pretty_reporter'
+          Turn::PrettyReporter.new($stdout, opts)
         else
           require 'turn/reporters/pretty_reporter'
-          Turn::OutlineReporter.new($stdout, opts)
+          Turn::PrettyReporter.new($stdout, opts)
         end
       )
     end
