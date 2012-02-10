@@ -128,7 +128,7 @@ module Turn
       backtrace.first.insert(0, TRACE_MARK)
 
       io.puts Colorize.bold(message.tabto(TAB_SIZE))
-      io.puts backtrace.shift.tabto(TAB_SIZE - 2)
+      io.puts backtrace.shift.tabto(TAB_SIZE - TRACE_MARK.length)
       io.puts backtrace.join("\n").tabto(TAB_SIZE)
       io.puts
     end
