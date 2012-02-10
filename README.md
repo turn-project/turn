@@ -9,7 +9,7 @@ can be very frustrating to see a failure (....F...) and then have to wait till
 all the tests finish before you can see what the exact failure was. TURN
 displays each test on a separate line with failures being displayed
 immediately instead of at the end of the tests.
-  
+
 If you have the 'ansi' gem installed, then TURN output will be displayed in
 wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
@@ -85,6 +85,33 @@ the end user to install the TURN package.
 For a Rails application, put the require line into the 'test/test_helper.rb'
 script. Now your Rails tests will use TURN formatting.
 
+## Configuration
+
+You can use `Turn.config` to adjust turn configuration.
+
+Options are following:
+
+    tests          List of if file names or glob pattern of tests to run. Default: ["test/**/{test,}*{,test}.rb"]
+    exclude         List of file names or globs to exclude from tests list. Default: []
+    pattern         Regexp pattern that all test name's must match to be eligible to run. Default: /.*/
+    matchcase       Regexp pattern that all test cases must match to be eligible to run. Default: nil
+    loadpath        Add these folders to the $LOAD_PATH. Default: ['lib']
+    requires        Libs to require when running tests. Default: []
+    format          Reporter type (:pretty, :dot, :cue, :marshal, :outline, :progress). Default: :pretty
+    live            Test against live install (i.e. Don't use loadpath option). Default: false
+    verbose         Verbose output? Default: false
+    trace           Number of backtrace lines to display. Default: set from ENV or nil
+    natural         Use natural language case names.  Default: false
+    ansi            Force colorized output (requires 'ansi' gem). Default: set from ENV or nil
+
+To set option just call the desired method:
+
+    Turn.config.format = :progress
+
+Also, you can use following environment variables to adjust settings:
+
+    backtrace       Number of backtrace lines to display. Default: set from ENV or nil
+    ansi            Colorize output (requires 'ansi' gem).
 
 ## RAILS/BUNDLER USERS
 
