@@ -15,7 +15,7 @@ If you have the 'ansi' gem installed, then TURN output will be displayed in
 wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
 
-<b>Interested in improving Turn?</b> Please read this[https://github.com/TwP/turn/wiki/Implementation].
+<b>Interested in improving Turn?</b> [Please read this](https://github.com/TwP/turn/wiki/Implementation).
 
 
 ## FEATURES:
@@ -87,8 +87,9 @@ the end user to install the TURN package.
 For a Rails application, put the require line into the 'test/test_helper.rb'
 script. Now your Rails tests will use TURN formatting.
 
-<b>Note: This changed in version 0.9. It used to be just `require 'turn'`, but
-becuase of how `bundle exec` works, it was better to require a subdirectory file.</b>
+<b>Note:</b> This changed in version 0.9. It used to be just `require 'turn'`,
+but becuase of how `bundle exec` works, it was better to require a subdirectory
+file.
 
 ### Configuration
 
