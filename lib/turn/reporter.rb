@@ -105,7 +105,7 @@ module Turn
     #
     def naturalized_name(test)
       if @natural
-        " #{test.name.gsub("test_", "").gsub(/_/, " ")}" 
+        " #{test.name.gsub("test_", "").gsub(/_/, " ")}"
       else
         " #{test.name}"
       end
@@ -119,7 +119,7 @@ module Turn
       s = t.truncate
       f = ((t - s) * 1000).to_i
 
-      "%01d:%02d:%02d:%03d" % [h,m,s,f]
+      "%01d:%02d:%02d.%03d" % [h,m,s,f]
     end
   end
 
