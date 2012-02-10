@@ -1,204 +1,120 @@
 require 'turn/reporter'
 
 module Turn
-
   # = Pretty Reporter (by Paydro)
   #
+  # Example output:
+  #    TestCaseName:
+  #         PASS test: Succesful test case.  (0.03s)
+  #        ERROR test: Bogus test case.  (0.04s)
+  #         FAIL test: Failed test case.  (0.03s)
+  #
   class PrettyReporter < Reporter
-    #
-    PADDING_SIZE = 4
-
-    #
+    # Second column left padding in chars
     TAB_SIZE = 10
 
-    #
+    # At the very start, before any testcases are run, this is called.
     def start_suite(suite)
-      #old_sync, @@out.sync = @@out.sync, true if io.respond_to? :sync=
       @suite  = suite
       @time   = Time.now
-      #@stdout = StringIO.new
-      #@stderr = StringIO.new
-      #files = suite.collect{ |s| s.file }.join(' ')
+
+      io.puts
       io.puts "Loaded suite #{suite.name}"
-      #io.puts "Loaded suite #{$0.sub(/\.rb$/, '')}\nStarted"
       io.puts "Started (#{suite.seed})"
+      io.puts
     end
 
-    #
+    # Invoked before a testcase is run.
     def start_case(kase)
-      #if kase.size > 0  # TODO: Don't have size yet?
-        io.print "\n#{kase.name}:\n"
-      #end
+      # Print case name is there any tests in suite
+      # TODO: Add option which will show all test cases, even without tests?
+      io.puts kase.name if kase.size > 0
     end
 
-    #
+    # Invoked before a test is run.
     def start_test(test)
       @test_time = Time.now
       @test = test
-      #if @file != test.file
-      #  @file = test.file
-      #  io.puts(test.file)
-      #end
-      #io.print "    %-69s" % test.name
-      #$stdout = @stdout
-      #$stderr = @stderr
-      #$stdout.rewind
-      #$stderr.rewind
     end
 
-    #
+    # Invoked when a test passes.
     def pass(message=nil)
-      io.print pad_with_size("#{PASS}")
-      io.print " #{@test}"
-      io.print " (%.2fs) " % (Time.now - @test_time)
+      banner PASS
+
       if message
         message = Colorize.magenta(message)
-        message = message.to_s.tabto(10)
+        message = message.to_s.tabto(TAB_SIZE)
+
         io.puts(message)
       end
     end
 
-    #
+    # Invoked when a test raises an assertion.
     def fail(assertion, message=nil)
-      io.print pad_with_size("#{FAIL}")
-      io.print " #{@test}"
-      io.print " (%.2fs) " % (Time.now - @test_time)
+      banner FAIL
 
-      #message = assertion.location[0] + "\n" + assertion.message #.gsub("\n","\n")
-      #trace   = MiniTest::filter_backtrace(report[:exception].backtrace).first
-
-      message ||= assertion.message
-
-      _trace = if assertion.respond_to?(:backtrace)
-                 filter_backtrace(assertion.backtrace)
-               else
-                 filter_backtrace(assertion.location).first
-               end
-
-      io.puts
-      #io.puts pad(message, tabsize)
-      io.puts message.tabto(TAB_SIZE)
-
-      cnt = @trace ? @trace.to_i : _trace.size
-      io.puts _trace[0, cnt].map{|l| l.tabto(TAB_SIZE) }.join("\n")
-
-      #show_captured_output
+      prettify(message, assertion)
     end
 
-    #
+    # Invoked when a test raises an exception.
     def error(exception, message=nil)
-      io.print pad_with_size("#{ERROR}")
-      io.print " #{@test}"
-      io.print " (%.2fs) " % (Time.now - @test_time)
+      banner ERROR
 
-      #message = exception.to_s.split("\n")[2..-1].join("\n")
-
-      message ||= exception.message
-
-      _trace = if exception.respond_to?(:backtrace)
-                 clean_backtrace(exception.backtrace)
-               else
-                 clean_backtrace(exception.location)
-               end
-
-      io.puts
-      io.puts message.tabto(TAB_SIZE)
-      io.puts _trace.map{|l| l.tabto(TAB_SIZE) }.join("\n")
+      prettify(message, exception)
     end
 
-    #
+    # Invoked when a test is skipped.
     def skip(exception, message=nil)
-      io.print pad_with_size("#{SKIP}")
-      io.print " #{@test}"
-      io.print " (%.2fs) " % (Time.now - @test_time)
+      banner SKIP
 
-      message ||= exception.message
-
-      _trace = if exception.respond_to?(:backtrace)
-                 clean_backtrace(exception.backtrace)
-               else
-                 clean_backtrace(exception.location)
-               end
-
-      io.puts
-      io.puts message.tabto(TAB_SIZE)
-      io.puts _trace.map{|l| l.tabto(TAB_SIZE) }.join("\n")
+      prettify(message, exception)
     end
 
-    #
-    def finish_test(test)
-      io.puts
-      #@test_count += 1
-      #@assertion_count += inst._assertions
-      #$stdout = STDOUT
-      #$stderr = STDERR
-    end
-
-=begin
-    def show_captured_output
-      show_captured_stdout
-      show_captured_stderr
-    end
-
-    def show_captured_stdout
-      @stdout.rewind
-      return if @stdout.eof?
-      STDOUT.puts(<<-output.tabto(8))
-\nSTDOUT:
-#{@stdout.read}
-      output
-    end
-
-    def show_captured_stderr
-      @stderr.rewind
-      return if @stderr.eof?
-      STDOUT.puts(<<-output.tabto(8))
-\nSTDERR:
-#{@stderr.read}
-      output
-    end
-=end
-
+    # Invoked after all tests in a testcase have ben run.
     def finish_case(kase)
-      if kase.size == 0
-        io.puts pad("(No Tests)")
-      end
+      # Print newline is there any tests in suite
+      io.puts if kase.size > 0
     end
 
-    #
+    # After all tests are run, this is the last observable action.
     def finish_suite(suite)
-      #@@out.sync = old_sync if @@out.respond_to? :sync=
+      total      = "%d tests" % suite.count_tests
+      passes     = "%d passed" % suite.count_passes
+      assertions = "%d assertions" % suite.count_assertions
+      failures   = "%d failures" % suite.count_failures
+      errors     = "%d errors" % suite.count_errors
+      skips      = "%d skips" % suite.count_skips
 
-      total   = suite.count_tests
-      failure = suite.count_failures
-      error   = suite.count_errors
-      #pass    = total - failure - error
-
+      io.puts "Finished in %.6f seconds." % (Time.now - @time)
       io.puts
-      io.puts "Finished in #{'%.6f' % (Time.now - @time)} seconds."
-      io.puts
 
-      io.print "%d tests, " % total
-      io.print "%d assertions, " % suite.count_assertions
-      io.print Colorize.fail( "%d failures" % failure) + ', '
-      io.print Colorize.error("%d errors" % error) #+ ', '
-      #io.puts  Colorize.cyan( "%d skips" % skips ) #TODO
+      io.puts [total, passes, assertions, Colorize.fail(failures), Colorize.error(errors), Colorize.skip(skips)].join(", ")
       io.puts
     end
 
   private
-
+    # Outputs test case header for given event (error, fail & etc)
     #
-    def pad(str, size=PADDING_SIZE)
-      " " * size + str
+    # Example:
+    #    PASS test: Test decription.  (0:00:02:059)
+    def banner(event)
+      io.puts "%18s %s (%.2fs)" % [event, @test, ticktock]
     end
 
-    #
-    def pad_with_size(str)
-      " " * (18 - str.size) + str
-    end
+    # Cleanups and prints test payload
+    def prettify(message=nil, raised)
+      # Get message from raised, if not fiven
+      message ||= raised.message
 
+      backtrace = raised.respond_to?(:backtrace) ? raised.backtrace : raised.location
+
+      # Filter and clean backtrace
+      backtrace = clean_backtrace(backtrace)
+
+      io.puts Colorize.bold(message.tabto(TAB_SIZE))
+      io.puts
+      io.puts backtrace.join("\n").tabto(TAB_SIZE)
+      io.puts
+    end
   end
-
 end
-

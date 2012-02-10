@@ -64,9 +64,13 @@ module Turn
       #)
     end
 
+    def count_skips
+      sum = 0; each{ |c| sum += c.count_skips }; sum
+    end
+
     # Convenience methods --this is what is typcially wanted.
     def counts
-      return count_tests, count_assertions, count_failures, count_errors #,count_skips
+      return count_tests, count_assertions, count_failures, count_errors ,count_skips
     end
 
     def each(&block)
@@ -88,4 +92,3 @@ module Turn
   end
 
 end
-
