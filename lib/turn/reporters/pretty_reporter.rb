@@ -98,6 +98,10 @@ module Turn
                 Colorize.skip(skips),
                 assertions
               ].join(", ")
+
+      # Please keep this newline, since it will be useful when after test case
+      # there will be other lines. For example "rake aborted!" or kind of.
+      io.puts
     end
 
   private
