@@ -2,6 +2,7 @@
     by Tim Pease
     http://codeforpeople.rubyforge.org/turn
 
+
 ## DESCRIPTION:
 
 TURN is a new way to view test results. With longer running tests, it
@@ -15,6 +16,7 @@ wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
 
 <b>Interested in improving Turn?</b> Please read this[https://github.com/TwP/turn/wiki/Implementation].
+
 
 ## FEATURES:
 
@@ -42,7 +44,7 @@ General usage provides better test output. Here is some sample output:
 Turn also provides solo and cross test modes when run from the *turn* commandline
 application.
 
-## SYNOPSIS:
+## INSTRUCTION:
 
 Turn can be using from the command-line or via require. The command-line tool
 offers additional options for how one runs tests.
@@ -72,12 +74,12 @@ This will run every pairing of tests in a separate process.
 
 Simply require the TURN package from within your test suite.
 
-    $ require 'turn'
+    $ require 'turn/autorun'
 
 This will configure MiniTest to use TURN formatting for displaying test
-restuls. A better line to use, though, is the following:
+results. A better line to use, though, is the following:
 
-    begin; require 'turn'; rescue LoadError; end
+    begin; require 'turn/autorun'; rescue LoadError; end
 
 When you distribute your code, the test suite can be run without requiring
 the end user to install the TURN package.
@@ -85,24 +87,27 @@ the end user to install the TURN package.
 For a Rails application, put the require line into the 'test/test_helper.rb'
 script. Now your Rails tests will use TURN formatting.
 
-## Configuration
+<b>Note: This changed in version 0.9. It used to be just `require 'turn'`, but
+becuase of how `bundle exec` works, it was better to require a subdirectory file.</b>
+
+### Configuration
 
 You can use `Turn.config` to adjust turn configuration.
 
 Options are following:
 
-    tests          List of if file names or glob pattern of tests to run. Default: ["test/**/{test,}*{,test}.rb"]
+    tests           List of file names or glob patterns of tests to run. Default: ["test/**/{test,}*{,test}.rb"]
     exclude         List of file names or globs to exclude from tests list. Default: []
-    pattern         Regexp pattern that all test name's must match to be eligible to run. Default: /.*/
-    matchcase       Regexp pattern that all test cases must match to be eligible to run. Default: nil
+    pattern         Regexp pattern that all test names must match to be eligible to run. Default: /.*/ (all)
+    matchcase       Regexp pattern that all test cases must match to be eligible to run. Default: nil (all)
     loadpath        Add these folders to the $LOAD_PATH. Default: ['lib']
     requires        Libs to require when running tests. Default: []
     format          Reporter type (:pretty, :dot, :cue, :marshal, :outline, :progress). Default: :pretty
     live            Test against live install (i.e. Don't use loadpath option). Default: false
     verbose         Verbose output? Default: false
-    trace           Number of backtrace lines to display. Default: set from ENV or nil
+    trace           Number of backtrace lines to display. Default: set from ENV or nil (all)
     natural         Use natural language case names.  Default: false
-    ansi            Force colorized output (requires 'ansi' gem). Default: set from ENV or nil
+    ansi            Force colorized output (requires 'ansi' gem). Default: set from ENV or nil (auto)
 
 To set option just call the desired method:
 
@@ -111,40 +116,20 @@ To set option just call the desired method:
 Also, you can use following environment variables to adjust settings:
 
     backtrace       Number of backtrace lines to display. Default: set from ENV or nil
-    ansi            Colorize output (requires 'ansi' gem).
-
-## RAILS/BUNDLER USERS
-
-Bundler automatically requires everything listed in your Gemfile, e.g.
-when using `bundle exec`. This means `turn` will get automatically
-required too, which in turn means the Turn's test autorunner is doing
-to kick in. Obviously we don't want that to happen unless we are actually
-running tests.
-
-Turn was created well before Bundler existed, and the use of `require 'turn'`
-as the autorunner was the obvious convenience. Unfortunately Bundler's choice
-to force require all requirements by defualt can have unexpected consequences,
-as is the case here.
-
-Thankfully there is a work around. In your Gemfile add:
-
-    gem 'turn', :require => false
-
-The `:require` option will prevent Turn from trying to autorun tests.
-
-In the future we will change turn to use `require 'turn/autorun'` instead,
-but that will require a lot of people to update a lot of tests, so it's not
-something to do lightly. Full change over will wait until the 1.0 release.
-In the mean time Turn will just put out a warning.
+    ansi            Force colorize output (requires 'ansi' gem).
 
 
 ## REQUIREMENTS:
 
 * ansi 1.1+ (for colorized output and progress bar output mode)
 
-## INSTALL:
 
-* sudo gem install turn
+## INSTALLATION:
+
+Follow the ususal procedure:
+
+    $ sudo gem install turn
+
 
 ## LICENSE:
 
