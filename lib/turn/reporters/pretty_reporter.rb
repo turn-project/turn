@@ -16,14 +16,20 @@ module Turn
     # Character to put in front of backtrace.
     TRACE_MARK = '@ '
 
+    # TODO: solo and cross runners do not have name or seed, need to fix.
+
     # At the very start, before any testcases are run, this is called.
     def start_suite(suite)
       @suite  = suite
       @time   = Time.now
 
-      io.puts Colorize.bold("Loaded Suite '#{suite.name}'")
+      io.puts Colorize.bold("Loaded Suite #{suite.name}")
       io.puts
-      io.puts "Started at #{Time.now} w/ seed #{suite.seed}."
+      if suite.seed
+        io.puts "Started at #{Time.now} w/ seed #{suite.seed}."
+      else
+        io.puts "Started at #{Time.now}."
+      end
       io.puts
     end
 
