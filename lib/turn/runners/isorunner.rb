@@ -80,6 +80,7 @@ module Turn
         #err = ''
 
         out, err = nil, nil
+p cmd
         Open3.popen3(cmd) do |stdin, stdout, stderr|
           stdin.close
           out = stdout.read.chomp
@@ -96,7 +97,7 @@ module Turn
         files = kase.files
 
         # remove any unexpected output injected at the beginning
-        b = out.index(/^---/)
+        b = out.index(/^---/m)
         yaml = out[b..-1]
         sub_suite = YAML.load(yaml)
 
