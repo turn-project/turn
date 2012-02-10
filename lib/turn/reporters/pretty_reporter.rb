@@ -10,23 +10,27 @@ module Turn
   #         FAIL test: Failed test case.  (0.03s)
   #
   class PrettyReporter < Reporter
-    # Second column left padding in chars
+    # Second column left padding in chars.
     TAB_SIZE = 10
+
+    # Character to put in front of backtrace.
+    TRACE_MARK = '@ '
 
     # At the very start, before any testcases are run, this is called.
     def start_suite(suite)
       @suite  = suite
       @time   = Time.now
 
+      #io.puts
+      io.puts Colorize.bold("Loaded Suite '#{suite.name}'")
       io.puts
-      io.puts "Loaded suite #{suite.name}"
-      io.puts "Started (#{suite.seed})"
+      io.puts "Started at #{Time.now} w/ seed #{suite.seed}."
       io.puts
     end
 
     # Invoked before a testcase is run.
     def start_case(kase)
-      # Print case name is there any tests in suite
+      # Print case name if there any tests in suite
       # TODO: Add option which will show all test cases, even without tests?
       io.puts kase.name if kase.size > 0
     end
@@ -88,8 +92,14 @@ module Turn
       io.puts "Finished in %.6f seconds." % (Time.now - @time)
       io.puts
 
-      io.puts [total, passes, assertions, Colorize.fail(failures), Colorize.error(errors), Colorize.skip(skips)].join(", ")
-      io.puts
+      io.puts [ Colorize.bold(total),
+                Colorize.pass(passes),
+                Colorize.fail(failures),
+                Colorize.error(errors),
+                Colorize.skip(skips),
+                assertions
+              ].join(", ")
+      #io.puts
     end
 
   private
@@ -98,7 +108,8 @@ module Turn
     # Example:
     #    PASS test: Test decription.  (0:00:02:059)
     def banner(event)
-      io.puts "%18s %s (%.2fs)" % [event, @test, ticktock]
+      #io.puts "%18s %s (%.2fs)" % [event, @test, Time.now - @test_time]
+      io.puts "%18s %s (%s)" % [event, @test, ticktock]
     end
 
     # Cleanups and prints test payload
@@ -111,9 +122,11 @@ module Turn
       # Filter and clean backtrace
       backtrace = clean_backtrace(backtrace)
 
+      #io.puts
       io.puts Colorize.bold(message.tabto(TAB_SIZE))
-      io.puts
-      io.puts backtrace.join("\n").tabto(TAB_SIZE)
+      #io.puts
+      io.puts (TRACE_MARK + backtrace[0]).tabto(TAB_SIZE)
+      io.puts backtrace[1..-1].join("\n").tabto(TAB_SIZE+2)
       io.puts
     end
   end

@@ -1,4 +1,6 @@
 == 0.9.3 / 2012-02-09
+  * Default to pretty reporter.
+  * Can set reporter via `rpt` environment variable.
   * Fix backtrace filter.
   * Fix require warning when using cli.
 
