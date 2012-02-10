@@ -5,9 +5,9 @@ module Turn
   #
   # Example output:
   #    TestCaseName:
-  #         PASS test: Succesful test case.  (0.03s)
-  #        ERROR test: Bogus test case.  (0.04s)
-  #         FAIL test: Failed test case.  (0.03s)
+  #         PASS test: Succesful test case.  (0:00:02:059)
+  #        ERROR test: Bogus test case.  (0:00:02:059)
+  #         FAIL test: Failed test case.  (0:00:02:059)
   #
   class PrettyReporter < Reporter
     # Second column left padding in chars.
@@ -21,7 +21,6 @@ module Turn
       @suite  = suite
       @time   = Time.now
 
-      #io.puts
       io.puts Colorize.bold("Loaded Suite '#{suite.name}'")
       io.puts
       io.puts "Started at #{Time.now} w/ seed #{suite.seed}."
@@ -99,7 +98,10 @@ module Turn
                 Colorize.skip(skips),
                 assertions
               ].join(", ")
-      #io.puts
+
+      # Please keep this newline, since it will be useful when after test case
+      # there will be other lines. For example "rake aborted!" or kind of.
+      io.puts
     end
 
   private
@@ -108,13 +110,17 @@ module Turn
     # Example:
     #    PASS test: Test decription.  (0:00:02:059)
     def banner(event)
-      #io.puts "%18s %s (%.2fs)" % [event, @test, Time.now - @test_time]
       io.puts "%18s %s (%s)" % [event, @test, ticktock]
     end
 
     # Cleanups and prints test payload
+    #
+    # Example:
+    #         fail is not 1
+    #       @ test/test_runners.rb:46:in `test_autorun_with_trace'
+    #         bin/turn:4:in `<main>'
     def prettify(message=nil, raised)
-      # Get message from raised, if not fiven
+      # Get message from raised, if not given
       message ||= raised.message
 
       backtrace = raised.respond_to?(:backtrace) ? raised.backtrace : raised.location
@@ -122,11 +128,12 @@ module Turn
       # Filter and clean backtrace
       backtrace = clean_backtrace(backtrace)
 
-      #io.puts
+      # Add trace mark to first line.
+      backtrace.first.insert(0, TRACE_MARK)
+
       io.puts Colorize.bold(message.tabto(TAB_SIZE))
-      #io.puts
-      io.puts (TRACE_MARK + backtrace[0]).tabto(TAB_SIZE)
-      io.puts backtrace[1..-1].join("\n").tabto(TAB_SIZE+2)
+      io.puts backtrace.shift.tabto(TAB_SIZE - TRACE_MARK.length)
+      io.puts backtrace.join("\n").tabto(TAB_SIZE)
       io.puts
     end
   end
