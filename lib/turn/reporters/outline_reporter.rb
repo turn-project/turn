@@ -7,7 +7,10 @@ module Turn
   #
   #--
   # TODO: Should we fit reporter output to width of console?
+  #       y8: Yes. we should, but it's a kinda tricky, if you want to make it
+  #           cross-platform. (See https://github.com/cldwalker/hirb/blob/master/lib/hirb/util.rb#L61)
   # TODO: Running percentages?
+  # TODO: Cleanup me!
   #++
   class OutlineReporter < Reporter
 
@@ -18,6 +21,7 @@ module Turn
     def start_suite(suite)
       @suite  = suite
       @time   = Time.now
+      # @FIXME (y8): Why we need to capture stdout and stderr?
       @stdout = StringIO.new
       @stderr = StringIO.new
       #files  = suite.collect{ |s| s.file }.join(' ')
@@ -32,7 +36,7 @@ module Turn
 
     #
     def start_case(kase)
-      io.puts(Colorize.bold("#{kase.name}"))
+      io.puts(Colorize.bold("#{kase.name}")) if kase.size > 0
     end
 
     #
@@ -42,6 +46,7 @@ module Turn
       #  io.puts(test.file)
       #end
 
+      # @FIXME: Should we move naturalized_name to test itself?
       name = naturalized_name(test)
 
       io.print "    %-57s" % name
@@ -152,26 +157,29 @@ module Turn
 
     # TODO: pending (skip) counts
     def finish_suite(suite)
-      total   = suite.count_tests
-      failure = suite.count_failures
-      error   = suite.count_errors
-      pass    = total - failure - error
+      total      = suite.count_tests
+      passes     = suite.count_passes
+      assertions = suite.count_assertions
+      failures   = suite.count_failures
+      errors     = suite.count_errors
+      skips      = suite.count_skips
 
       bar = '=' * 78
+      # @FIXME: Remove this, since Colorize already take care of colorize?
       if colorize?
         bar = if pass == total then Colorize.green(bar)
               else Colorize.red(bar) end
       end
 
-      tally = [total, suite.count_assertions]
+      # @FIXME: Should we add suite.runtime, instead if this lame time calculations?
+      tally = [total, assertions, (Time.new - @time)]
 
       io.puts bar
-      io.puts "  pass: %d,  fail: %d,  error: %d" % [pass, failure, error]
-      io.puts "  total: %d tests with %d assertions in #{Time.new - @time} seconds" % tally
+      io.puts "  pass: %d,  fail: %d,  error: %d, skip: %d" % [passes, failures, errors, skips]
+      io.puts "  total: %d tests with %d assertions in %f seconds" % tally
       io.puts bar
     end
 
   end
 
 end
-

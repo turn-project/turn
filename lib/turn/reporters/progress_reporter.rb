@@ -55,10 +55,10 @@ module Turn
 
       width = suite.collect{ |tr| tr.name.to_s.size }.max
 
-      headers = [ 'TESTCASE  ', '  TESTS   ', 'ASSERTIONS', ' FAILURES ', '  ERRORS   ' ]
-      io.puts "\n\n%-#{width}s       %10s %10s %10s %10s\n" % headers
+      headers = [ 'TESTCASE  ', '  TESTS   ', 'ASSERTIONS', ' FAILURES ', '  ERRORS   ', 'SKIPS    ' ]
+      io.puts "\n\n%-#{width}s       %10s %10s %10s %10s %10s\n" % headers
 
-      io.puts ("-" * (width + 50))
+      io.puts ("-" * (width + 60))
 
       files = nil
       suite.each do |testrun|
@@ -73,9 +73,9 @@ module Turn
 
       #puts("\n%i tests, %i assertions, %i failures, %i errors\n\n" % tally)
 
-      tally_line = ("-" * (width + 50))
+      tally_line = ("-" * (width + 60))
       tally_line << "\n%-#{width}s  " % "TOTAL"
-      tally_line << "%10s %10s %10s %10s" % tally
+      tally_line << "%10s %10s %10s %10s %10s" % tally
 
       io.puts(tally_line + "\n\n\n")
 
@@ -127,7 +127,7 @@ module Turn
     def paint_line(testrun, width)
       line = ''
       line << "%-#{width}s  " % [testrun.name]
-      line << "%10s %10s %10s %10s" % testrun.counts
+      line << "%10s %10s %10s %10s %10s" % testrun.counts
       line << " " * 8
       if testrun.fail?
         line << "[#{FAIL}]"
@@ -141,9 +141,9 @@ module Turn
 
     def test_tally(suite)
       counts = suite.collect{ |tr| tr.counts }
-      tally  = [0,0,0,0]
+      tally  = [0,0,0,0,0]
       counts.each do |count|
-        4.times{ |i| tally[i] += count[i] }
+        5.times{ |i| tally[i] += count[i] }
       end
       return tally
     end
@@ -151,4 +151,3 @@ module Turn
   end
 
 end
-
