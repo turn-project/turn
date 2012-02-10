@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift(File.dirname(File.dirname(__FILE__)))
-require 'turn/command'
+require 'turn'
 #begin
   Turn::Command.main(*ARGV)
 #rescue StandardError => e
