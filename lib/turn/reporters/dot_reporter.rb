@@ -68,31 +68,22 @@ module Turn
 
       io.puts report
 
-      count = test_tally(suite)
+      # @TODO: Add something like suite.count(:tests, :passes) or
+      #        suite.count(tests: "%d tests", passes: "%d passes")
+      #        to cleanup, which will return something handy
+      #        (suite.count(:test, :passes).test proxy maybe?)
+      total      = "%d tests" % suite.count_tests
+      passes     = "%d passed" % suite.count_passes
+      assertions = "%d assertions" % suite.count_assertions
+      failures   = "%s failures" % suite.count_failures
+      errors     = "%s errors" % suite.count_errors
+      skips      = "%s skips" % suite.count_skips
 
-      tally = "%s tests, %s assertions, %s failures, %s errors" % count
- 
-      if count[-1] > 0 or count[-2] > 0
-        tally = Colorize.red(tally)
-      else
-        tally = Colorize.green(tally)
-      end
+      tally = [total, passes, assertions, failures, errors, skips].join(", ")
 
-      io.puts tally
-    end
-
-  private
-
-    def test_tally(suite)
-      counts = suite.collect{ |tr| tr.counts }
-      tally  = [0,0,0,0]
-      counts.each do |count|
-        4.times{ |i| tally[i] += count[i] }
-      end
-      return tally
+      io.puts suite.passed? ? Colorize.green(tally) : Colorize.red(tally)
     end
 
   end
 
 end
-

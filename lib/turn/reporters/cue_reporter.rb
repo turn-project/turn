@@ -108,22 +108,26 @@ module Turn
     #end
 
     def finish_suite(suite)
-      total   = suite.count_tests
-      failure = suite.count_failures
-      error   = suite.count_errors
-      pass    = total - failure - error
+      total      = suite.count_tests
+      passes     = suite.count_passes
+      assertions = suite.count_assertions
+      failures   = suite.count_failures
+      errors     = suite.count_errors
+      skips      = suite.count_skips
 
       bar = '=' * 78
+      # @FIXME: Remove this, since Colorize already take care of colorize?
       if colorize?
         bar = if pass == total then Colorize.green(bar)
               else Colorize.red(bar) end
       end
 
-      tally = [total, suite.count_assertions]
+      # @FIXME: Should we add suite.runtime, instead if this lame time calculations?
+      tally = [total, assertions, (Time.new - @time)]
 
       io.puts bar
-      io.puts "  pass: %d,  fail: %d,  error: %d" % [pass, failure, error]
-      io.puts "  total: %d tests with %d assertions in #{Time.new - @time} seconds" % tally
+      io.puts "  pass: %d,  fail: %d,  error: %d, skip: %d" % [passes, failures, errors, skips]
+      io.puts "  total: %d tests with %d assertions in %f seconds" % tally
       io.puts bar
     end
 
