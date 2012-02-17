@@ -206,8 +206,11 @@ module Turn
         opts.separator "COMMAND OPTIONS"
 
         opts.on('--debug', "turn debug mode on") do
-          $VERBOSE = true
           $DEBUG   = true
+        end
+
+        opts.on('--warn', "turn warnings on") do
+          $VERBOSE = true
         end
 
         opts.on_tail('--version', "display version") do
