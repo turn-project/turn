@@ -1,4 +1,24 @@
-= Turn 0.8.0
+= Release Notes
+
+== 0.9.x
+
+The main departure of the 0.9.x series form older version of Turn,
+is that the old TestUnit library (1.x series) is no longer supported.
+Turn is now a MiniTest only library.[1]
+
+Among other imporvements, the default reporter is now the Pretty reporter
+instead of the orginal Outline reporter, and MiniTest skips are finally
+supported.
+
+Big thanks to y8, Alexey Bondar and others for helpig to get this series
+up to snuff.
+
+[1] Note that the old testunit runner is still included in the package
+if it is needed, but no longer will be actively maintained and it
+must be directly required to be used.
+
+
+== 0.8.x
 
 Version 0.8.0 is a fairly significant release for Turn. This release
 adds support for Ruby 1.9's Minitest framework. You can even use
