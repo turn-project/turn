@@ -77,7 +77,7 @@ module Turn
       /\/lib\/turn.*\.rb/,
       /\/bin\/turn/,
       /\/lib\/minitest.*\.rb/,
-      /\/test\/unit.*\.rb/
+      /\/test\/unit\/(?!.*\_test.rb).*\.rb.*/
     ])
 
     # Filter backtrace of unimportant entries, and applies count limit if set in
