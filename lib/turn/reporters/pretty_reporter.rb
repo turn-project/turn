@@ -87,23 +87,17 @@ module Turn
 
     # After all tests are run, this is the last observable action.
     def finish_suite(suite)
-      total      = "%d tests" % suite.count_tests
-      passes     = "%d passed" % suite.count_passes
-      assertions = "%d assertions" % suite.count_assertions
-      failures   = "%d failures" % suite.count_failures
-      errors     = "%d errors" % suite.count_errors
-      skips      = "%d skips" % suite.count_skips
+      total      = colorize_count("%d tests", suite.count_tests, :bold)
+      passes     = colorize_count("%d passed", suite.count_passes, :pass)
+      assertions = colorize_count("%d assertions", suite.count_assertions, nil)
+      failures   = colorize_count("%d failures", suite.count_failures, :fail)
+      errors     = colorize_count("%d errors", suite.count_errors, :error)
+      skips      = colorize_count("%d skips", suite.count_skips, :skip)
 
       io.puts "Finished in %.6f seconds." % (Time.now - @time)
       io.puts
 
-      io.puts [ Colorize.bold(total),
-                Colorize.pass(passes),
-                Colorize.fail(failures),
-                Colorize.error(errors),
-                Colorize.skip(skips),
-                assertions
-              ].join(", ")
+      io.puts [ total, passes, failures, errors, skips, assertions ].join(", ")
 
       # Please keep this newline, since it will be useful when after test case
       # there will be other lines. For example "rake aborted!" or kind of.
@@ -111,6 +105,18 @@ module Turn
     end
 
   private
+    # Creates an optionally-colorized string describing the number of occurances an event occurred.
+    #
+    # @param [String] str A printf-style string that expects an integer argument (i.e. the count)
+    # @param [Integer] count The number of occurances of the event being described.
+    # @param [nil, Symbol] colorize_method The method on Colorize to call in order to apply color to the result, or nil
+    #   to not apply any coloring at all.
+    def colorize_count(str, count, colorize_method)
+      str= str % [count]
+      str= Colorize.send(colorize_method, str) if colorize_method and count != 0
+      str
+    end
+
     # Outputs test case header for given event (error, fail & etc)
     #
     # Example:
