@@ -19,7 +19,7 @@ module Turn
     end
 
     def pass(message=nil)
-      io.print Colorize.pass('S'); io.flush
+      io.print Colorize.pass('.'); io.flush
     end
 
     def fail(assertion, message=nil)
@@ -31,7 +31,7 @@ module Turn
     end
 
     def skip(exception, message=nil)
-      io.print Colorize.skip('-'); io.flush
+      io.print Colorize.skip('S'); io.flush
     end
 
     def finish_test(test)
