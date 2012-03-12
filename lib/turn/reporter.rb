@@ -87,7 +87,8 @@ module Turn
     def filter_backtrace(backtrace)
       return [] unless backtrace
       bt = backtrace.dup
-      bt = bt.reject{ |line| $RUBY_IGNORE_CALLERS.any?{ |re| re =~ line } } unless $DEBUG
+      pwd= Dir.pwd
+      bt = bt.reject{ |line| $RUBY_IGNORE_CALLERS.any?{|re| re =~ line} unless line.start_with?(pwd) } unless $DEBUG
       #bt.reject!{ |line| line.rindex('minitest') }
       #bt.reject!{ |line| line.rindex('test/unit') }
       #bt.reject!{ |line| line.rindex('lib/turn') }
