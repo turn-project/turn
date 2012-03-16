@@ -72,6 +72,9 @@ module Turn
       limit_backtrace(filter_backtrace(backtrace))
     end
 
+    # TODO: Is the text/unit line needed any more now that Dir.pwd is excluded
+    #       from filtering?
+
     $RUBY_IGNORE_CALLERS ||= []
     $RUBY_IGNORE_CALLERS.concat([
       /\/lib\/turn.*\.rb/,
@@ -86,15 +89,14 @@ module Turn
     # as that probably means there was an issue with the test harness itself.
     def filter_backtrace(backtrace)
       return [] unless backtrace
-      bt = backtrace.dup
-      pwd= Dir.pwd
-      bt = bt.reject{ |line| $RUBY_IGNORE_CALLERS.any?{|re| re =~ line} unless line.start_with?(pwd) } unless $DEBUG
-      #bt.reject!{ |line| line.rindex('minitest') }
-      #bt.reject!{ |line| line.rindex('test/unit') }
-      #bt.reject!{ |line| line.rindex('lib/turn') }
-      #bt.reject!{ |line| line.rindex('bin/turn') }
+      bt, pwd = backtrace.dup, Dir.pwd
+      unless $DEBUG
+        bt = bt.reject do |line|
+          $RUBY_IGNORE_CALLERS.any?{|re| re =~ line} unless line.start_with?(pwd)
+        end
+      end
       bt = backtrace if bt.empty?  # if empty just dump the whole thing
-      bt.map{ |line| line.sub(Dir.pwd+'/', '') }
+      bt.map{ |line| line.sub(pwd+'/', '') }
     end
 
     # Limit backtrace to number of lines if `trace` configuration option is set.

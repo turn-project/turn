@@ -1,4 +1,9 @@
-== 0.9.3 / 2012-02-09
+== 0.9.4 / 2012-03-16
+  * Fix dot reporter to use `.` instead of `S` for passed tests.
+  * Do not filter backtraces of local directory.
+  * Do not colourize zero counts in pretty reporter.
+
+== 0.9.3 / 2012-02-17
   * Default to pretty reporter.
   * Can set reporter via `rpt` environment variable.
   * Fix backtrace filter.

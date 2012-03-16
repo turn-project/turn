@@ -1,4 +1,4 @@
-#!mast bin lib test try [A-Z]*.*
+#!mast -x Gemfile.lock bin lib test try [A-Z]*.*
 bin/turn
 lib/turn/autoload.rb
 lib/turn/autorun.rb
@@ -30,6 +30,7 @@ lib/turn/testunit.rb
 lib/turn/version.rb
 lib/turn.rb
 test/helper.rb
+test/reporter_test.rb
 test/runner
 test/test_framework.rb
 test/test_reporters.rb
