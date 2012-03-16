@@ -10,8 +10,6 @@ copyrights:
 - holder: Tim Pease
   year: '2008'
   license: MIT
-replacements: []
-alternatives: []
 requirements:
 - name: ansi
 - name: minitest
@@ -23,6 +21,7 @@ requirements:
   - build
   development: true
 dependencies: []
+alternatives: []
 conflicts: []
 repositories: []
 resources:
@@ -32,10 +31,10 @@ extra: {}
 load_path:
 - lib
 revision: 0
-version: 0.9.3
+version: 0.9.4
 name: turn
 title: Turn
 summary: Test Reporters (New) -- new output formats for Testing
 description: Turn provides a set of alternative runners for MiniTest, both colorful
   and informative.
-date: '2012-02-17'
+date: '2012-03-16'
