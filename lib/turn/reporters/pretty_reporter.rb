@@ -62,21 +62,21 @@ module Turn
     def fail(assertion, message=nil)
       banner FAIL
 
-      prettify(message, assertion)
+      prettify(assertion, message)
     end
 
     # Invoked when a test raises an exception.
     def error(exception, message=nil)
       banner ERROR
 
-      prettify(message, exception)
+      prettify(exception, message)
     end
 
     # Invoked when a test is skipped.
     def skip(exception, message=nil)
       banner SKIP
 
-      prettify(message, exception)
+      prettify(exception, message)
     end
 
     # Invoked after all tests in a testcase have ben run.
@@ -131,7 +131,7 @@ module Turn
     #         fail is not 1
     #       @ test/test_runners.rb:46:in `test_autorun_with_trace'
     #         bin/turn:4:in `<main>'
-    def prettify(message=nil, raised)
+    def prettify(raised, message=nil)
       # Get message from raised, if not given
       message ||= raised.message
 
