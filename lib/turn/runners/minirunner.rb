@@ -1,6 +1,6 @@
 require 'stringio'
 
-# Becuase of some wierdness in MiniTest
+# Because of some wierdness in MiniTest
 #debug, $DEBUG = $DEBUG, false
 #require 'minitest/unit'
 #$DEBUG = debug
