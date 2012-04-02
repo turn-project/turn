@@ -108,9 +108,9 @@ module Turn
     #
     def naturalized_name(test)
       if @natural
-        " #{test.name.gsub("test_", "").gsub(/_/, " ")}"
+        test.name.gsub("test_", "").gsub(/_/, " ")
       else
-        " #{test.name}"
+        test.name
       end
     end
 

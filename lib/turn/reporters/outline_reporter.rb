@@ -49,7 +49,7 @@ module Turn
       # @FIXME: Should we move naturalized_name to test itself?
       name = naturalized_name(test)
 
-      io.print "    %-57s" % name
+      io.print "     %-57s" % name
 
       @stdout.rewind
       @stderr.rewind
