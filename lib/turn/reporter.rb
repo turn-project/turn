@@ -105,7 +105,7 @@ module Turn
       @trace ? backtrace[0, @trace.to_i] : backtrace
     end
 
-    #
+    # Returns a more readable test name with spaces instead of underscores
     def naturalized_name(test)
       if @natural
         test.name.gsub("test_", "").gsub(/_/, " ")
