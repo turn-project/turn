@@ -165,11 +165,7 @@ module Turn
       skips      = suite.count_skips
 
       bar = '=' * 78
-      # @FIXME: Remove this, since Colorize already take care of colorize?
-      if colorize?
-        bar = if pass == total then Colorize.green(bar)
-              else Colorize.red(bar) end
-      end
+      bar = passes == total ? Colorize.green(bar) : Colorize.red(bar)
 
       # @FIXME: Should we add suite.runtime, instead if this lame time calculations?
       tally = [total, assertions, (Time.new - @time)]
