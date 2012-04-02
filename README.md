@@ -88,7 +88,7 @@ For a Rails application, put the require line into the 'test/test_helper.rb'
 script. Now your Rails tests will use TURN formatting.
 
 <b>Note:</b> This changed in version 0.9. It used to be just `require 'turn'`,
-but becuase of how `bundle exec` works, it was better to require a subdirectory
+but because of how `bundle exec` works, it was better to require a subdirectory
 file.
 
 ### Configuration
