@@ -25,13 +25,17 @@ alternatives: []
 conflicts: []
 repositories: []
 resources:
-  home: http://rubygems.org/gems/turn
-  code: http://github.com/TwP/turn
+- uri: http://rubygems.org/gems/turn
+  name: home
+  type: home
+- uri: http://github.com/TwP/turn
+  name: code
+  type: code
 extra: {}
 load_path:
 - lib
 revision: 0
-version: 0.9.4
+version: 0.9.5
 name: turn
 title: Turn
 summary: Test Reporters (New) -- new output formats for Testing

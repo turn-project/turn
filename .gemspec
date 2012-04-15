@@ -157,8 +157,8 @@ module DotRuby
         end
 
         # determine homepage from resources
-        homepage = metadata['resources'].find{ |key, url| key =~ /^home/ }
-        gemspec.homepage = homepage.last if homepage
+        homepage = metadata['resources'].find{ |r| r['name] =~ /^home|website/ || r['type'] =~ /^home/ }
+        gemspec.homepage = homepage['uri'] if homepage
 
         gemspec.require_paths        = metadata['load_path'] || ['lib']
         gemspec.post_install_message = metadata['install_message']
