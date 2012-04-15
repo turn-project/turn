@@ -128,9 +128,9 @@ module Turn
       name = naturalized_name(@test)
       delta = Time.now - @test_time  # test runtime
       if @verbose
-        out = "%18s (%0.5fs) [%s] %s" % [event, delta, ticktock, name]
+        out = "%18s (%0.5fs) (%s) %s" % [event, delta, ticktock, name]
       else
-        out = "%18s [%s] %s" % [event, ticktock, name]
+        out = "%18s (%s) %s" % [event, ticktock, name]
       end
       if @mark > 0 && delta > @mark
         out[1] = Colorize.mark('*')
