@@ -120,10 +120,11 @@ module Turn
     # Outputs test case header for given event (error, fail & etc)
     #
     # Example:
-    #    PASS test: Test decription.  (0:00:02:059)
+    #    PASS test: Test decription.  (0.15s 0:00:02:059)
     def banner(event)
       name = naturalized_name(@test)
-      io.puts "%18s %s (%s)" % [event, name, ticktock]
+      delta = Time.now - @test_time  # Test runtime
+      io.puts "%18s %s (%s %0.2fs)" % [event, name, ticktock, delta]
     end
 
     # Cleanups and prints test payload
