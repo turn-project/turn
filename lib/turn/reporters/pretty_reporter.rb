@@ -117,6 +117,9 @@ module Turn
       str
     end
 
+    # TODO: Could also provide % done with time info. But it's already taking up
+    #       a lot of screen realestate. Maybe use --verbose flag to offer two forms.
+
     # Outputs test case header for given event (error, fail & etc)
     #
     # Example:
@@ -124,7 +127,7 @@ module Turn
     def banner(event)
       name = naturalized_name(@test)
       delta = Time.now - @test_time  # Test runtime
-      io.puts "%18s %s (%s %0.2fs)" % [event, name, ticktock, delta]
+      io.puts "%18s (%s %0.3fs) %s" % [event, ticktock, delta, name]
     end
 
     # Cleanups and prints test payload
