@@ -21,6 +21,8 @@ module Turn
       @io      = io || $stdout
       @trace   = opts[:trace]
       @natural = opts[:natural]
+      @verbose = opts[:verbose]
+      @mark    = opts[:mark].to_i
     end
 
     # These methods are called in the process of running the tests.

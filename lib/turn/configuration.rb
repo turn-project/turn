@@ -48,7 +48,11 @@ module Turn
     # Verbose output?
     attr_accessor :verbose
 
-    # Test framework, either :minitest or :testunit
+    # Runtime threshold.
+    attr_accessor :mark
+
+    # Test framework, either `:minitest` or `:testunit`.
+    # @todo Is this used any more?
     attr_accessor :framework
 
     # Enable full backtrace
@@ -93,6 +97,7 @@ module Turn
       @matchcase ||= nil
       @pattern   ||= /.*/
       @natural   ||= false
+      @verbose   ||= false
       @format    ||= environment_format
       @trace     ||= environment_trace
       @ansi      ||= environment_ansi
@@ -175,7 +180,7 @@ module Turn
     # Select reporter based on output mode.
     def reporter
       @reporter ||= (
-        opts = { :trace=>trace, :natural=>natural? }
+        opts = reporter_options
         case format
         when :marshal
           require 'turn/reporters/marshal_reporter'
@@ -200,6 +205,11 @@ module Turn
           Turn::PrettyReporter.new($stdout, opts)
         end
       )
+    end
+
+    #
+    def reporter_options
+      { :trace=>trace, :natural=>natural?, :verbose=>verbose?, :mark=>mark }
     end
 
     #

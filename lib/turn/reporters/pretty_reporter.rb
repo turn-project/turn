@@ -126,8 +126,16 @@ module Turn
     #    PASS test: Test decription.  (0.15s 0:00:02:059)
     def banner(event)
       name = naturalized_name(@test)
-      delta = Time.now - @test_time  # Test runtime
-      io.puts "%18s (%s %0.3fs) %s" % [event, ticktock, delta, name]
+      delta = Time.now - @test_time  # test runtime
+      if @verbose
+        out = "%18s (%0.5fs) [%s] %s" % [event, delta, ticktock, name]
+      else
+        out = "%18s [%s] %s" % [event, ticktock, name]
+      end
+      if @mark > 0 && delta > @mark
+        out[1] = Colorize.mark('*')
+      end
+      io.puts out
     end
 
     # Cleanups and prints test payload

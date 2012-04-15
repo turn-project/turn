@@ -76,6 +76,12 @@ module Turn
     # Use natural test case names.
     attr :natural
 
+    # Show extra information.
+    attr :verbose
+
+    # Show extra information.
+    attr :mark
+
     # Force ANSI use on or off.
     attr :ansi
 
@@ -91,6 +97,8 @@ module Turn
       @outmode   = nil
       @trace     = nil
       @natural   = false
+      @verbose   = false
+      @mark      = nil
       @ansi      = nil
     end
 
@@ -131,12 +139,20 @@ module Turn
           end
         end
 
+        opts.on('-m', '--mark=SECONDS', "Mark test if it exceeds runtime threshold.") do |int|
+          @mark = int.to_i
+        end
+
         opts.on('-b', '--backtrace', '--trace INT', "Limit the number of lines of backtrace.") do |int|
           @trace = int
         end
 
         opts.on('--natural', "Show natualized test names.") do |bool|
           @natural = bool
+        end
+
+        opts.on('-v', '--verbose', "Show extra information.") do |bool|
+          @verbose = bool
         end
 
         opts.on('--[no-]ansi', "Force use of ANSI codes on or off.") do |bool|
@@ -218,7 +234,7 @@ module Turn
           exit
         end
 
-        opts.on_tail('--help', '-h', "display this help information") do
+        opts.on_tail('-h', '--help', "display this help information") do
           puts opts
           exit
         end
@@ -246,6 +262,8 @@ module Turn
         c.matchcase = matchcase
         c.trace     = trace
         c.natural   = natural
+        c.verbose   = verbose
+        c.mark      = mark
         c.ansi      = ansi unless ansi.nil?
       end
 
