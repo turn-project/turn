@@ -2,7 +2,7 @@ task :default => :test
 
 desc "Run unit tests"
 task :test do
-  ruby "-Ilib bin/turn -Ilib test/*.rb"
+  ruby "-Ilib bin/turn -Ilib -v test/*.rb"
 end
 
 desc "build gem package"
