@@ -1,4 +1,5 @@
 == 0.9.5 / 2012-04-15
+  * Add -m/-mark option to flag tests with high runtimes.
   * Show per-test runtime in Pretty reporter. (#83)
   * Fix colorization of result box. (Don Wilson) (#81, #85)
   * Add support for natural test names in pretty format. (Don Wilson) (#86)
