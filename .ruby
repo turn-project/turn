@@ -26,19 +26,20 @@ conflicts: []
 repositories: []
 resources:
 - uri: http://rubygems.org/gems/turn
-  name: home
+  label: Website
   type: home
 - uri: http://github.com/TwP/turn
-  name: code
+  label: Source Code
   type: code
+categories: []
 extra: {}
 load_path:
 - lib
 revision: 0
-version: 0.9.5
+version: 0.9.6
 name: turn
 title: Turn
 summary: Test Reporters (New) -- new output formats for Testing
 description: Turn provides a set of alternative runners for MiniTest, both colorful
   and informative.
-date: '2012-04-16'
+date: '2012-06-13'
