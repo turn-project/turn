@@ -129,7 +129,7 @@ Also, you can use following environment variables to adjust settings:
 
 Follow the ususal procedure:
 
-    $ sudo gem install turn
+    $ gem install turn
 
 
 ## LICENSE:
