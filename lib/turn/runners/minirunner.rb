@@ -17,9 +17,13 @@ module Turn
 
       super()
 
-      # route minitests traditional output to nowhere
-      # (instead of overriding #puts and #print)
-      @@out = ::StringIO.new
+      # a stream we will use to route minitests traditional output
+      @out = ::StringIO.new
+    end
+
+    # route minitests traditional output to nowhere
+    def output
+      @out
     end
 
     #
