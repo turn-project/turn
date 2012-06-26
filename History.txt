@@ -1,3 +1,8 @@
+=== 0.9.6 / 2012-06-26
+  * Override output() instead of changeing @@out. (#96,#97)
+  * Update install instructions in README. (#95)
+  * Fix bug in gemspec that interfered with Bundler (#93)
+
 == 0.9.5 / 2012-04-15
   * Add -m/-mark option to flag tests with high runtimes.
   * Show per-test runtime in Pretty reporter. (#83)
