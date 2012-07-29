@@ -20,7 +20,7 @@ if MiniTest::Unit.respond_to?(:runner=)
   MiniTest::Unit.runner = Turn::MiniRunner.new
 else
   raise "MiniTest v#{MiniTest::Unit::VERSION} is out of date.\n" \
-        "`gem install minitest` and add `gem 'minitest' to you test helper."
+        "Please update to a newer version."
   #MiniTest::Unit = Turn::MiniRunner
 end
 
