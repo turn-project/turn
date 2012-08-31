@@ -119,7 +119,7 @@ module Turn
     #
     def ticktock
       t = Time.now - @time
-      h, t = t.divmod(360)
+      h, t = t.divmod(3600)
       m, t = t.divmod(60)
       s = t.truncate
       f = ((t - s) * 1000).to_i
