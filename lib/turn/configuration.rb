@@ -182,24 +182,12 @@ module Turn
       @reporter ||= (
         opts = reporter_options
         case format
-        when :marshal
-          require 'turn/reporters/marshal_reporter'
-          Turn::MarshalReporter.new($stdout, opts)
-        when :progress
-          require 'turn/reporters/progress_reporter'
-          Turn::ProgressReporter.new($stdout, opts)
-        when :dotted, :dot
+        when :marshal, :progress, :dot, :outline, :cue, :pretty
+          require "turn/reporters/#{format.to_s}_reporter"
+          Turn.const_get(format.to_s.capitalize + "Reporter").send(:new, $stdout, opts)
+        when :dotted
           require 'turn/reporters/dot_reporter'
           Turn::DotReporter.new($stdout, opts)
-        when :outline
-          require 'turn/reporters/outline_reporter'
-          Turn::OutlineReporter.new($stdout, opts)
-        when :cue
-          require 'turn/reporters/cue_reporter'
-          Turn::CueReporter.new($stdout, opts)
-        when :pretty
-          require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, opts)
         else
           require 'turn/reporters/pretty_reporter'
           Turn::PrettyReporter.new($stdout, opts)
