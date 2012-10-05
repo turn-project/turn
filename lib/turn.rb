@@ -1,3 +1,6 @@
+$: << File.expand_path("./.turnreporters")
+$: << File.expand_path("~/.turnreporters")
+
 module Turn
 end
 
