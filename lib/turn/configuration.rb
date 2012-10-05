@@ -181,29 +181,14 @@ module Turn
     def reporter
       @reporter ||= (
         opts = reporter_options
-        case format
-        when :marshal
-          require 'turn/reporters/marshal_reporter'
-          Turn::MarshalReporter.new($stdout, opts)
-        when :progress
-          require 'turn/reporters/progress_reporter'
-          Turn::ProgressReporter.new($stdout, opts)
-        when :dotted, :dot
-          require 'turn/reporters/dot_reporter'
-          Turn::DotReporter.new($stdout, opts)
-        when :outline
-          require 'turn/reporters/outline_reporter'
-          Turn::OutlineReporter.new($stdout, opts)
-        when :cue
-          require 'turn/reporters/cue_reporter'
-          Turn::CueReporter.new($stdout, opts)
-        when :pretty
-          require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, opts)
-        else
-          require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, opts)
+        rpt_format = (format == :dotted ? :dot : format)
+
+        begin
+          require "#{rpt_format.to_s}_reporter"
+        rescue LoadError
+          require "turn/reporters/#{rpt_format.to_s}_reporter"
         end
+        Turn.const_get(rpt_format.to_s.capitalize + "Reporter").send(:new, $stdout, opts)
       )
     end
 
@@ -214,7 +199,7 @@ module Turn
 
     #
     def environment_format
-      ENV['rpt']
+      ENV['rpt'] || :pretty
     end
 
     #
