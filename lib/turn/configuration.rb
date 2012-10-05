@@ -181,7 +181,7 @@ module Turn
     def reporter
       @reporter ||= (
         opts = reporter_options
-        rpt_format = (format == :dotted ? :dot : format)
+        rpt_format = (format == :dotted ? :dot : format || :pretty)
 
         begin
           require "#{rpt_format.to_s}_reporter"
@@ -199,7 +199,7 @@ module Turn
 
     #
     def environment_format
-      ENV['rpt'] || :pretty
+      ENV['rpt']
     end
 
     #
