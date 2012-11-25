@@ -46,7 +46,7 @@ application.
 
 ## INSTRUCTION:
 
-Turn can be using from the command-line or via require. The command-line tool
+Turn can be used from the command-line or via require. The command-line tool
 offers additional options for how one runs tests.
 
 ### Command Line

@@ -36,7 +36,11 @@ module Turn
     # Reporter type.
     attr_accessor :format
 
-    # Run mode.
+    # Report modifier.
+    attr_accessor :mode
+
+    # Run mode, which defaults to `nil`, but can also be `:solo`,
+    # `:cross` or `:marshal`.
     attr_accessor :runmode
 
     # Test against live install (i.e. Don't use loadpath option)
@@ -66,20 +70,24 @@ module Turn
       @verbose
     end
 
+    #
     def live?
       @live
     end
 
+    #
     def natural?
       @natural
     end
 
+    #
     def ansi?
       @ansi
     end
 
   private
 
+    #
     def initialize
       yield(self) if block_given?
       initialize_defaults
@@ -99,6 +107,7 @@ module Turn
       @natural   ||= false
       @verbose   ||= false
       @format    ||= environment_format
+      @mode      ||= environment_mode
       @trace     ||= environment_trace
       @ansi      ||= environment_ansi
 
@@ -177,22 +186,51 @@ module Turn
       files.map{ |path| File.dirname(path).sub(Dir.pwd+'/','') }.uniq.join(',')
     end
 
-    # Select reporter based on output mode.
+    # Get selected reporter with any mode decorator.
     def reporter
-      @reporter ||= (
-        rpt_format = format || :pretty
-        class_name = rpt_format.to_s.capitalize + "Reporter"
+      @reporter ||= decorate_reporter(choose_reporter_class.new($stdout, reporter_options))
+    end
 
-        path = "turn/reporters/#{rpt_format}_reporter"
-        [$HOME, DIR.pwd].each do |dir|
-          file = File.join(dir, ".turn", "reporters", "#{rpt_format}_reporter.rb")
-          path = file if File.exist?(file)
-        end
+    # Load reporter based on output mode and return its class.
+    def reporter_class
+      rpt_format = format || :pretty
+      class_name = rpt_format.to_s.capitalize + "Reporter"
 
-        require path
+      path = "turn/reporters/#{rpt_format}_reporter"
+      [$HOME, DIR.pwd].each do |dir|
+        file = File.join(dir, ".turn", "reporters", "#{rpt_format}_reporter.rb")
+        path = file if File.exist?(file)
+      end
 
-        Turn.const_get(class_name).new($stdout, reporter_opts)
-      )
+      require path
+
+      Turn.const_get(class_name)
+    end
+
+    #
+    def decorate_reporter(reporter)
+      if mode
+        decorator_class.new(reporter)
+      else
+        reporter
+      end
+    end
+
+    #
+    def decorator_class
+      return nil unless mode
+
+      class_name = mode.to_s.capitalize + "Decorator"
+
+      path = "turn/decorators/#{mode}_decorator"
+      [$HOME, DIR.pwd].each do |dir|
+        file = File.join(dir, ".turn", "decorators", "#{mode}_reporter.rb")
+        path = file if File.exist?(file)
+      end
+
+      require path
+
+      Turn.const_get(class_name)
     end
 
     #
@@ -203,6 +241,11 @@ module Turn
     #
     def environment_format
       ENV['rpt']
+    end
+
+    #
+    def environment_mode
+      ENV['mode']
     end
 
     #
