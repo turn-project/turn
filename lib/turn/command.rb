@@ -24,10 +24,10 @@ module Turn
   #         --cross                      run each pair of test files in a separate process
   #  
   # OUTPUT MODES
-  #     -O, --outline                    turn's original case/test outline mode [default]
+  #     -O, --outline                    turn's original case/test outline mode
   #     -P, --progress                   indicates progress with progress bar
   #     -D, --dotted                     test-unit's traditonal dot-progress mode
-  #     -R, -T, --pretty                 new pretty output mode
+  #     -R, -T, --pretty                 new pretty output mode [default]
   #     -C, --cue                        cue for action on each failure/error
   #     -M, --marshal                    dump output as YAML (normal run mode only)
   #  
@@ -193,7 +193,7 @@ module Turn
         opts.separator " "
         opts.separator "OUTPUT MODES"
 
-        opts.on('--outline', '-O', "turn's original case/test outline mode [default]") do
+        opts.on('--outline', '-O', "turn's original case/test outline mode") do
           @outmode = :outline
         end
 
@@ -205,7 +205,7 @@ module Turn
           @outmode = :dotted
         end
 
-        opts.on('--pretty', '-R', '-T', "new pretty output mode") do
+        opts.on('--pretty', '-R', '-T', "new pretty output mode [default]") do
           @outmode = :pretty
         end
 
