@@ -1,3 +1,5 @@
+require 'turn/reporters/top_ten_decorator'
+
 module Turn
 
   # Configure Turn
@@ -61,6 +63,9 @@ module Turn
     # Use natural language case names.
     attr_accessor :natural
 
+    # Show top ten longest running tests
+    attr_accessor :top_ten
+
     #
     def verbose?
       @verbose
@@ -76,6 +81,10 @@ module Turn
 
     def ansi?
       @ansi
+    end
+
+    def top_ten?
+      @top_ten
     end
 
   private
@@ -101,6 +110,7 @@ module Turn
       @format    ||= environment_format
       @trace     ||= environment_trace
       @ansi      ||= environment_ansi
+      @top_ten    ||= false
 
       @files = nil  # reset files just in case
     end
@@ -179,32 +189,38 @@ module Turn
 
     # Select reporter based on output mode.
     def reporter
-      @reporter ||= (
-        opts = reporter_options
-        case format
-        when :marshal
-          require 'turn/reporters/marshal_reporter'
-          Turn::MarshalReporter.new($stdout, opts)
-        when :progress
-          require 'turn/reporters/progress_reporter'
-          Turn::ProgressReporter.new($stdout, opts)
-        when :dotted, :dot
-          require 'turn/reporters/dot_reporter'
-          Turn::DotReporter.new($stdout, opts)
-        when :outline
-          require 'turn/reporters/outline_reporter'
-          Turn::OutlineReporter.new($stdout, opts)
-        when :cue
-          require 'turn/reporters/cue_reporter'
-          Turn::CueReporter.new($stdout, opts)
-        when :pretty
-          require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, opts)
-        else
-          require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, opts)
-        end
-      )
+      @reporter ||=
+        decorate_reporter(choose_reporter_class.new($stdout, reporter_options))
+    end
+
+    def choose_reporter_class
+      case format
+      when :marshal
+        require 'turn/reporters/marshal_reporter'
+        Turn::MarshalReporter
+      when :progress
+        require 'turn/reporters/progress_reporter'
+        Turn::ProgressReporter
+      when :dotted, :dot
+        require 'turn/reporters/dot_reporter'
+        Turn::DotReporter
+      when :outline
+        require 'turn/reporters/outline_reporter'
+        Turn::OutlineReporter
+      when :cue
+        require 'turn/reporters/cue_reporter'
+        Turn::CueReporter
+      when :pretty
+        require 'turn/reporters/pretty_reporter'
+        Turn::PrettyReporter
+      else
+        require 'turn/reporters/pretty_reporter'
+        Turn::PrettyReporter
+      end
+    end
+
+    def decorate_reporter(reporter)
+      top_ten? ? Turn::TopTenDecorator.new(reporter) : reporter
     end
 
     #
