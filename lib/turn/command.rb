@@ -70,6 +70,9 @@ module Turn
     # Output mode.
     attr :outmode
 
+    # Decorator mode.
+    attr :decmode
+
     # Enable full backtrace
     attr :trace
 
@@ -95,6 +98,7 @@ module Turn
       @requires  = []
       @runmode   = nil
       @outmode   = nil
+      @decmode   = nil
       @trace     = nil
       @natural   = false
       @verbose   = false
@@ -219,10 +223,17 @@ module Turn
         end
 
         opts.separator " "
+        opts.separator "DECORATOR MODES"
+
+        opts.on('--topten', "show only top ten slowest tests") do
+          @decmode = :topten
+        end
+
+        opts.separator " "
         opts.separator "COMMAND OPTIONS"
 
         opts.on('--debug', "turn debug mode on") do
-          $DEBUG   = true
+          $DEBUG = true
         end
 
         opts.on('--warn', "turn warnings on") do
@@ -258,6 +269,7 @@ module Turn
         c.tests     = tests
         c.runmode   = runmode
         c.format    = outmode
+        c.mode      = decmode
         c.pattern   = pattern
         c.matchcase = matchcase
         c.trace     = trace

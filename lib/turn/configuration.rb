@@ -36,7 +36,7 @@ module Turn
     # Reporter type.
     attr_accessor :format
 
-    # Report modifier.
+    # Report modifier. These act as decorators on the reporter class.
     attr_accessor :mode
 
     # Run mode, which defaults to `nil`, but can also be `:solo`,
