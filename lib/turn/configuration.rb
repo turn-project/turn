@@ -180,30 +180,18 @@ module Turn
     # Select reporter based on output mode.
     def reporter
       @reporter ||= (
-        opts = reporter_options
-        case format
-        when :marshal
-          require 'turn/reporters/marshal_reporter'
-          Turn::MarshalReporter.new($stdout, opts)
-        when :progress
-          require 'turn/reporters/progress_reporter'
-          Turn::ProgressReporter.new($stdout, opts)
-        when :dotted, :dot
-          require 'turn/reporters/dot_reporter'
-          Turn::DotReporter.new($stdout, opts)
-        when :outline
-          require 'turn/reporters/outline_reporter'
-          Turn::OutlineReporter.new($stdout, opts)
-        when :cue
-          require 'turn/reporters/cue_reporter'
-          Turn::CueReporter.new($stdout, opts)
-        when :pretty
-          require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, opts)
-        else
-          require 'turn/reporters/pretty_reporter'
-          Turn::PrettyReporter.new($stdout, opts)
+        rpt_format = format || :pretty
+        class_name = rpt_format.to_s.capitalize + "Reporter"
+
+        path = "turn/reporters/#{rpt_format}_reporter"
+        [$HOME, DIR.pwd].each do |dir|
+          file = File.join(dir, ".turn", "reporters", "#{rpt_format}_reporter.rb")
+          path = file if File.exist?(file)
         end
+
+        require path
+
+        Turn.const_get(class_name).new($stdout, reporter_opts)
       )
     end
 

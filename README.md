@@ -119,6 +119,15 @@ Also, you can use following environment variables to adjust settings:
     backtrace       Number of backtrace lines to display. Default: set from ENV or nil
     ansi            Force colorize output (requires 'ansi' gem).
 
+Finally, you can include your own custom Reporter type (aka format). Turn will search for reporters in the `.turn/reporters/`
+directory of your local project and then in your user home directory. So for example, if you specified the following:
+
+    Turn.config.format = :cool
+
+Then Turn will look first for `./.turn/reporters/cool_reporter.rb`, then `~/.turn/reporters/cool_reporter.rb`.
+
+See source code for examples of how to write your own reporters.
+
 
 ## REQUIREMENTS:
 
