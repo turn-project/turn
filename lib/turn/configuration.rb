@@ -188,7 +188,7 @@ module Turn
 
     # Get selected reporter with any mode decorator.
     def reporter
-      @reporter ||= decorate_reporter(choose_reporter_class.new($stdout, reporter_options))
+      @reporter ||= decorate_reporter(reporter_class.new($stdout, reporter_options))
     end
 
     # Load reporter based on output mode and return its class.
@@ -197,7 +197,8 @@ module Turn
       class_name = rpt_format.to_s.capitalize + "Reporter"
 
       path = "turn/reporters/#{rpt_format}_reporter"
-      [$HOME, DIR.pwd].each do |dir|
+
+      [File.expand_path('~'), Dir.pwd].each do |dir|
         file = File.join(dir, ".turn", "reporters", "#{rpt_format}_reporter.rb")
         path = file if File.exist?(file)
       end
@@ -223,7 +224,7 @@ module Turn
       class_name = mode.to_s.capitalize + "Decorator"
 
       path = "turn/decorators/#{mode}_decorator"
-      [$HOME, DIR.pwd].each do |dir|
+      [File.expand_path('~'), Dir.pwd].each do |dir|
         file = File.join(dir, ".turn", "decorators", "#{mode}_reporter.rb")
         path = file if File.exist?(file)
       end
