@@ -118,6 +118,24 @@ end
   save_test(text, 'outline_test.rb')
 end
 
+def setup_minispec
+  text = <<-HERE
+require 'turn'
+require 'minitest/autorun'
+
+describe 'multiple tests' do
+  it 'should pass' do
+    assert true
+  end
+
+  it 'should fail' do
+    assert false
+  end
+end
+  HERE
+  save_test(text, 'minispec_test.rb')
+end
+
 #
 def setup_minitest_autorun
   text = <<-HERE
