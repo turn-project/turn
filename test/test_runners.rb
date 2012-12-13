@@ -18,6 +18,15 @@ class TestRunners < Test::Unit::TestCase
     assert result.index('0 errors'), "ACTUAL RESULT:\n #{result}"
   end
 
+  def test_minispec_name
+    file = setup_minispec
+    result = turn2 '-n "/fail/"', file
+
+    assert result.index('0 passed'), "ACTUAL RESULT:\n #{result}"
+    assert result.index('1 failures'), "ACTUAL RESULT:\n #{result}"
+    assert result.index('1 assertions'),  "ACTUAL RESULT:\n #{result}"
+  end
+
   # autorun
 
   #if RUBY_VERSION < '1.9'
@@ -30,6 +39,15 @@ class TestRunners < Test::Unit::TestCase
       assert(result.index('0 errors'), "ACTUAL RESULT:\n #{result}")
     end
 
+    def test_autorun_minispec_name
+      file = setup_minispec
+      result = `ruby -Ilib #{file} -n "/fail/" 2>&1`
+
+      assert result.index('0 passed'), "ACTUAL RESULT:\n #{result}"
+      assert result.index('1 failures'), "ACTUAL RESULT:\n #{result}"
+      assert result.index('1 assertions'),  "ACTUAL RESULT:\n #{result}"
+    end
+
   #else
 
     def test_autorun
@@ -38,6 +56,15 @@ class TestRunners < Test::Unit::TestCase
       assert result.index('0 failures'),  "ACTUAL RESULT:\n #{result}"
       assert result.index('0 errors'), "ACTUAL RESULT:\n #{result}"
     end
+
+    def test_autorun_minitest_name
+      file = setup_minitest_autorun
+      result = `ruby -Ilib #{file} -n "/sample/" 2>&1`
+
+      assert result.index('1 passed'), "ACTUAL RESULT:\n #{result}"
+      assert result.index('1 assertions'),  "ACTUAL RESULT:\n #{result}"
+    end
+
 
     def test_autorun_with_trace
       file = setup_minitest_autorun_with_trace
