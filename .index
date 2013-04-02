@@ -1,45 +1,47 @@
 ---
-source:
-- Profile
+revision: 2013
+type: ruby
+sources:
+- Index.rb
 authors:
 - name: Thomas Sawyer
   email: transfire@gmail.com
 - name: Tim Pease
   email: tim.pease@gmail.com
+organizations: []
+requirements:
+- name: ansi
+- groups:
+  - test
+  development: true
+  name: minitest
+- groups:
+  - build
+  development: true
+  name: rake
+conflicts: []
+alternatives: []
+resources:
+- type: home
+  uri: http://rubygems.org/gems/turn
+  label: Homepage
+- type: code
+  uri: http://github.com/TwP/turn
+  label: Source Code
+repositories: []
+categories: []
 copyrights:
 - holder: Tim Pease
   year: '2008'
   license: MIT
-requirements:
-- name: ansi
-- name: minitest
-  groups:
-  - test
-  development: true
-- name: rake
-  groups:
-  - build
-  development: true
-dependencies: []
-alternatives: []
-conflicts: []
-repositories: []
-resources:
-- uri: http://rubygems.org/gems/turn
-  label: Website
-  type: home
-- uri: http://github.com/TwP/turn
-  label: Source Code
-  type: code
-categories: []
-extra: {}
-load_path:
-- lib
-revision: 0
+customs: []
+paths:
+  lib:
+  - lib
 version: 0.9.6
 name: turn
 title: Turn
 summary: Test Reporters (New) -- new output formats for Testing
 description: Turn provides a set of alternative runners for MiniTest, both colorful
   and informative.
-date: '2012-06-13'
+date: '2013-04-02'
