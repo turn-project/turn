@@ -7,7 +7,7 @@ module DotRuby
   #
   class GemSpec
 
-    # For which revision of .ruby is this gemspec intended?
+    # For which revision of .index is this gemspec intended?
     REVISION = 0 unless defined?(REVISION)
 
     #
@@ -30,7 +30,7 @@ module DotRuby
 
     #
     def initialize
-      @metadata = YAML.load_file('.ruby')
+      @metadata = YAML.load_file('.index')
       @manifest = Dir.glob('manifest{,.txt}', File::FNM_CASEFOLD).first
 
       if @metadata['revision'].to_i != REVISION
