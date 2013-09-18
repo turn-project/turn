@@ -1,6 +1,6 @@
 # make sure latest verison is used, rather than ruby's built-in
 begin
-  gem 'minitest', '~> 4.7.5'
+  gem 'minitest', '< 5.0.0'
 rescue Exception
   warn "gem install minitest"
 end
