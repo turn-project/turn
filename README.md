@@ -3,8 +3,10 @@
     http://codeforpeople.rubyforge.org/turn
 
 
-<b>TURN NEEDS A NEW MAINTAINTER. If you are interested in taking over the project
-please email or submit an issue.</b>
+<b>TURN NEEDS A NEW MAINTAINTER.</b>
+
+<i>If you are interested in taking over the project
+please email or submit an issue.</i>
 
 
 ## DESCRIPTION:
