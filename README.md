@@ -3,6 +3,10 @@
     http://codeforpeople.rubyforge.org/turn
 
 
+<b>TURN NEEDS A NEW MAINTAINTER. If you are interested in taking over the project
+please email or submit an issue.</b>
+
+
 ## DESCRIPTION:
 
 TURN is a new way to view test results. With longer running tests, it
@@ -14,8 +18,6 @@ immediately instead of at the end of the tests.
 If you have the 'ansi' gem installed, then TURN output will be displayed in
 wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
-
-<b>Interested in improving Turn?</b> [Please read this](https://github.com/TwP/turn/wiki/Implementation).
 
 
 ## FEATURES:
