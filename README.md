@@ -2,8 +2,9 @@
     by Tim Pease
     http://codeforpeople.rubyforge.org/turn
 
+<br/>
 
-<b>TURN NEEDS A NEW MAINTAINTER.</b>
+<b>TURN NEEDS A NEW MAINTAINTER</b>
 
 <i>If you are interested in taking over the project
 please email or submit an issue.</i>
