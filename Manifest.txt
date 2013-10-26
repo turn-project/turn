@@ -12,6 +12,7 @@ lib/turn/components.rb
 lib/turn/configuration.rb
 lib/turn/controller.rb
 lib/turn/core_ext.rb
+lib/turn/decorators/topten_decorator.rb
 lib/turn/minitest.rb
 lib/turn/reporter.rb
 lib/turn/reporters/cue_reporter.rb
@@ -40,11 +41,11 @@ try/test_autorun_testunit.rb
 try/test_counts.rb
 try/test_sample.rb
 try/test_sample2.rb
-LICENSE-MIT.txt
+CONTRIBUTING.md
 Release.txt
-LICENSE.txt
 Version.txt
-README.md
-LICENSE-RUBY.txt
-LICENSE-GPL2.txt
+NOTICE.md
+Index.rb
 History.txt
+README.md
+LICENSE.txt

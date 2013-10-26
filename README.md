@@ -10,7 +10,7 @@
 please email or submit an issue.</i>
 
 
-## DESCRIPTION:
+## DESCRIPTION
 
 TURN is a new way to view test results. With longer running tests, it
 can be very frustrating to see a failure (....F...) and then have to wait till
@@ -23,7 +23,7 @@ wonderful technicolor (but only if your terminal supports ANSI color codes).
 Well, the only colors are green and red, but that is still color.
 
 
-## FEATURES:
+## FEATURES
 
 General usage provides better test output. Here is some sample output:
 
@@ -49,7 +49,7 @@ General usage provides better test output. Here is some sample output:
 Turn also provides solo and cross test modes when run from the *turn* commandline
 application.
 
-## INSTRUCTION:
+## INSTRUCTION
 
 Turn can be used from the command-line or via require. The command-line tool
 offers additional options for how one runs tests.
@@ -134,23 +134,24 @@ Then Turn will look first for `./.turn/reporters/cool_reporter.rb`, then `~/.tur
 See source code for examples of how to write your own reporters.
 
 
-## REQUIREMENTS:
+## REQUIREMENTS
 
 * ansi 1.1+ (for colorized output and progress bar output mode)
 
 
-## INSTALLATION:
+## INSTALLATION
 
 Follow the ususal procedure:
 
     $ gem install turn
 
 
-## LICENSE:
+## LICENSE
 
 MIT License
 
-Copyright (c) 2006-2008
+Copyright (c) 2006 Tim Pease
+Copyright (c) 2009 Thomas Sawyer
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -170,3 +171,4 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+

@@ -19,6 +19,14 @@ requirements:
   - build
   development: true
   name: rake
+- groups:
+  - build
+  development: true
+  name: indexer
+- groups:
+  - build
+  development: true
+  name: mast
 conflicts: []
 alternatives: []
 resources:
@@ -32,7 +40,10 @@ repositories: []
 categories: []
 copyrights:
 - holder: Tim Pease
-  year: '2008'
+  year: '2006'
+  license: MIT
+- holder: Thomas Sawyer
+  year: '2009'
   license: MIT
 customs: []
 paths:
@@ -44,4 +55,4 @@ title: Turn
 summary: Test Reporters (New) -- new output formats for Testing
 description: Turn provides a set of alternative runners for MiniTest, both colorful
   and informative.
-date: '2013-04-02'
+date: '2013-10-26'
