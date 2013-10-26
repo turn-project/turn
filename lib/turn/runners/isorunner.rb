@@ -80,7 +80,7 @@ module Turn
         #err = ''
 
         out, err = nil, nil
-p cmd
+#p cmd
         Open3.popen3(cmd) do |stdin, stdout, stderr|
           stdin.close
           out = stdout.read.chomp
