@@ -23,4 +23,3 @@ else
         "Please update to a newer version, but version 5.0.0 or above will not work. ."
   #MiniTest::Unit = Turn::MiniRunner
 end
-
