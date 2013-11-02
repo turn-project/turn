@@ -8,4 +8,4 @@ rvm:
   - ree
   - jruby
   - ruby-head
-script: rake
+script: rake test
