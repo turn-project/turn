@@ -4,12 +4,6 @@
 
 <br/>
 
-<b>TURN NEEDS A NEW MAINTAINTER</b>
-
-<i>If you are interested in taking over the project
-please email or submit an issue.</i>
-
-
 ## DESCRIPTION
 
 TURN is a new way to view test results. With longer running tests, it
