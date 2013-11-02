@@ -1,10 +1,11 @@
+languange: ruby
 rvm:
-  - 1.8.6
-  - 1.8.7 # (current default)
   - 1.9.2
+  - 1.9.3
+  - 2.0.0
   - rbx
   - rbx-2.0
   - ree
   - jruby
   - ruby-head
-
+script: rake
