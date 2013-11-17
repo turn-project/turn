@@ -1,7 +1,7 @@
 # make sure latest verison is used, rather than ruby's built-in
 begin
   gem 'minitest', '< 5.0.0'
-rescue Exception
+rescue Gem::LoadError
   warn "gem install minitest"
 end
 
@@ -23,4 +23,3 @@ else
         "Please update to a newer version, but version 5.0.0 or above will not work. ."
   #MiniTest::Unit = Turn::MiniRunner
 end
-
