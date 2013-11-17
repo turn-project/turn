@@ -2,14 +2,6 @@
     by Tim Pease
     http://codeforpeople.rubyforge.org/turn
 
-<br/>
-
-<b>TURN NEEDS A NEW MAINTAINTER</b>
-
-<i>If you are interested in taking over the project
-please email or submit an issue.</i>
-
-
 ## DESCRIPTION
 
 TURN is a new way to view test results. With longer running tests, it
@@ -146,12 +138,23 @@ Follow the ususal procedure:
     $ gem install turn
 
 
+## TODO
+
+* Setup CI for Ruby 1.9 and 2.0
+* Support MiniTest v5.0
+* Remove indexer and mast gems from build process
+* Remove support for Ruby versions < 1.9
+* Remove support for Test::Unit
+* General code cleanup
+
+
 ## LICENSE
 
 MIT License
 
 Copyright (c) 2006 Tim Pease
 Copyright (c) 2009 Thomas Sawyer
+Copyright (c) 2013 Michael Kohl, Daniel Yoon
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -171,4 +174,3 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
