@@ -1,5 +1,6 @@
-require 'turn/configuration'  # why is this needed here?
+require 'turn/configuration'  # TODO: why is this needed here?
 
+# TODO: adapt for Ruby 1.9+?
 begin
   require 'ansi/code'
 rescue LoadError
@@ -93,4 +94,3 @@ module Turn
   end
 
 end
-

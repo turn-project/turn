@@ -56,7 +56,7 @@ module Turn
     attr_accessor :mark
 
     # Test framework, either `:minitest` or `:testunit`.
-    # @todo Is this used any more?
+    # TODO: Is this used any more?
     attr_accessor :framework
 
     # Enable full backtrace
