@@ -11,8 +11,8 @@ task :gem => ['.ruby'] do
   sh 'mv *.gem pkg/'
 end
 
-file '.ruby' => ['Profile', 'lib/turn/version.rb'] do
-  sh 'dotruby source Profile'
+file '.index' => ['Index.rb', 'lib/turn/version.rb'] do
+  sh 'index -f'
 end
 
 # Might be useful one day, so we'll leave it here.
