@@ -1,4 +1,4 @@
-# TURN - MiniTest Reporters
+# TURN - MiniTest Reporters [![Build status](https://api.travis-ci.org/turn-project/turn.png)](https://travis-ci.org/turn-project/turn)
     by Tim Pease
     http://codeforpeople.rubyforge.org/turn
 

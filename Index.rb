@@ -17,7 +17,7 @@ authors [
 
 requirements [
   'ansi',
-  'minitest (test)',
+  'minitest  4~',
   'rake     (build)',
   'indexer  (build)',
   'mast     (build)'
@@ -32,5 +32,3 @@ copyrights [
   '2006 Tim Pease (MIT)',
   '2009 Thomas Sawyer (MIT)'
 ]
-
-
