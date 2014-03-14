@@ -1,3 +1,9 @@
+=== 0.9.7 / 2014-03-14
+  * Fix -n option for running named tests (#78)
+  * Change default output mode to 'pretty'
+  * Add option to print top 10 longest running tests
+  * Fix home directory lookup
+
 === 0.9.6 / 2012-06-26
   * Override output() instead of changeing @@out. (#96,#97)
   * Update install instructions in README. (#95)

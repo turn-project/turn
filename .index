@@ -47,10 +47,10 @@ customs: []
 paths:
   lib:
   - lib
-version: 0.9.6
+version: 0.9.7
 name: turn
 title: Turn
 summary: Test Reporters (New) -- new output formats for Testing
 description: Turn provides a set of alternative runners for MiniTest, both colorful
   and informative.
-date: '2013-11-03'
+date: '2014-03-14'
