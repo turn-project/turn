@@ -70,9 +70,9 @@ module Turn
       # suites are cases in minitest
       @turn_case = @turn_suite.new_case(suite.name)
 
-      filter = @options[:filter] || @turn_config.pattern || /./
+      filter = normalize_filter(@options[:filter]) || @turn_config.pattern || /./
 
-      suite.send("#{type}_methods").grep(filter).each do |test|
+      suite.send("#{type}_methods").grep(/#{filter}/).each do |test|
         @turn_case.new_test(test)
       end
 
@@ -120,6 +120,14 @@ module Turn
         turn_reporter.error(err)
       end
       super(klass, meth, err)
+    end
+
+    private
+
+    # regex gets turned into a string literal with leading/trailing slashes
+    # so remove them
+    def normalize_filter(filter)
+      filter.sub(/^(\/)/, '').sub(/(\/)$/, '') if filter
     end
 
   end
