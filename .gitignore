@@ -4,3 +4,4 @@ doc
 pkg
 tmp
 /tags
+.ruby-version
