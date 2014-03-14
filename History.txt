@@ -1,4 +1,5 @@
 === 0.9.7 / 2014-03-14
+  * Add support for custom reporters
   * Fix -n option for running named tests (#78)
   * Change default output mode to 'pretty'
   * Add option to print top 10 longest running tests
