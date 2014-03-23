@@ -9,7 +9,7 @@ module Turn
   # in isolated processes. It can do this either by running
   # each test in isolation (solo testing) or in pairs (cross testing).
   #
-  # The IsoRunner proiveds some variery in ouput formats and can also
+  # The IsoRunner provides some variety in output formats and can also
   # log results to a file.
   #
   class IsoRunner
