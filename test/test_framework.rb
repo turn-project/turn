@@ -74,7 +74,7 @@ if RUBY_VERSION >= '1.9'
     #end
 
     def test_ruby19_minitest_mocking
-      setup_testunit
+      setup_test('MiniTest', 'minitest/unit')
       result = turn 'tmp/test.rb'
       assert result.index('PASS'), "RESULT:\n#{result}"
     end
