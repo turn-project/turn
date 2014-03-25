@@ -3,13 +3,9 @@ $:.unshift './lib'
 #require 'turn/colorize'
 require 'fileutils'
 
-if RUBY_VERSION < "1.9"
-  require 'test/unit'
-else
-  gem 'minitest'
-  require 'minitest/unit'
-  require 'test/unit'
-end
+gem 'minitest'
+require 'minitest/unit'
+require 'test/unit'
 
 require 'turn'
 
@@ -18,20 +14,12 @@ require 'turn'
 
 #
 def turn(*args)
-  if RUBY_VERSION < '1.9'
-    `ruby1.8 -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
-  else
-    `ruby -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
-  end
+  `ruby -Ilib bin/turn -Ilib #{args.join(' ')} 2>&1`
 end
 
 #
 def turn2(*args)
-  if RUBY_VERSION < '1.9'
-    `ruby1.8 -Ilib bin/turn -Ilib #{args.join(' ')}`
-  else
-    `ruby -Ilib bin/turn -Ilib #{args.join(' ')}`
-  end
+  `ruby -Ilib bin/turn -Ilib #{args.join(' ')}`
 end
 
 #

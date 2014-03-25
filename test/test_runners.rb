@@ -29,55 +29,40 @@ class TestRunners < Test::Unit::TestCase
 
   # autorun
 
-  #if RUBY_VERSION < '1.9'
+  def test_autorun_minispec_name
+    file = setup_minispec
+    result = `ruby -Ilib #{file} -n "/fail/" 2>&1`
 
-    def test_autorun_testunit
-      file = setup_testunit('turn/autorun', 'test_autorun.rb')
-      result = `ruby -Ilib #{file} 2>&1`
-      assert(result.index('1 passed'),  "ACTUAL RESULT:\n #{result}")
-      assert(result.index('0 failures'),  "ACTUAL RESULT:\n #{result}")
-      assert(result.index('0 errors'), "ACTUAL RESULT:\n #{result}")
-    end
+    assert result.index('0 passed'), "ACTUAL RESULT:\n #{result}"
+    assert result.index('1 failures'), "ACTUAL RESULT:\n #{result}"
+    assert result.index('1 assertions'),  "ACTUAL RESULT:\n #{result}"
+  end
 
-    def test_autorun_minispec_name
-      file = setup_minispec
-      result = `ruby -Ilib #{file} -n "/fail/" 2>&1`
+  def test_autorun
+    file = setup_minitest_autorun
+    result = `ruby -Ilib #{file} 2>&1`
+    assert result.index('0 failures'),  "ACTUAL RESULT:\n #{result}"
+    assert result.index('0 errors'), "ACTUAL RESULT:\n #{result}"
+  end
 
-      assert result.index('0 passed'), "ACTUAL RESULT:\n #{result}"
-      assert result.index('1 failures'), "ACTUAL RESULT:\n #{result}"
-      assert result.index('1 assertions'),  "ACTUAL RESULT:\n #{result}"
-    end
+  def test_autorun_minitest_name
+    file = setup_minitest_autorun
+    result = `ruby -Ilib #{file} -n "/sample/" 2>&1`
 
-  #else
-
-    def test_autorun
-      file = setup_minitest_autorun
-      result = `ruby -Ilib #{file} 2>&1`
-      assert result.index('0 failures'),  "ACTUAL RESULT:\n #{result}"
-      assert result.index('0 errors'), "ACTUAL RESULT:\n #{result}"
-    end
-
-    def test_autorun_minitest_name
-      file = setup_minitest_autorun
-      result = `ruby -Ilib #{file} -n "/sample/" 2>&1`
-
-      assert result.index('1 passed'), "ACTUAL RESULT:\n #{result}"
-      assert result.index('1 assertions'),  "ACTUAL RESULT:\n #{result}"
-    end
+    assert result.index('1 passed'), "ACTUAL RESULT:\n #{result}"
+    assert result.index('1 assertions'),  "ACTUAL RESULT:\n #{result}"
+  end
 
 
-    def test_autorun_with_trace
-      file = setup_minitest_autorun_with_trace
+  def test_autorun_with_trace
+    file = setup_minitest_autorun_with_trace
 
-      result = `ruby -Ilib #{file} 2>&1`
-      assert result.index('1 failures'), 'fail is not 1'
-      assert result.index('0 errors'), 'error is not 0'
+    result = `ruby -Ilib #{file} 2>&1`
+    assert result.index('1 failures'), 'fail is not 1'
+    assert result.index('0 errors'), 'error is not 0'
 
-      # TODO: the backtrace is empty, why?
-      #assert result.scan(/\.rb:\d+:in/).length > 1
-    end
-
-  #end
+    # TODO: the backtrace is empty, why?
+    #assert result.scan(/\.rb:\d+:in/).length > 1
+  end
 
 end
-

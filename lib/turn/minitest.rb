@@ -9,9 +9,6 @@ end
 require 'minitest/unit'
 require 'minitest/spec'
 
-# compatability with old Test::Unit
-#Test = MiniTest unless defined?(Test)
-
 # load Turn's minitest runner
 require 'turn/runners/minirunner'
 

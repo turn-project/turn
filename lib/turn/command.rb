@@ -61,9 +61,6 @@ module Turn
     # Libraries to require before running tests.
     attr :requires
 
-    # Framework to use, :minitest or :testunit.
-    #attr :framework
-
     # Run mode.
     attr :runmode
 
@@ -162,11 +159,6 @@ module Turn
         opts.on('--[no-]ansi', "Force use of ANSI codes on or off.") do |bool|
           @ansi = bool
         end
-
-        # Turn does not support Test::Unit 2.0+
-        #opts.on('-u', '--testunit', "Force use of TestUnit framework") do
-        #  @framework = :testunit
-        #end
 
         opts.on('--log', "log results to a file") do #|path|
           @log = true # TODO: support path/file

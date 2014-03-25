@@ -27,7 +27,6 @@ module Turn
       @loadpath = @config.loadpath
       @requires = @config.requires
       @live     = @config.live?
-      @minitest = @config.framework == :minitest
     end
 
   public
@@ -72,7 +71,6 @@ module Turn
         cmd << %[--loadpath="#{@loadpath.join(':')}"] unless @loadpath.empty?
         cmd << %[--requires="#{@requires.join(':')}"] unless @requires.empty?
         cmd << "--live" if @live
-        cmd << "--minitest" if @minitest
         cmd << files.join(' ')
         cmd = cmd.join(' ')
 
@@ -129,13 +127,6 @@ module Turn
       suite.cases.flatten!
 
       reporter.finish_suite(suite)
-
-      # shutdown auto runner
-      if @minitest
-
-      else
-        ::Test::Unit.run=true rescue nil
-      end
 
       suite
     end
