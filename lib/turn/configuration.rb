@@ -55,10 +55,6 @@ module Turn
     # Runtime threshold.
     attr_accessor :mark
 
-    # Test framework, either `:minitest` or `:testunit`.
-    # TODO: Is this used any more?
-    attr_accessor :framework
-
     # Enable full backtrace
     attr_accessor :trace
 
