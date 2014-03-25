@@ -97,7 +97,6 @@ module Turn
       @requires  ||= []
       @live      ||= false
       @log       ||= true
-      #@runner   ||= RUBY_VERSION >= "1.9" ? MiniRunner : TestRunner
       @matchcase ||= nil
       @pattern   ||= /.*/
       @natural   ||= false
