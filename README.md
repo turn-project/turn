@@ -141,9 +141,6 @@ Follow the ususal procedure:
 ## TODO
 
 * Support MiniTest v5.0
-* Remove indexer and mast gems from build process
-* Remove support for Ruby versions < 1.9
-* Remove support for Test::Unit
 * General code cleanup
 
 
