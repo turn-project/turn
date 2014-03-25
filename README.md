@@ -140,7 +140,6 @@ Follow the ususal procedure:
 
 ## TODO
 
-* Setup CI for Ruby 1.9 and 2.0
 * Support MiniTest v5.0
 * Remove indexer and mast gems from build process
 * Remove support for Ruby versions < 1.9
