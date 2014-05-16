@@ -55,6 +55,9 @@ module Turn
     # Only run testcases matching this pattern.
     attr :matchcase
 
+    # if minitest-metadata is installed, only run testcases which have at least one of these tags
+    attr :tags
+
     # List of paths to add to $LOAD_PATH
     attr :loadpath
 
@@ -91,6 +94,7 @@ module Turn
       @log       = nil
       @pattern   = nil
       @matchcase = nil
+      @tags      = []
       @loadpath  = []
       @requires  = []
       @runmode   = nil
@@ -138,6 +142,10 @@ module Turn
           else
             @matchcase = Regexp.new(pattern, Regexp::IGNORECASE)
           end
+        end
+
+        opts.on('-t', '--tags=TAGS', "only run test cases with at least one TAG (colon-separated, requires minitest-metadata)") do |tags|
+          @tags = tags.split(':').collect { |tag| tag.to_sym }
         end
 
         opts.on('-m', '--mark=SECONDS', "Mark test if it exceeds runtime threshold.") do |int|
@@ -264,6 +272,7 @@ module Turn
         c.mode      = decmode
         c.pattern   = pattern
         c.matchcase = matchcase
+        c.tags      = tags
         c.trace     = trace
         c.natural   = natural
         c.verbose   = verbose

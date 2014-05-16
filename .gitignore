@@ -5,3 +5,4 @@ pkg
 tmp
 /tags
 .ruby-version
+*.sublime*

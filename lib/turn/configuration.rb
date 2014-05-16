@@ -27,6 +27,9 @@ module Turn
     # match to be eligible to run.
     attr_accessor :matchcase
 
+    # all tests must have at least one of these tags to be eligible to run
+    attr_accessor :tags
+
     # Add these folders to the $LOAD_PATH.
     attr_reader :loadpath
 
@@ -98,6 +101,7 @@ module Turn
       @live      ||= false
       @log       ||= true
       @matchcase ||= nil
+      @tags      ||= []
       @pattern   ||= /.*/
       @natural   ||= false
       @verbose   ||= false
