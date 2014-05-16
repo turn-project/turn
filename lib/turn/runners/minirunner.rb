@@ -72,7 +72,21 @@ module Turn
 
       filter = normalize_filter(@options[:filter]) || @turn_config.pattern || /./
 
-      suite.send("#{type}_methods").grep(/#{filter}/).each do |test|
+      filtered_test_methods = suite.send("#{type}_methods").grep(/#{filter}/)
+
+      if defined?(MiniTest::Metadata) && !@turn_config.tags.empty?
+        metadata = suite.metadata
+
+        filtered_test_methods.select! do |test_method|
+          method_metadata = metadata[test_method]
+          # if test method has at least one of the tags, and at least one of those tag values is truthy, include it
+          !(method_metadata.keys & @turn_config.tags).select do |tag|
+            method_metadata[tag]
+          end.empty?
+        end
+      end
+
+      filtered_test_methods.each do |test|
         @turn_case.new_test(test)
       end
 
