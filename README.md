@@ -98,6 +98,8 @@ Options are following:
     exclude         List of file names or globs to exclude from tests list. Default: []
     pattern         Regexp pattern that all test names must match to be eligible to run. Default: /.*/ (all)
     matchcase       Regexp pattern that all test cases must match to be eligible to run. Default: nil (all)
+    tags            If specified, test cases must have at least one of these tags to be eligible to run. 
+                    Requires minitest-metadata for tagging. Tags are colon-separated. Default: [] (all)
     loadpath        Add these folders to the $LOAD_PATH. Default: ['lib']
     requires        Libs to require when running tests. Default: []
     format          Reporter type (:pretty, :dot, :cue, :marshal, :outline, :progress). Default: :pretty
