@@ -90,6 +90,26 @@ HERE
 end
 
 #
+def setup_testunit_dotted
+  text = <<-HERE
+class DottedTest < Test::Unit::TestCase
+  def test_pass
+    assert_equal(1,1)
+  end
+
+  def test_fail
+    assert_equal(1,2)
+  end
+
+  def test_error
+    raise
+  end
+end
+  HERE
+  save_test(text, 'dotted_test.rb')
+end
+
+#
 def setup_testunit_outline
   text = <<-HERE
 class OutlineTest < Test::Unit::TestCase
