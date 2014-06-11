@@ -49,18 +49,18 @@ module Turn
       suite.each do |testcase|
         testcase.each do |testunit|
           if testunit.fail? || testunit.error?
-            list << testunit
+            list << [testcase, testunit]
           end
         end
       end
 
       unless list.empty? # or verbose?
         #report << "\n\n-- Failures and Errors --\n\n"
-        list.uniq.each do |testunit|
+        list.uniq.each do |(testcase, testunit)|
           heading = []
           message = []
           heading << (testunit.fail? ? FAIL : ERROR)
-          heading << testunit.name
+          heading << "#{testcase.name}::#{testunit.name}"
           message << heading.join(' ')
           message << testunit.message.tabto(2)
           message << clean_backtrace(testunit.backtrace).join("\n").tabto(2)
