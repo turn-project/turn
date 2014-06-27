@@ -1,0 +1,57 @@
+---
+revision: 2013
+type: ruby
+sources:
+- Indexfile
+- Gemfile
+authors:
+- name: Thomas Sawyer
+  email: transfire@gmail.com
+- name: Tim Pease
+  email: tim.pease@gmail.com
+organizations: []
+requirements:
+- version: '>= 1.1'
+  name: ansi
+- version: ~> 4
+  name: minitest
+- groups:
+  - development
+  version: '>= 0'
+  name: rake
+- groups:
+  - development
+  version: '>= 0'
+  name: pry
+- groups:
+  - development
+  version: '>= 1.3'
+  name: bundler
+conflicts: []
+alternatives: []
+resources:
+- type: home
+  uri: https://github.com/turn-project/turn
+  label: Homepage
+repositories: []
+categories: []
+copyrights:
+- holder: Thomas Sawyer
+  year: '2014'
+  license: MIT
+- holder: Tim Pease
+  year: '2005'
+  license: MIT
+customs: []
+paths:
+  lib:
+  - lib
+name: turn
+title: Turn
+version: 0.9.7
+summary: Better report formats for MiniTest
+description: |2
+
+    Turn provides a set of alternative reporter formats for MiniTest,
+    both colorful and informative.
+date: '2014-06-27'

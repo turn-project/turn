@@ -1,5 +1,5 @@
 # TURN - MiniTest Reporters [![Build status](https://api.travis-ci.org/turn-project/turn.png)](https://travis-ci.org/turn-project/turn)
-    by Tim Pease
+    by Tim Pease & Trans
     http://rubygems.org/gems/turn
 
 ## DESCRIPTION
@@ -67,7 +67,7 @@ Likewise for the cross runner.
 
 This will run every pairing of tests in a separate process.
 
-### Require
+### Via Require
 
 Simply require the TURN package from within your test suite.
 
@@ -153,7 +153,9 @@ If you are a project member please follow the same process (minus the forking). 
 
 ## Building
 
-`gem build turn.gemspec`
+To build the gem simply run:
+
+    gem build .gemspec
 
 ## Solo and Cross Runners
 
@@ -172,7 +174,6 @@ MIT License
 
 Copyright (c) 2006 Tim Pease
 Copyright (c) 2009 Thomas Sawyer
-Copyright (c) 2013 Michael Kohl, Daniel Yoon
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+load File.dirname(__FILE__) + '/lib/turn/version.rb'
+
+name "turn"
+version Turn::VERSION
+
+title "Turn"
+summary "Better report formats for MiniTest"
+
+description %{
+  Turn provides a set of alternative reporter formats for MiniTest,
+  both colorful and informative.
+}
+
+resources(
+  home: "https://github.com/turn-project/turn"
+)
+
+authors(
+  "Thomas Sawyer <transfire@gmail.com>",
+  "Tim Pease <tim.pease@gmail.com>"
+)
+
+copyrights(
+  "2009 Thomas Sawyer (MIT)",
+  "2006 Tim Pease  (MIT)"
+)
+

@@ -1,2 +1,13 @@
 source "https://rubygems.org"
-gemspec
+
+ruby ">= 1.9.2"
+
+gem "ansi", ">= 1.1"
+gem "minitest", "~> 4"
+
+group :development do
+  gem "rake"
+  gem "pry"
+  gem "bundler", ">= 1.3"
+end
+
