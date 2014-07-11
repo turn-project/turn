@@ -14,7 +14,7 @@ because the underlying API has changed yet again.</i>
 
 <i>The most recent major change finally added something of a real reporter API. 
 That's a good thing! Although it should have been there from day one. Yet
-the new version also removed the runner API. That's means Turn would have
+the new version also removed the runner API. That means Turn would have
 revert back to old subclassing and monkey patching tricks in order support
 certain features such as the solo and cross runners.</i>
 
