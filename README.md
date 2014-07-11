@@ -2,36 +2,34 @@
     by Tim Pease & Trans
     http://rubygems.org/gems/turn
 
-## IMPORTANT
+## TURN is no longer being maintained!
 
-**TURN is no longer being maintained!**
-
-Ruby's built-in test framework has changed so frequently (and rather poorly)
+<i>Ruby's built-in test framework has changed so frequently (and rather poorly)
 over the last few years that it has been a relative nightmare to try keep Turn 
 working. From the deprecation of Test::Unit and the switch to MiniTest and thru
 all the many API changes made to MiniTest itself (we're at major version 5 now!),
 it is simply not conducive to a coder's productivity to have to rewrite a program
 every year while explaining to gracious bug reporters that it's broken
-because the underlying API has changed yet again.
+because the underlying API has changed yet again.</i>
 
-The most recent major change finally added something of a real reporter API. 
+<i>The most recent major change finally added something of a real reporter API. 
 That's a good thing! Although it should have been there from day one. Yet
 the new version also removed the runner API. That's means Turn would have
 revert back to old subclassing and monkey patching tricks in order support
-certain features such as the solo and cross runners.
+certain features such as the solo and cross runners.</i>
 
-As any programmer can well understand, I have no interest in playing these
+<i>As any programmer can well understand, I have no interest in playing these
 musical chairs any longer. I have endeavored to provide preliminary support
 for Minitest v5+, which is now in the master branch. For the most part,
 the reporter part, it is working. But there are plenty of loose ends that
-have to be tied up if everything is to work as it should.
+have to be tied up if everything is to work as it should.</i>
 
-If someone else would like to take up the mantle of this project please 
+<i>If someone else would like to take up the mantle of this project please 
 have at it. I'm available to answer any questions. Until then, consider
-this entire project *deprecated*.
+this entire project **deprecated**.</i>
 
-Sincerely,
-**trans**
+Sincerely,<br/>
+&nbsp;&nbsp;**trans**
 </b>
 
 
