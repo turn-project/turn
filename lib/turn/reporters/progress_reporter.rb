@@ -3,14 +3,17 @@ require 'ansi/progressbar'
 
 module Turn
 
+  # Progress reporter uses a progressbar to indicate progress.
   #
   class ProgressReporter < Reporter
 
-    def initialize(io, opts={})
-      super(io, opts)
-      @fails  = Hash.new{|h,k|h[k]=[]}
-      @errors = Hash.new{|h,k|h[k]=[]}
-      @skips  = Hash.new{|h,k|h[k]=[]}
+    def initialize(opts={})
+      super(opts)
+
+      @record = {}
+      @record[:fails]  = Hash.new{|h,k|h[k]=[]}
+      @record[:errors] = Hash.new{|h,k|h[k]=[]}
+      @record[:skips]  = Hash.new{|h,k|h[k]=[]}
     end
 
     def start_suite(suite)
@@ -29,15 +32,15 @@ module Turn
     #end
 
     def fail(assertion, message=nil)
-      @fails[@_current_case] << assertion
+      @record[:fails][@_current_case] << assertion
     end
 
     def error(exception, message=nil)
-      @errors[@_current_case] << exception
+      @record[:errors][@_current_case] << exception
     end
 
     def skip(exception, message=nil)
-      @skips[@_current_case] << exception
+      @record[:skips][@_current_case] << exception
     end
 
     def finish_case(kase)
@@ -79,9 +82,9 @@ module Turn
 
       io.puts(tally_line + "\n\n\n")
 
-      io.puts "-- Failures --\n\n" unless @fails.empty?
+      io.puts "-- Failures --\n\n" unless @record[:fails].empty?
 
-      @fails.each do |tc, cc|
+      @record[:fails].each do |tc, cc|
         cc.each do |e|
           message = e.message.tabto(0).strip
           message = Colorize.red(message)
@@ -91,9 +94,9 @@ module Turn
         io.puts
       end
 
-      io.puts "-- Errors --\n\n" unless @errors.empty?
+      io.puts "-- Errors --\n\n" unless @record[:errors].empty?
 
-      @errors.each do |tc, cc|
+      @record[:errors].each do |tc, cc|
         cc.each do |e|
           message = e.message.tabto(0).strip
           message = Colorize.red(message)

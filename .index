@@ -13,7 +13,7 @@ organizations: []
 requirements:
 - version: '>= 1.1'
   name: ansi
-- version: ~> 4
+- version: ~> 5
   name: minitest
 - groups:
   - development
@@ -37,10 +37,10 @@ repositories: []
 categories: []
 copyrights:
 - holder: Thomas Sawyer
-  year: '2014'
+  year: '2009'
   license: MIT
 - holder: Tim Pease
-  year: '2005'
+  year: '2006'
   license: MIT
 customs: []
 paths:
@@ -48,10 +48,10 @@ paths:
   - lib
 name: turn
 title: Turn
-version: 0.9.7
+version: 1.0.0
 summary: Better report formats for MiniTest
 description: |2
 
     Turn provides a set of alternative reporter formats for MiniTest,
     both colorful and informative.
-date: '2014-06-27'
+date: '2014-07-10'

@@ -1,4 +1,4 @@
-class Sample2Case1 < Test::Unit::TestCase
+class Sample2Case1 < Minitest::Test
   def test_sample_pass1
     assert_equal(1,1)
   end
@@ -22,7 +22,7 @@ class Sample2Case1 < Test::Unit::TestCase
 end
 
 
-class Sample2Case2 < Test::Unit::TestCase
+class Sample2Case2 < Minitest::Test
   def test_sample_pass1
     assert_equal(1,1)
   end

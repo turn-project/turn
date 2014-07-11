@@ -21,8 +21,10 @@ module Turn
 
       setup
 
-      testrun = runner.new
-      testrun.start
+      #testrun = runner.new
+      #testrun.start
+
+      Minitest.autorun
     end
 
     #

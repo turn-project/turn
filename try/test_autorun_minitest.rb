@@ -4,7 +4,7 @@ Turn.config do |c|
   c.natural = true
 end
 
-class SampleCase1 < MiniTest::Unit::TestCase
+class SampleCase1 < Minitest::Test
   def test_sample_pass1
     assert_equal(1,1)
   end

@@ -103,16 +103,69 @@ module Turn
       @ansi      = nil
     end
 
+    # Run command.
+    def main(*argv)
+      option_parser.parse!(argv)
+
+      @loadpath = ['lib'] if loadpath.empty?
+
+      tests = ARGV.empty? ? nil : argv.dup
+
+      #config = Turn::Configuration.new do |c|
+      config = Turn.config do |c|
+        c.live      = live
+        c.log       = log
+        c.loadpath  = loadpath
+        c.requires  = requires
+        c.tests     = tests
+        c.runmode   = runmode
+        c.format    = outmode
+        c.mode      = decmode
+        c.pattern   = pattern
+        c.matchcase = matchcase
+        c.trace     = trace
+        c.natural   = natural
+        c.verbose   = verbose
+        c.mark      = mark
+        c.ansi      = ansi unless ansi.nil?
+      end
+
+      controller = Turn::Controller.new(config)
+
+      #result = controller.start
+      #if result
+      #  exit(result.passed? ? 0 : -1)
+      #else # no tests
+      #  exit(-1)
+      #end
+
+      controller.start
+      #exit(success ? 0 : -1)
+    end
+
     #
     def option_parser
       OptionParser.new do |opts|
+        options_header(opts)
+        options_general(opts)
+        options_runmode(opts)
+        options_output(opts)
+        options_decorator(opts)
+        options_command(opts)
+      end
+    end
 
+    #
+    def options_header(opts)
         opts.banner = "Turn - Pretty Unit Test Runner for Ruby"
 
         opts.separator " "
         opts.separator "SYNOPSIS"
         opts.separator "  turn [OPTIONS] [RUN MODE] [OUTPUT MODE] [TEST GLOBS ...]"
+    end
 
+    #
+    def options_general(opts)
         opts.separator " "
         opts.separator "GENERAL OPTIONS"
 
@@ -167,7 +220,10 @@ module Turn
         opts.on('--live', "do not use local load path") do
           @live = true
         end
+      end
 
+      #
+      def options_runmode(opts)
         opts.separator " "
         opts.separator "RUN MODES"
 
@@ -185,7 +241,10 @@ module Turn
 
         #opts.on('--load', "") do
         #end
+      end
 
+      #
+      def options_output(opts)
         opts.separator " "
         opts.separator "OUTPUT MODES"
 
@@ -213,7 +272,10 @@ module Turn
           @runmode = :marshal
           @outmode = :marshal
         end
+      end
 
+      #
+      def options_decorator(opts)
         opts.separator " "
         opts.separator "DECORATOR MODES"
 
@@ -221,6 +283,8 @@ module Turn
           @decmode = :topten
         end
 
+      #
+      def options_command(opts)
         opts.separator " "
         opts.separator "COMMAND OPTIONS"
 
@@ -241,44 +305,6 @@ module Turn
           puts opts
           exit
         end
-      end
-    end
-
-    # Run command.
-    def main(*argv)
-      option_parser.parse!(argv)
-
-      @loadpath = ['lib'] if loadpath.empty?
-
-      tests = ARGV.empty? ? nil : argv.dup
-
-      #config = Turn::Configuration.new do |c|
-      config = Turn.config do |c|
-        c.live      = live
-        c.log       = log
-        c.loadpath  = loadpath
-        c.requires  = requires
-        c.tests     = tests
-        c.runmode   = runmode
-        c.format    = outmode
-        c.mode      = decmode
-        c.pattern   = pattern
-        c.matchcase = matchcase
-        c.trace     = trace
-        c.natural   = natural
-        c.verbose   = verbose
-        c.mark      = mark
-        c.ansi      = ansi unless ansi.nil?
-      end
-
-      controller = Turn::Controller.new(config)
-
-      result = controller.start
-
-      if result
-        exit (result.passed? ? 0 : -1)
-      else # no tests
-        exit -1
       end
     end
 

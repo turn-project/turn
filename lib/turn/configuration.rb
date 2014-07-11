@@ -13,7 +13,7 @@ module Turn
   #
   class Configuration
 
-    # List of if file names or glob pattern of tests to run.
+    # List of file names or glob pattern of tests to run.
     attr_reader :tests
 
     # List of file names or globs to exclude from +tests+ list.

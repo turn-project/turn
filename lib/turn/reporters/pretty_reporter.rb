@@ -81,7 +81,7 @@ module Turn
 
     # Invoked after all tests in a testcase have ben run.
     def finish_case(kase)
-      # Print newline is there any tests in suite
+      # Print newline if there any tests in suite
       io.puts if kase.size > 0
     end
 

@@ -1,4 +1,5 @@
 require 'turn'
 
-MiniTest::Unit.autorun
+require 'minitest/autorun'
+#Minitest.autorun
 

@@ -1,6 +1,7 @@
 module Turn
   require 'turn/colorize'
   require 'turn/core_ext'
+  require 'turn/adapter'
 
   # There are two distinct way in which a report may be utilized
   # by a Runner: per-call or per-file. The method #pass, #fail
@@ -10,15 +11,17 @@ module Turn
   # and will not use the start_test and finish_test methods,
   # since those are beyond it's grainularity.
   #
-  class Reporter
+  class Reporter < Minitest::TurnAdapter
 
     include Colorize
 
     # Where to send report, defaults to `$stdout`.
     attr :io
 
-    def initialize(io, opts={})
-      @io      = io || $stdout
+    def initialize(opts={})
+      super(opts)
+
+      @io      = opts[:io] || $stdout
       @trace   = opts[:trace]
       @natural = opts[:natural]
       @verbose = opts[:verbose]

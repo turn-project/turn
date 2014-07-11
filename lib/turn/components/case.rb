@@ -44,6 +44,7 @@ module Turn
       #@command = command
     end
 
+    #
     def new_test(name)
       c = TestMethod.new(name)
       @tests << c
