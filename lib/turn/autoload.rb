@@ -2,5 +2,5 @@
 # Eventually a way to handle this more robustly (without autoreload) 
 # should be worked out. But how?
 autoload "Test",     'test/unit'
-autoload "MiniTest", 'minitest/unit'
+autoload "Minitest", 'minitest/unit'
 

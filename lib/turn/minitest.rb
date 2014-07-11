@@ -9,7 +9,7 @@ end
 #require 'minitest/unit'
 require 'minitest/spec'
 
-# set MiniTest's runner to Turn::MiniRunner instance
+# If Minitest v4, set MiniTest's runner to Turn::MiniRunner instance.
 if MiniTest::Unit.respond_to?(:runner=)
   # load Turn's minitest runner
   require 'turn/runners/minirunner'

@@ -10,24 +10,30 @@ module Minitest
   #     -T marshal                dump output as YAML (normal run mode only)
   #
   def self.plugin_turn_options(opts, options)
+    options[:loadpath] ||= []
+    options[:requires] ||= []
+
+    # TODO: Really want a way not to do all the other options unless `-t`.
     unless $turn_command
       opts.on "-t", "--turn", "Use Turn for output." do |format|
         $turn_command = true
       end
     end
 
-    options[:loadpath] ||= []
-    options[:requires] ||= []
-
     opts.separator " "
     opts.separator "turn options:"
 
-    opts.on('-I', '--loadpath=PATHS', "add paths to $LOAD_PATH") do |path|
-      options[:loadpath].concat(path.split(':'))
+    if $turn_command
+      opts.on('-I', '--loadpath=PATHS', "add paths to $LOAD_PATH") do |path|
+        options[:loadpath].concat(path.split(':'))
+      end
+
+      opts.on('-r', '--require=LIBS', "require libraries") do |lib|
+        options[:requires].concat(lib.split(':'))
+      end
     end
-    opts.on('-r', '--require=LIBS', "require libraries") do |lib|
-      @options[:requires].concat(lib.split(':'))
-    end
+
+    # TODO: DEPRECATED b/c this is supported by minitest itself now
     #opts.on('-n', '--name=PATTERN', "only run tests that match PATTERN") do |pattern|
     #  if pattern =~ /\/(.*)\//
     #    options[:pattern] = Regexp.new($1)
@@ -35,6 +41,7 @@ module Minitest
     #    options[:pattern] = Regexp.new(pattern, Regexp::IGNORECASE)
     #  end
     #end
+    # TODO: minitest should support this too, it would require a monkey patch by us
     #opts.on('-c', '--case=PATTERN', "only run test cases that match PATTERN") do |pattern|
     #  if pattern =~ /\/(.*)\//
     #    options[:matchcase] = Regexp.new($1)
@@ -43,16 +50,22 @@ module Minitest
     #  end
     #end
     opts.on('-m', '--mark=SECONDS', "Mark test if it exceeds runtime threshold.") do |int|
-      @options[:mark] = int.to_i
+      options[:mark] = int.to_i
     end
-    opts.on('-b', '--backtrace', '--trace INT', "Limit the number of lines of backtrace.") do |int|
-      options[:trace] = int
+
+    # TODO: rename this and make the count selectable
+    opts.on('--topten', "show only top ten slowest tests") do
+      options[:decmode] = :topten
     end
+
     opts.on('--natural', "Show natualized test names.") do |bool|
       options[:natural] = bool
     end
     opts.on('-v', '--verbose', "Show extra information.") do |bool|
       options[:verbose] = bool
+    end
+    opts.on('-b', '--backtrace', '--trace INT', "Limit the number of lines of backtrace.") do |int|
+      options[:trace] = int
     end
     opts.on('--[no-]ansi', "Force use of ANSI codes on or off.") do |bool|
       options[:ansi] = bool
@@ -60,9 +73,9 @@ module Minitest
     opts.on('--log', "log results to a file") do #|path|
       options[:log] = true # TODO: support path/file
     end
-    #opts.on('--live', "do not use local load path") do
-    #  options[:live] = true
-    #end
+    opts.on('--live', "do not use local load path") do
+      options[:live] = true
+    end
 
     opts.on('--normal', "run all tests in a single process [default]") do
       options[:runmode] = nil
@@ -74,6 +87,7 @@ module Minitest
       options[:runmode] = :cross
     end
 
+    # TODO: reduce these to a single option
     opts.on('--outline', '-O', "turn's original case/test outline mode") do
       options[:outmode] = :outline
     end
@@ -94,9 +108,6 @@ module Minitest
       options[:outmode] = :marshal
     end
 
-    opts.on('--topten', "show only top ten slowest tests") do
-      @options[:decmode] = :topten
-    end
     opts.on('--debug', "turn debug mode on") do
       $DEBUG = true
     end

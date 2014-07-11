@@ -1,3 +1,6 @@
+# DEPRECATED: This is no longer used. Everything runs thru Minitest's autorun now.
+#             Note that alternate runner's no longer work! :-(
+
 module Turn
 
   # Controls execution of test run.

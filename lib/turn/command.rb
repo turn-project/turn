@@ -1,3 +1,5 @@
+# DEORECATED: This is no longer used, everything runs thru minitest's autorun now.
+
 require 'optparse'
 
 module Turn
