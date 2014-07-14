@@ -19,6 +19,14 @@ class TestReporters < Test::Unit::TestCase
     assert result.index('0 errors'), "ACTUAL RESULT:\n#{result}"
   end
 
+  def test_dotted_shows_name
+    file = setup_testunit_dotted
+    result = turn '--dotted', file
+    assert result.index('FAIL DottedTest::test_fail'), "ACTUAL RESULT:\n#{result}"
+    assert result.index('ERROR DottedTest::test_error'), "ACTUAL RESULT:\n#{result}"
+    assert !result.index('test_pass'), "ACTUAL RESULT:\n#{result}"
+  end
+
   def test_marshal
     file = setup_testunit
     result = turn '--marshal', file
