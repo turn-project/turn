@@ -151,7 +151,7 @@ module Indexer
     end
 
     def licenses
-      metadata['copyrights'].map{ |c| c['license'] }.compact
+      metadata['copyrights'].map{ |c| c['license'] }.compact.uniq
     end
 
     def require_paths
